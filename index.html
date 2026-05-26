@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Briefing do projeto Cidadania Conectada: Vozes do Oziel — serious game para participação popular de jovens no Jardim Oziel, Campinas. Grupo Diálogos no CriaLab da Minha Campinas.">
+<meta property="og:title" content="Cidadania Conectada: Vozes do Oziel">
+<meta property="og:description" content="Serious game web para jovens de 12-17 anos do Jardim Oziel. Briefing de projeto do Grupo Diálogos no CriaLab.">
+<title>Cidadania Conectada — Vozes do Oziel · Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF8F1;
+    --bg-card: #FFFFFF;
+    --bg-soft: #F2ECDD;
+    --bg-deep: #E8DFC7;
+    --ink: #1A1611;
+    --ink-2: #4D453B;
+    --ink-3: #8A7F6F;
+    --line: #DDD4BF;
+    --line-soft: #EAE2CC;
+    --coral: #B8451F;
+    --coral-deep: #7A2D14;
+    --coral-bg: #F5DDD0;
+    --forest: #2D5944;
+    --forest-bg: #DAE7DD;
+    --amber: #8A5611;
+    --amber-bg: #F3E4C4;
+    --indigo: #2A3F66;
+    --indigo-bg: #DCE2EE;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--coral); color: var(--bg); }
+
+  /* Subtle paper texture via SVG noise */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.05 0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: multiply;
+  }
+
+  /* Container */
+  .wrap { position: relative; z-index: 1; }
+
+  /* Top meta bar */
+  .topbar {
+    border-bottom: 1px solid var(--line);
+    padding: 14px 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .topbar strong { color: var(--ink-2); font-weight: 500; }
+
+  /* Layout */
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  @media (min-width: 960px) {
+    .layout { display: grid; grid-template-columns: 240px 1fr; gap: 64px; padding-top: 64px; }
+  }
+
+  /* TOC */
+  .toc {
+    padding: 32px 0 16px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 32px;
+  }
+  @media (min-width: 960px) {
+    .toc {
+      position: sticky;
+      top: 32px;
+      align-self: start;
+      padding: 0;
+      border: none;
+      margin: 0;
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
+    }
+  }
+  .toc-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-3);
+    margin-bottom: 14px;
+  }
+  .toc ol { list-style: none; }
+  .toc li { margin-bottom: 4px; }
+  .toc a {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding: 8px 0;
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.4;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .toc a:hover { color: var(--coral); border-bottom-color: var(--coral); }
+  .toc-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    min-width: 22px;
+    font-weight: 500;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 48px 0 56px;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 960px) {
+    .hero { padding: 0 0 56px; border-bottom: none; }
+  }
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--coral);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(40px, 8vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--coral);
+  }
+  .hero-sub {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(22px, 3.4vw, 32px);
+    color: var(--ink-2);
+    line-height: 1.25;
+    margin-bottom: 32px;
+  }
+  .hero-lead {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-2);
+    max-width: 640px;
+    margin-bottom: 36px;
+  }
+
+  /* Hero metrics */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  @media (min-width: 600px) { .metrics { grid-template-columns: repeat(4, 1fr); } }
+  .metric {
+    background: var(--bg);
+    padding: 18px 20px;
+  }
+  .metric-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+  .metric-value {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  /* Sections */
+  section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  @media (min-width: 960px) {
+    section { padding: 72px 0; }
+  }
+
+  .sec-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--coral);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sec-num::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--coral);
+  }
+  section h2 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    margin-bottom: 28px;
+    max-width: 720px;
+  }
+  section h2 em { font-style: italic; color: var(--coral); }
+  section h3 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    margin: 32px 0 14px;
+    color: var(--ink);
+  }
+  section p {
+    margin-bottom: 16px;
+    max-width: 680px;
+    color: var(--ink-2);
+  }
+  section p strong { color: var(--ink); font-weight: 500; }
+
+  /* Pull quote (used for the meme paragraph) */
+  .pull {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(22px, 3vw, 28px);
+    line-height: 1.35;
+    color: var(--ink);
+    border-left: 2px solid var(--coral);
+    padding: 8px 0 8px 22px;
+    margin: 32px 0;
+    max-width: 680px;
+  }
+
+  /* Two-column problem-solution */
+  .pq {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 16px 0 8px;
+  }
+  @media (min-width: 700px) { .pq { grid-template-columns: 1fr 1fr; gap: 20px; } }
+  .pq-col {
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+  }
+  .pq-col.now { border-top: 3px solid var(--amber); }
+  .pq-col.then { border-top: 3px solid var(--forest); }
+  .pq-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+    color: var(--ink-3);
+  }
+  .pq-tag.now { color: var(--amber); }
+  .pq-tag.then { color: var(--forest); }
+  .pq-col p { font-size: 15px; line-height: 1.65; margin: 0; }
+
+  /* Roles list */
+  .roles {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+  }
+  .role {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  @media (min-width: 600px) {
+    .role { grid-template-columns: 200px 1fr; gap: 24px; align-items: baseline; }
+  }
+  .role:last-child { border-bottom: none; }
+  .role-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 21px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .role-name span {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    margin-top: 4px;
+    font-style: normal;
+  }
+  .role-desc { font-size: 14px; color: var(--ink-2); margin: 0; line-height: 1.55; }
+
+  /* Reference & stack rows */
+  .ref-list { border-top: 1px solid var(--line); margin-top: 8px; }
+  .ref {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  @media (min-width: 600px) { .ref { grid-template-columns: 180px 1fr; gap: 24px; align-items: baseline; } }
+  .ref-name { font-weight: 500; font-size: 15px; color: var(--ink); }
+  .ref-name code { font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+  .ref-desc { font-size: 14px; color: var(--ink-2); line-height: 1.55; margin: 0; }
+
+  /* Schema */
+  .schema {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    padding: 8px 22px;
+  }
+  .schema-row {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  @media (min-width: 600px) { .schema-row { grid-template-columns: 130px 1fr; gap: 20px; align-items: start; } }
+  .schema-row:last-child { border-bottom: none; }
+  .schema-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--coral);
+    font-weight: 500;
+  }
+  .schema-fields {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    word-break: break-word;
+  }
+  code.inline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    background: var(--bg-soft);
+    padding: 2px 7px;
+    border-radius: 3px;
+    color: var(--coral-deep);
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin-top: 12px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--line);
+  }
+  .tl-week {
+    position: relative;
+    padding-bottom: 28px;
+  }
+  .tl-week:last-child { padding-bottom: 0; }
+  .tl-week::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 8px;
+    width: 13px;
+    height: 13px;
+    border: 2px solid var(--coral);
+    background: var(--bg);
+    border-radius: 50%;
+  }
+  .tl-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--coral);
+    margin-bottom: 4px;
+  }
+  .tl-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .tl-list {
+    padding-left: 18px;
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .tl-list li { margin-bottom: 2px; }
+
+  /* Layer cards */
+  .layers { margin-top: 8px; }
+  .layer {
+    padding: 22px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    margin-bottom: 12px;
+  }
+  .layer-head {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .layer-n {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .layer-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .layer-body {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    padding-left: 32px;
+  }
+
+  /* Pill / status */
+  .pill {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 500;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .pill.amber { background: var(--amber-bg); color: var(--amber); }
+  .pill.forest { background: var(--forest-bg); color: var(--forest); }
+  .pill.indigo { background: var(--indigo-bg); color: var(--indigo); }
+
+  /* Alert box */
+  .alert {
+    background: var(--amber-bg);
+    border-left: 3px solid var(--amber);
+    padding: 14px 18px;
+    margin: 18px 0;
+    font-size: 14px;
+    color: var(--ink);
+    max-width: 680px;
+  }
+  .alert strong { color: var(--amber); font-weight: 500; }
+
+  /* Decisions */
+  .decisions { margin-top: 12px; }
+  .decision {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 16px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .decision:last-child { border-bottom: none; }
+  .d-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    color: var(--coral);
+    line-height: 1;
+    font-style: italic;
+  }
+  .d-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .d-desc {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Bulleted lists in body */
+  .body-list {
+    padding-left: 22px;
+    margin: 14px 0 18px;
+    color: var(--ink-2);
+    max-width: 680px;
+  }
+  .body-list li { margin-bottom: 8px; line-height: 1.6; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 40px 0 80px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  footer p { max-width: none; margin-bottom: 4px; color: var(--ink-3); }
+
+  /* Asterisk divider */
+  .asterism {
+    text-align: center;
+    margin: 36px 0;
+    color: var(--line);
+    letter-spacing: 1em;
+    font-size: 18px;
+  }
+
+  /* Animation: fade in on scroll */
+  @media (prefers-reduced-motion: no-preference) {
+    section { opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    section.in { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span><strong>Grupo Diálogos</strong> · CriaLab · Minha Campinas · Fundação FEAC</span>
+  <span>Briefing v1 · 25.05.2026</span>
+</div>
+
+<div class="wrap container">
+  <div class="layout">
+
+    <!-- TOC -->
+    <nav class="toc" aria-label="Sumário">
+      <p class="toc-label">Sumário</p>
+      <ol>
+        <li><a href="#s01"><span class="toc-num">01</span>Contexto e financiamento</a></li>
+        <li><a href="#s02"><span class="toc-num">02</span>Equipe e papéis</a></li>
+        <li><a href="#s03"><span class="toc-num">03</span>Problema e solução</a></li>
+        <li><a href="#s04"><span class="toc-num">04</span>Mecânica do jogo</a></li>
+        <li><a href="#s05"><span class="toc-num">05</span>Referências</a></li>
+        <li><a href="#s06"><span class="toc-num">06</span>Stack técnica</a></li>
+        <li><a href="#s07"><span class="toc-num">07</span>Modelo de dados</a></li>
+        <li><a href="#s08"><span class="toc-num">08</span>Cinco semanas</a></li>
+        <li><a href="#s09"><span class="toc-num">09</span>Operação</a></li>
+        <li><a href="#s10"><span class="toc-num">10</span>Decisões — reunião</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <!-- HERO -->
+      <header class="hero">
+        <p class="hero-eyebrow">Briefing · projeto em construção</p>
+        <h1>Cidadania <em>Conectada</em></h1>
+        <p class="hero-sub">vozes do Oziel</p>
+        <p class="hero-lead">Serious game web mobile-first no molde do <code class="inline">caminhos-cps.social</code>, voltado a adolescentes de 12 a 17 anos do Jardim Oziel, Campinas. O jogo é o próprio EAD do curso híbrido de seis semanas. Mecânica de swipe em dilemas-meme; as consequências revelam o que o meme apaga.</p>
+
+        <div class="metrics">
+          <div class="metric"><p class="metric-label">Financiamento</p><p class="metric-value">R$ 5.000</p></div>
+          <div class="metric"><p class="metric-label">Execução</p><p class="metric-value">5 semanas</p></div>
+          <div class="metric"><p class="metric-label">Conclusão</p><p class="metric-value">Jul/26</p></div>
+          <div class="metric"><p class="metric-label">Público</p><p class="metric-value">12–17 anos</p></div>
+        </div>
+      </header>
+
+      <!-- 01 -->
+      <section id="s01">
+        <p class="sec-num">01 · Contexto</p>
+        <h2>CriaLab, Minha Campinas e Fundação <em>FEAC</em></h2>
+        <p>O Grupo Diálogos integra o CriaLab da Minha Campinas, com investimento da Fundação FEAC. O Fundo Semente de R$ 5.000 é destinado a criar e testar um modelo de solução para problemas de participação popular. A pessoa responsável pelo Fundo é a <strong>Lusi</strong>, que assina termo de compromisso e faz a gestão da prestação de contas. Todo o grupo é corresponsável pelo uso correto do recurso.</p>
+        <p><strong>Território:</strong> Jardim Oziel, Campinas. A articulação de parcerias com escolas e OSCs do bairro (incluindo a OZipa) está sendo conduzida por <strong>Stefane, Ricardo e Ferrão</strong> em paralelo ao desenvolvimento do jogo.</p>
+      </section>
+
+      <!-- 02 -->
+      <section id="s02">
+        <p class="sec-num">02 · Equipe</p>
+        <h2>Papéis do Cria <em>energizados</em></h2>
+        <div class="roles">
+          <div class="role">
+            <p class="role-name">Flávio<span>Facilitadora</span></p>
+            <p class="role-desc">Garante que o grupo siga a metodologia CriaLab e cumpra os prazos de cada etapa.</p>
+          </div>
+          <div class="role">
+            <p class="role-name">Ricardo<span>Registro</span></p>
+            <p class="role-desc">Mantém as fichas preenchidas e a ficha de acompanhamento atualizada.</p>
+          </div>
+          <div class="role">
+            <p class="role-name">Valéria<span>Mobilizadora</span></p>
+            <p class="role-desc">Garante engajamento, lembra reuniões e cuida da integração do grupo.</p>
+          </div>
+          <div class="role">
+            <p class="role-name">Stefane<span>Comunicadora</span></p>
+            <p class="role-desc">Registro audiovisual e divulgação. Também conduz parcerias com escolas do Oziel.</p>
+          </div>
+          <div class="role">
+            <p class="role-name">Lusi<span>Resp. Fundo Semente</span></p>
+            <p class="role-desc">Recebe o recurso, faz transferências, guarda comprovantes e sobe a prestação de contas.</p>
+          </div>
+          <div class="role">
+            <p class="role-name">Daniel<span>Execução</span></p>
+            <p class="role-desc">Foco em colocar o projeto em prática. Conduz a frente técnica do jogo.</p>
+          </div>
+          <div class="role">
+            <p class="role-name">Todes<span>Criadora de Solução</span></p>
+            <p class="role-desc">Papel compartilhado: planejar, executar e testar a solução.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 -->
+      <section id="s03">
+        <p class="sec-num">03 · Ficha de solução</p>
+        <h2>O problema que <em>atacamos</em></h2>
+        <div class="pq">
+          <div class="pq-col now">
+            <p class="pq-tag now">O que acontece hoje</p>
+            <p>Jovens com visão restrita da política, com medo de se aproximar porque sentem que o espaço "não é pra eles". Descrença com políticos eleitos, medo de opinar, medo da polarização. Faltam linguagem e canais adequados ao dia a dia jovem.</p>
+          </div>
+          <div class="pq-col then">
+            <p class="pq-tag then">O que passa a acontecer</p>
+            <p>Jovens com mais repertório, entendimento e confiança para debater e fazer política. Entendendo que política é algo do cotidiano, do bairro, que afeta diariamente. Protagonismo: quanto mais a gente se empodera, mais participa.</p>
+          </div>
+        </div>
+        <h3>Inovação proposta</h3>
+        <p>Inverter a lógica da formação política tradicional — que costuma ser acadêmica, expositiva e intimidadora. Em vez de expor o jovem a um ambiente hostil, oferecer vivência lúdica via jogos. O jogo digital substitui o EAD expositivo e se conecta aos laboratórios presenciais e a uma micro intervenção real no bairro, planejada pelos próprios jovens.</p>
+      </section>
+
+      <!-- 04 -->
+      <section id="s04">
+        <p class="sec-num">04 · O jogo</p>
+        <h2>Meme como <em>mecânica</em>, não como tempero</h2>
+        <p>O meme polariza a política simplificando democracia e direitos numa simplicidade cruel. A reação intuitiva seria fugir dele e produzir conteúdo "sério" e denso — mas isso perde os 12 a 17. A estratégia é a inversa.</p>
+        <p class="pull">Usar a gramática do meme — leitura em frações de segundo, formato nativo do público — e, pela mecânica do jogo, restaurar o que o meme apaga: consequência, contexto, a pessoa do outro lado.</p>
+        <p>Concretamente: cada carta abre como um meme cru. Swipe à direita concorda, à esquerda discorda. O jogo não dá certo ou errado — dá a próxima cena. "Você concordou que vereador é tudo ladrão. A creche do seu sobrinho vai fechar porque ninguém foi na audiência pública. E agora?" Alfabetização midiática embutida em mecânica, não em aula.</p>
+        <p>Sessão típica de 3 a 5 minutos, cabe no ponto de ônibus. Progressão por módulos temáticos. A memória das escolhas é longitudinal: na semana seguinte o jogo lembra o que o jovem decidiu antes e cobra a consequência.</p>
+      </section>
+
+      <!-- 05 -->
+      <section id="s05">
+        <p class="sec-num">05 · Referências</p>
+        <h2>O que estamos <em>puxando</em> de outros jogos</h2>
+        <div class="ref-list">
+          <div class="ref">
+            <p class="ref-name"><code>caminhos-cps.social</code></p>
+            <p class="ref-desc">Serious game web sobre população em situação de rua de Campinas. Molde de stack e de tom (sério sem ser professoral) que vamos replicar.</p>
+          </div>
+          <div class="ref">
+            <p class="ref-name">Reigns</p>
+            <p class="ref-desc">Swipe esquerda/direita em dilemas, com medidores que reagem. Padrão de mecânica para simulação política em mobile.</p>
+          </div>
+          <div class="ref">
+            <p class="ref-name">Spent</p>
+            <p class="ref-desc">Simulador de pobreza feito pela Urban Ministries of Durham. Referência de como uma ONG construiu impacto com produção mínima.</p>
+          </div>
+          <div class="ref">
+            <p class="ref-name">Headliner</p>
+            <p class="ref-desc">Você decide o que publicar e vê o efeito em pessoas próximas. Conecta com o combate às fake news.</p>
+          </div>
+          <div class="ref">
+            <p class="ref-name">Bury Me, My Love</p>
+            <p class="ref-desc">Narrativa em interface de WhatsApp. Linguagem nativa do público de 12 a 17.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 06 -->
+      <section id="s06">
+        <p class="sec-num">06 · Stack técnica</p>
+        <h2>Tecnologias <em>propostas</em></h2>
+        <div class="ref-list">
+          <div class="ref"><p class="ref-name">Next.js</p><p class="ref-desc">Framework web que entrega o jogo no celular. Permite deploy rápido e iterações semanais.</p></div>
+          <div class="ref"><p class="ref-name">Supabase</p><p class="ref-desc">Banco PostgreSQL, autenticação e armazenamento de arquivos num único serviço. Backend pronto sem servidor próprio.</p></div>
+          <div class="ref"><p class="ref-name">Tailwind + Framer Motion</p><p class="ref-desc">Estilização rápida e animação fluida do swipe das cartas.</p></div>
+          <div class="ref"><p class="ref-name">Vercel</p><p class="ref-desc">Hospedagem com deploy automático a cada mudança no código. Custo zero no piloto.</p></div>
+          <div class="ref"><p class="ref-name">Claude Code</p><p class="ref-desc">Ferramenta de IA que codifica a partir de specs escritas. Acelera as cinco semanas se as specs estiverem claras.</p></div>
+        </div>
+        <p style="margin-top: 22px; font-size: 14px; color: var(--ink-3);">Custo de infraestrutura no piloto: zero. Os planos gratuitos de Supabase e Vercel cobrem o volume esperado do Oziel.</p>
+      </section>
+
+      <!-- 07 -->
+      <section id="s07">
+        <p class="sec-num">07 · Banco de dados</p>
+        <h2>Modelo proposto em <em>PostgreSQL</em></h2>
+        <div class="schema">
+          <div class="schema-row">
+            <span class="schema-name">dilemmas</span>
+            <span class="schema-fields">id, slug, módulo, autor_tipo (curadoria | jovem | poprua), situação_md, meme_url, contexto_oculto_md, status, validado_por, fonte_url</span>
+          </div>
+          <div class="schema-row">
+            <span class="schema-name">choices</span>
+            <span class="schema-fields">id, dilemma_id, label, efeitos_jsonb, próximo_dilemma_id</span>
+          </div>
+          <div class="schema-row">
+            <span class="schema-name">plays</span>
+            <span class="schema-fields">id, user_id, dilemma_id, choice_id, timestamp, sessão_id</span>
+          </div>
+          <div class="schema-row">
+            <span class="schema-name">users</span>
+            <span class="schema-fields">id, apelido, bairro, faixa_etária, criado_em</span>
+          </div>
+          <div class="schema-row">
+            <span class="schema-name">submissões</span>
+            <span class="schema-fields">id, autor_jovem_id, vídeo_url, descrição, status_moderação</span>
+          </div>
+          <div class="schema-row">
+            <span class="schema-name">agregados</span>
+            <span class="schema-fields">materialized view para o painel da facilitadora</span>
+          </div>
+        </div>
+        <p style="margin-top: 22px;">O campo <code class="inline">contexto_oculto_md</code> é o coração pedagógico: o texto que aparece <em>depois</em> da escolha, mostrando o que o meme apagou. Escrito em linguagem do bairro, em coautoria com a Pop Rua e com os próprios jovens.</p>
+      </section>
+
+      <!-- 08 -->
+      <section id="s08">
+        <p class="sec-num">08 · Cronograma</p>
+        <h2>Fatiamento das <em>cinco semanas</em></h2>
+        <div class="timeline">
+          <div class="tl-week">
+            <p class="tl-num">Semana 1 · fundação</p>
+            <p class="tl-title">Schema, auth leve e loop básico no ar</p>
+            <ul class="tl-list">
+              <li>Criação do banco no Supabase</li>
+              <li>Autenticação leve (apelido + bairro)</li>
+              <li>Swipe funcional com 3 a 4 dilemas hardcoded</li>
+              <li>Deploy público para iterar com usuários reais</li>
+            </ul>
+          </div>
+          <div class="tl-week">
+            <p class="tl-num">Semana 2 · conteúdo e viralidade</p>
+            <p class="tl-title">20 a 25 dilemas carregados, share</p>
+            <ul class="tl-list">
+              <li>Banco de dilemas escrito em coautoria com Pop Rua</li>
+              <li>Templates de meme reaproveitáveis</li>
+              <li>Tela de consequência depois da escolha</li>
+              <li>Compartilhamento direto pro WhatsApp</li>
+            </ul>
+          </div>
+          <div class="tl-week">
+            <p class="tl-num">Semana 3 · estrutura pedagógica</p>
+            <p class="tl-title">Módulos, progressão e painel</p>
+            <ul class="tl-list">
+              <li>Divisão em módulos temáticos (orçamento, conselhos, eleição, comunicação, território)</li>
+              <li>Tela coletiva "o que o Oziel decidiu essa semana"</li>
+              <li>Painel da facilitadora com métricas agregadas</li>
+            </ul>
+          </div>
+          <div class="tl-week">
+            <p class="tl-num">Semana 4 · coautoria aberta</p>
+            <p class="tl-title">Canal de submissão e moderação</p>
+            <ul class="tl-list">
+              <li>Recebimento de vídeos-flagrantes da quebrada</li>
+              <li>Fila de moderação para virar carta</li>
+              <li>Polimento de métricas longitudinais</li>
+            </ul>
+          </div>
+          <div class="tl-week">
+            <p class="tl-num">Semana 5 · piloto e replicação</p>
+            <p class="tl-title">Teste com jovens e doc de replicação</p>
+            <ul class="tl-list">
+              <li>Piloto presencial no laboratório com jovens do Oziel</li>
+              <li>Ajustes baseados em uso real</li>
+              <li>Documento de replicação para outros territórios</li>
+              <li>Relatório do teste para a Minha Campinas</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 09 -->
+      <section id="s09">
+        <p class="sec-num">09 · Operação</p>
+        <h2>Três processos <em>paralelos</em></h2>
+
+        <h3>Coautoria do banco de dilemas <span class="pill indigo">em curso</span></h3>
+        <p>As reuniões curtas do grupo serão usadas para construir o banco de dilemas em coautoria. Para evitar o bloqueio da página em branco, levamos 3 a 4 dilemas-semente prontos por encontro e o grupo "quebra" coletivamente. Meta realista: 15 a 20 dilemas validados em duas reuniões de 1h. A Pop Rua e parceiros do território podem enviar dilemas reais. O canal de vídeos-flagrantes da quebrada (Semana 4) é a entrada permanente para novas cartas.</p>
+
+        <h3>Coleta sistemática de dados <span class="pill forest">três camadas</span></h3>
+        <div class="layers">
+          <div class="layer">
+            <div class="layer-head"><span class="layer-n">01</span><span class="layer-title">Gestão do projeto</span></div>
+            <p class="layer-body">Drive do Grupo Diálogos com Ficha de Acompanhamento, Registros, Pasta Fundo Semente, Pasta Comunicação. Já estruturado pela metodologia CriaLab. Responsável: Ricardo (Registro) e Lusi (Fundo).</p>
+          </div>
+          <div class="layer">
+            <div class="layer-head"><span class="layer-n">02</span><span class="layer-title">Curadoria de dilemas</span></div>
+            <p class="layer-body">Planilha única no Drive, colunas alinhadas ao schema do banco: id, módulo, situação, escolha A, escolha B, consequência A, consequência B, autor, status. Migra direto para o Postgres sem retrabalho. A montar antes da próxima reunião curta.</p>
+          </div>
+          <div class="layer">
+            <div class="layer-head"><span class="layer-n">03</span><span class="layer-title">Dados do teste do jogo</span></div>
+            <p class="layer-body">Engajamento (capturado automático pelo Postgres via tabela <code class="inline">plays</code>). Autoconfiança (mini-questionário pré/pós no laboratório presencial, quatro a cinco perguntas em escala 1-5). Micro intervenção (ficha de registro com fotos, parceiros, impacto, conduzida pela Stefane).</p>
+          </div>
+        </div>
+
+        <h3>LGPD com menor de idade <span class="pill amber">pendente</span></h3>
+        <p>O Art. 14 da LGPD exige consentimento específico e em destaque do responsável legal para tratamento de dados de adolescentes de 12 a 17. Caminho enxuto para o piloto Oziel:</p>
+        <ul class="body-list">
+          <li>Coletar apenas apelido, bairro e faixa etária — sem nome real, sem email, sem foto de rosto</li>
+          <li>Termo de consentimento em papel assinado no primeiro laboratório presencial, piggyback na autorização que as escolas já pedem</li>
+          <li>Para replicar em outros territórios depois: aviso de privacidade formal e fluxo digital de consentimento</li>
+        </ul>
+        <div class="alert">
+          <strong>Pendência:</strong> redigir o termo de consentimento. Tarefa para definir responsável na reunião.
+        </div>
+      </section>
+
+      <div class="asterism">* * *</div>
+
+      <!-- 10 -->
+      <section id="s10">
+        <p class="sec-num">10 · Reunião de amanhã</p>
+        <h2>Pontos para <em>validar</em> ou ajustar</h2>
+
+        <div class="decisions">
+          <div class="decision">
+            <span class="d-num">01</span>
+            <div><p class="d-title">Direção geral — o jogo digital é o EAD</p><p class="d-desc">Confirma a virada da estética "pílulas via reels" para serious game web no molde do caminhos-cps.social? O jogo carrega o peso pedagógico inteiro do EAD — não é suplemento.</p></div>
+          </div>
+          <div class="decision">
+            <span class="d-num">02</span>
+            <div><p class="d-title">Meme como mecânica central</p><p class="d-desc">Confirma o princípio de usar a gramática do meme para restaurar o que o meme apaga? Aprova como eixo pedagógico de combate às fake news.</p></div>
+          </div>
+          <div class="decision">
+            <span class="d-num">03</span>
+            <div><p class="d-title">Stack técnica proposta</p><p class="d-desc">Next.js, Supabase, Vercel e Claude Code. Custo zero no piloto. Replica o stack do caminhos-cps.social.</p></div>
+          </div>
+          <div class="decision">
+            <span class="d-num">04</span>
+            <div><p class="d-title">Fatiamento das cinco semanas</p><p class="d-desc">Ordem proposta: fundação, conteúdo, estrutura pedagógica, coautoria aberta, piloto e replicação. Algum bloco precisa subir ou descer?</p></div>
+          </div>
+          <div class="decision">
+            <span class="d-num">05</span>
+            <div><p class="d-title">Reuniões curtas como sprint de escrita</p><p class="d-desc">Próximas reuniões viram coautoria do banco de dilemas, no formato de 3 a 4 sementes prontas para o grupo quebrar. Confirma esse uso?</p></div>
+          </div>
+          <div class="decision">
+            <span class="d-num">06</span>
+            <div><p class="d-title">Responsável pelo termo LGPD</p><p class="d-desc">Pendente: definir quem redige o termo de consentimento dos responsáveis. Modelo pode ser puxado pelo Daniel e validado pelo grupo.</p></div>
+          </div>
+          <div class="decision">
+            <span class="d-num">07</span>
+            <div><p class="d-title">Articulação de parceiros</p><p class="d-desc">Stefane, Ricardo e Ferrão precisam de algum material do projeto (mockup, vídeo curto, descrição one-pager) para acelerar as conversas com escolas e OSCs?</p></div>
+          </div>
+          <div class="decision">
+            <span class="d-num">08</span>
+            <div><p class="d-title">Mini-questionário de autoconfiança</p><p class="d-desc">Aprovar formato (pré/pós, quatro a cinco perguntas em escala 1-5) e quem aplica no laboratório presencial — provavelmente Flávio.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <p>Grupo Diálogos · Cidadania Conectada: Vozes do Oziel</p>
+        <p>Documento de trabalho. Atualizado conforme decisões do grupo.</p>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  // Fade-in das seções no scroll
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+    document.querySelectorAll('section').forEach(s => obs.observe(s));
+  } else {
+    document.querySelectorAll('section').forEach(s => s.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
