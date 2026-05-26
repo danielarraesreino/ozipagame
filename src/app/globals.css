@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+html, body, #__next {
+  height: 100%;
+  background: #0E0E0F;
+  color: #F5F0E8;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
