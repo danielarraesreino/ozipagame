@@ -685,7 +685,7 @@
         <div class="ref-list">
           <div class="ref">
             <p class="ref-name"><code>caminhos-cps.social</code></p>
-            <p class="ref-desc">Serious game web sobre população em situação de rua de Campinas. Molde de stack e de tom (sério sem ser professoral) que vamos replicar.</p>
+            <p class="ref-desc">Serious game web sobre população em situação de rua de Campinas. Influência direta na escolha de stack e de tom — o Ozipa é um projeto independente, não uma parceria formal com o Caminhos.</p>
           </div>
           <div class="ref">
             <p class="ref-name">Reigns</p>
@@ -716,6 +716,7 @@
           <div class="ref"><p class="ref-name">Tailwind + Framer Motion</p><p class="ref-desc">Estilização rápida e animação fluida do swipe das cartas.</p></div>
           <div class="ref"><p class="ref-name">Vercel</p><p class="ref-desc">Hospedagem com deploy automático a cada mudança no código. Custo zero no piloto.</p></div>
           <div class="ref"><p class="ref-name">Claude Code</p><p class="ref-desc">Ferramenta de IA que codifica a partir de specs escritas. Acelera as cinco semanas se as specs estiverem claras.</p></div>
+          <div class="ref"><p class="ref-name">TikTok Embed</p><p class="ref-desc">Player oficial embutido no app via oEmbed para exibir vídeos-flagrantes sem tirar o jovem da experiência. API pública, sem custo.</p></div>
         </div>
         <p style="margin-top: 22px; font-size: 14px; color: var(--ink-3);">Custo de infraestrutura no piloto: zero. Os planos gratuitos de Supabase e Vercel cobrem o volume esperado do Oziel.</p>
       </section>
@@ -727,7 +728,7 @@
         <div class="schema">
           <div class="schema-row">
             <span class="schema-name">dilemmas</span>
-            <span class="schema-fields">id, slug, módulo, autor_tipo (curadoria | jovem | poprua), situação_md, meme_url, contexto_oculto_md, status, validado_por, fonte_url</span>
+            <span class="schema-fields">id, slug, módulo, autor_tipo (curadoria | jovem | grupo), situação_md, meme_url, contexto_oculto_md, status, validado_por, fonte_url</span>
           </div>
           <div class="schema-row">
             <span class="schema-name">choices</span>
@@ -743,14 +744,14 @@
           </div>
           <div class="schema-row">
             <span class="schema-name">submissões</span>
-            <span class="schema-fields">id, autor_jovem_id, vídeo_url, descrição, status_moderação</span>
+            <span class="schema-fields">id, autor_jovem_id, tiktok_url, descrição, status_moderação, embed_aprovado</span>
           </div>
           <div class="schema-row">
             <span class="schema-name">agregados</span>
             <span class="schema-fields">materialized view para o painel da facilitadora</span>
           </div>
         </div>
-        <p style="margin-top: 22px;">O campo <code class="inline">contexto_oculto_md</code> é o coração pedagógico: o texto que aparece <em>depois</em> da escolha, mostrando o que o meme apagou. Escrito em linguagem do bairro, em coautoria com a Pop Rua e com os próprios jovens.</p>
+        <p style="margin-top: 22px;">O campo <code class="inline">contexto_oculto_md</code> é o coração pedagógico: o texto que aparece <em>depois</em> da escolha, mostrando o que o meme apagou. Escrito em linguagem do bairro, em coautoria com os próprios jovens do grupo.</p>
       </section>
 
       <!-- 08 -->
@@ -772,7 +773,7 @@
             <p class="tl-num">Semana 2 · conteúdo e viralidade</p>
             <p class="tl-title">20 a 25 dilemas carregados, share</p>
             <ul class="tl-list">
-              <li>Banco de dilemas escrito em coautoria com Pop Rua</li>
+              <li>Os 20 a 25 primeiros dilemas produzidos integralmente pelo próprio grupo</li>
               <li>Templates de meme reaproveitáveis</li>
               <li>Tela de consequência depois da escolha</li>
               <li>Compartilhamento direto pro WhatsApp</li>
@@ -815,7 +816,29 @@
         <h2>Três processos <em>paralelos</em></h2>
 
         <h3>Coautoria do banco de dilemas <span class="pill indigo">em curso</span></h3>
-        <p>As reuniões curtas do grupo serão usadas para construir o banco de dilemas em coautoria. Para evitar o bloqueio da página em branco, levamos 3 a 4 dilemas-semente prontos por encontro e o grupo "quebra" coletivamente. Meta realista: 15 a 20 dilemas validados em duas reuniões de 1h. A Pop Rua e parceiros do território podem enviar dilemas reais. O canal de vídeos-flagrantes da quebrada (Semana 4) é a entrada permanente para novas cartas.</p>
+        <p>Os primeiros 20 a 25 dilemas são produzidos integralmente pelo próprio grupo — esse processo garante autoria real e vínculo com o território. Para evitar o bloqueio da página em branco, levamos 3 a 4 dilemas-semente prontos por encontro e o grupo "quebra" coletivamente. Meta: 20 a 25 dilemas validados em duas reuniões de 1h.</p>
+
+        <h3>Como produzir um bom dilema-meme</h3>
+        <p><strong>A fórmula:</strong> situação real → frase-meme polarizante → consequência oculta. O meme leva dois segundos para ler; a consequência é o que ele apaga.</p>
+        <ul class="body-list">
+          <li><strong>Escolha uma situação do cotidiano político do bairro</strong> — câmara municipal, conselho de saúde, audiência pública, eleição, orçamento, equipamento público.</li>
+          <li><strong>Simplifique em uma frase de meme</strong> — curta, polarizante, como se fosse um print de Twitter/X ou sticker de WhatsApp.</li>
+          <li><strong>Escreva a consequência oculta</strong> — o que o meme apaga? Quem é afetado? O que acontece depois da escolha?</li>
+        </ul>
+
+        <h3>Fontes para beber <span class="pill forest">curadoria</span></h3>
+        <ul class="body-list">
+          <li>Notícias do G1 Campinas e Correio Popular sobre vereadores, câmara e políticas públicas locais</li>
+          <li>Atas e pautas de audiências públicas da Câmara de Campinas (<code class="inline">campinas.sp.leg.br</code>)</li>
+          <li>Relatos diretos de moradores do Jardim Oziel e parceiros do território</li>
+          <li>Perfis de ação dos vereadores de Campinas — votações, projetos, presença</li>
+          <li>Dados do IBGE sobre o bairro — renda, escolaridade, serviços públicos</li>
+        </ul>
+        <p>Após os 25 primeiros, o canal de vídeos-flagrantes da quebrada (Semana 4) passa a ser a entrada permanente para novas cartas.</p>
+
+        <h3>TikTok como canal de entrada <span class="pill indigo">em planejamento</span></h3>
+        <p>O grupo produz vídeos curtos no TikTok — flagrantes do território, bastidores do projeto, dilemas em formato de stories — com CTA direto para o jogo ao final. O TikTok não é o jogo; é a porta de entrada que leva o jovem a abrir o link.</p>
+        <p>Dentro do app, os vídeos aparecem numa seção <strong>"Flagrantes da quebrada"</strong>: o TikTok fica embutido (embed do player oficial) para que quem está navegando possa assistir sem sair da experiência. O campo <code class="inline">tiktok_url</code> na tabela <code class="inline">submissões</code> armazena o link; um moderador aprova antes de publicar no feed.</p>
 
         <h3>Coleta sistemática de dados <span class="pill forest">três camadas</span></h3>
         <div class="layers">
