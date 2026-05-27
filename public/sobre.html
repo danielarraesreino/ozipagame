@@ -36,32 +36,16 @@ body {
   background: var(--paper);
 }
 
-/* ── nav ── */
-.site-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(247,243,236,.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--rule);
-  padding: 0 28px;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  height: 52px;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-}
-.nav-brand { color: var(--ink-soft); font-weight: 500; text-decoration: none; white-space: nowrap; }
-.nav-links { display: flex; gap: 0; }
-.nav-links a {
-  color: var(--muted); text-decoration: none;
-  padding: 0 14px; height: 52px; display: flex; align-items: center;
-  border-left: 1px solid var(--rule);
-  transition: color .15s, background .15s;
-  white-space: nowrap;
-}
-.nav-links a:hover { color: var(--accent); background: rgba(226,90,28,.04); }
-.nav-links a.cta { color: var(--accent-deep); font-weight: 600; }
-@media (max-width: 640px) {
-  .nav-links .hide-sm { display: none; }
-}
+/* ── nav global — copiar igual em todas as páginas ── */
+.site-nav{position:sticky;top:0;z-index:100;background:rgba(247,243,236,.95);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid #D9D1C2;padding:0 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;height:50px;font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.site-nav .nav-brand{color:#3D3833;font-weight:500;text-decoration:none;white-space:nowrap}
+.site-nav .nav-brand:hover{color:#E25A1C}
+.site-nav .nav-links{display:flex;gap:0}
+.site-nav .nav-links a{color:#766F66;text-decoration:none;padding:0 14px;height:50px;display:flex;align-items:center;border-left:1px solid #D9D1C2;transition:color .15s,background .15s;white-space:nowrap}
+.site-nav .nav-links a:hover{color:#E25A1C;background:rgba(226,90,28,.04)}
+.site-nav .nav-links a.nav-active{color:#E25A1C;font-weight:600}
+.site-nav .nav-links a.nav-cta{color:#B5440F;font-weight:600}
+@media(max-width:640px){.site-nav .nav-links .hide-sm{display:none}}
 
 /* ── hero ── */
 .hero {
@@ -451,9 +435,10 @@ footer a:hover { text-decoration: underline; }
 <nav class="site-nav">
   <a class="nav-brand" href="/sobre.html">Vozes do Oziel</a>
   <div class="nav-links">
+    <a href="/sobre.html" class="nav-active hide-sm">Sobre</a>
     <a href="/briefing.html" class="hide-sm">Briefing</a>
     <a href="/linha-do-tempo.html" class="hide-sm">Linha do tempo</a>
-    <a href="/" class="cta">Jogar →</a>
+    <a href="/" class="nav-cta">Jogar →</a>
   </div>
 </nav>
 
