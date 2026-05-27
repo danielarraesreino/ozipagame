@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cidadania Conectada: Vozes do Oziel — Grupo Diálogos · CriaLab</title>
+<meta name="description" content="Serious game web que usa memes e dilemas para aproximar jovens de 12 a 17 anos do Jardim Oziel da política do cotidiano. Projeto do Grupo Diálogos no CriaLab da Minha Campinas." />
+<meta property="og:title" content="Cidadania Conectada: Vozes do Oziel" />
+<meta property="og:description" content="Serious game web para jovens do Jardim Oziel, Campinas. Memes, dilemas e as consequências que eles escondem." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --ink: #1A1817;
+  --ink-soft: #3D3833;
+  --muted: #766F66;
+  --rule: #D9D1C2;
+  --paper: #F7F3EC;
+  --paper-warm: #EFE8D8;
+  --accent: #E25A1C;
+  --accent-deep: #B5440F;
+  --green: #3F5C3D;
+  --green-bg: #E8EEE2;
+  --shadow-sm: 0 1px 0 rgba(26,24,23,.04), 0 4px 16px -8px rgba(26,24,23,.12);
+  --shadow: 0 1px 0 rgba(26,24,23,.04), 0 10px 30px -18px rgba(26,24,23,.18);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+body {
+  font-family: "Newsreader", Georgia, serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+/* ── nav ── */
+.site-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(247,243,236,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule);
+  padding: 0 28px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  height: 52px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+}
+.nav-brand { color: var(--ink-soft); font-weight: 500; text-decoration: none; white-space: nowrap; }
+.nav-links { display: flex; gap: 0; }
+.nav-links a {
+  color: var(--muted); text-decoration: none;
+  padding: 0 14px; height: 52px; display: flex; align-items: center;
+  border-left: 1px solid var(--rule);
+  transition: color .15s, background .15s;
+  white-space: nowrap;
+}
+.nav-links a:hover { color: var(--accent); background: rgba(226,90,28,.04); }
+.nav-links a.cta { color: var(--accent-deep); font-weight: 600; }
+@media (max-width: 640px) {
+  .nav-links .hide-sm { display: none; }
+}
+
+/* ── hero ── */
+.hero {
+  max-width: 1100px; margin: 0 auto;
+  padding: 80px 28px 72px;
+  display: grid; grid-template-columns: 1fr;
+  gap: 48px;
+}
+@media (min-width: 860px) {
+  .hero { grid-template-columns: 1fr 420px; align-items: end; padding: 96px 28px 80px; }
+}
+.hero-left {}
+.kicker {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent);
+  margin-bottom: 24px;
+}
+h1 {
+  font-family: "Fraunces", serif;
+  font-weight: 300;
+  font-size: clamp(52px, 9vw, 104px);
+  line-height: .93;
+  letter-spacing: -.03em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+h1 em { font-style: italic; color: var(--accent-deep); }
+.hero-sub {
+  font-family: "Fraunces", serif; font-style: italic;
+  font-size: clamp(20px, 2.8vw, 26px);
+  color: var(--ink-soft); font-weight: 300; letter-spacing: -.01em;
+  margin-bottom: 32px;
+}
+.hero-lead {
+  font-size: 18px; line-height: 1.6; color: var(--ink-soft);
+  max-width: 520px; margin-bottom: 40px;
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500;
+  padding: 12px 22px; text-decoration: none; border: 1px solid;
+  transition: background .15s, color .15s, border-color .15s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
+.btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.btn-outline {
+  background: transparent; color: var(--ink-soft); border-color: var(--rule);
+}
+.btn-outline:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+/* hero card */
+.hero-card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+.hero-card .label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 18px;
+}
+.meme-preview {
+  background: var(--ink);
+  border-radius: 4px;
+  padding: 24px 22px;
+  margin-bottom: 16px;
+  position: relative;
+}
+.meme-text {
+  font-family: "Fraunces", serif; font-style: italic;
+  font-size: 20px; line-height: 1.25; color: #fff;
+  letter-spacing: -.01em;
+}
+.swipe-hint {
+  display: flex; gap: 10px; margin-bottom: 16px;
+}
+.swipe-btn {
+  flex: 1; padding: 11px 10px; text-align: center;
+  font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  border: 1px solid; cursor: default;
+}
+.swipe-agree { background: #E8F4ED; color: #2A6645; border-color: #B2D8C0; }
+.swipe-disagree { background: #FDE8E0; color: #B5440F; border-color: #F2C7AE; }
+.consequence {
+  background: var(--paper-warm);
+  border-left: 3px solid var(--accent);
+  padding: 14px 16px;
+  font-size: 14px; line-height: 1.5; color: var(--ink-soft);
+  font-style: italic;
+}
+.consequence strong { font-style: normal; color: var(--ink); }
+
+/* ── divider ── */
+.divider { border: none; border-top: 1px solid var(--rule); }
+
+/* ── seções ── */
+.section {
+  max-width: 1100px; margin: 0 auto;
+  padding: 80px 28px;
+  border-top: 1px solid var(--rule);
+}
+.section-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent);
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-tag .line { flex: 1; height: 1px; background: var(--rule); max-width: 48px; }
+h2 {
+  font-family: "Fraunces", serif;
+  font-weight: 300; font-size: clamp(34px, 5vw, 52px); line-height: 1.05; letter-spacing: -.025em;
+  color: var(--ink); margin-bottom: 28px; max-width: 760px;
+}
+h2 em { font-style: italic; color: var(--accent-deep); }
+h3 {
+  font-family: "Fraunces", serif; font-weight: 500; font-size: 22px;
+  line-height: 1.2; letter-spacing: -.01em; margin-bottom: 10px;
+}
+p { margin-bottom: 18px; max-width: 680px; }
+p.lead { font-size: 20px; color: var(--ink-soft); line-height: 1.55; }
+strong { font-weight: 600; color: var(--ink); }
+em { font-style: italic; }
+a.inline { color: var(--accent-deep); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+/* ── problema/solução ── */
+.pq {
+  display: grid; grid-template-columns: 1fr; gap: 14px;
+  margin: 28px 0;
+}
+@media (min-width: 700px) { .pq { grid-template-columns: 1fr 1fr; } }
+.pq-col {
+  padding: 24px; background: #fff; border: 1px solid var(--rule);
+  box-shadow: var(--shadow-sm);
+}
+.pq-col.before { border-top: 3px solid #D4A843; }
+.pq-col.after { border-top: 3px solid var(--green); }
+.pq-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.pq-tag.before { color: #A07A20; }
+.pq-tag.after { color: var(--green); }
+.pq-col p { font-size: 15px; line-height: 1.6; color: var(--ink-soft); margin: 0; max-width: none; }
+
+/* ── mecânica ── */
+.steps {
+  display: grid; grid-template-columns: 1fr; gap: 0;
+  border: 1px solid var(--rule);
+  margin: 28px 0;
+}
+@media (min-width: 700px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+.step {
+  padding: 28px 24px;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+@media (min-width: 700px) {
+  .step { border-bottom: none; border-right: 1px solid var(--rule); }
+  .step:last-child { border-right: none; }
+}
+.step-n {
+  font-family: "Fraunces", serif; font-size: 56px; line-height: 1; color: var(--rule);
+  font-style: italic; font-weight: 300; margin-bottom: 12px; letter-spacing: -.03em;
+}
+.step-title {
+  font-family: "Fraunces", serif; font-size: 20px; font-weight: 500;
+  margin-bottom: 8px; letter-spacing: -.01em;
+}
+.step p { font-size: 14px; line-height: 1.55; color: var(--ink-soft); margin: 0; max-width: none; }
+
+/* ── galeria ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 28px 0;
+}
+@media (min-width: 700px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 960px) { .gallery-grid { grid-template-columns: repeat(4, 1fr); } }
+.gallery-item {
+  position: relative; overflow: hidden;
+  background: var(--paper-warm);
+  border: 1px solid var(--rule);
+  aspect-ratio: 4/3;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px;
+}
+.gallery-item.tall { grid-row: span 2; aspect-ratio: unset; }
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  display: block;
+}
+.gallery-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; padding: 16px;
+}
+.gallery-placeholder svg { opacity: .25; }
+.gallery-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(26,24,23,.72));
+  padding: 20px 14px 12px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: rgba(247,243,236,.85);
+}
+.gallery-placeholder-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  text-align: center; line-height: 1.4;
+}
+.gallery-note {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  margin-top: 6px;
+  display: flex; align-items: center; gap: 8px;
+}
+.gallery-note::before { content: ''; width: 20px; height: 1px; background: var(--rule); }
+
+/* ── equipe ── */
+.team-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0; border: 1px solid var(--rule); margin: 28px 0;
+}
+@media (min-width: 700px) { .team-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 960px) { .team-grid { grid-template-columns: repeat(4, 1fr); } }
+.team-member {
+  padding: 22px 20px;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.team-member:nth-child(2n) { border-right: none; }
+@media (min-width: 700px) {
+  .team-member:nth-child(2n) { border-right: 1px solid var(--rule); }
+  .team-member:nth-child(3n) { border-right: none; }
+}
+@media (min-width: 960px) {
+  .team-member:nth-child(3n) { border-right: 1px solid var(--rule); }
+  .team-member:nth-child(4n) { border-right: none; }
+}
+.member-avatar {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--paper-warm); border: 1px solid var(--rule);
+  margin-bottom: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Fraunces", serif; font-style: italic;
+  font-size: 20px; color: var(--muted); font-weight: 300;
+}
+.member-name {
+  font-family: "Fraunces", serif; font-size: 19px; font-weight: 500;
+  letter-spacing: -.01em; margin-bottom: 4px;
+}
+.member-role {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+  margin-bottom: 10px;
+}
+.member-desc { font-size: 13px; line-height: 1.55; color: var(--ink-soft); max-width: none; margin: 0; }
+.member-all {
+  grid-column: 1 / -1;
+  padding: 18px 20px;
+  background: var(--paper-warm);
+  border-top: 1px solid var(--rule);
+}
+.member-all .member-role { color: var(--green); margin-bottom: 6px; }
+.member-all p { font-size: 14px; color: var(--ink-soft); margin: 0; }
+
+/* ── território ── */
+.territory-block {
+  display: grid; grid-template-columns: 1fr; gap: 28px;
+  margin: 28px 0;
+}
+@media (min-width: 860px) { .territory-block { grid-template-columns: 1fr 1fr; align-items: start; } }
+.territory-map {
+  background: var(--paper-warm); border: 1px solid var(--rule);
+  aspect-ratio: 4/3;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 12px;
+}
+.territory-map svg { opacity: .3; }
+.territory-map-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+}
+.territory-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  border: 1px solid var(--rule); align-self: start;
+}
+.t-stat {
+  padding: 18px 18px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+.t-stat:nth-child(2n) { border-right: none; }
+.t-stat:nth-child(3), .t-stat:nth-child(4) { border-bottom: none; }
+.t-stat .lbl {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+}
+.t-stat .val {
+  font-family: "Fraunces", serif; font-size: 24px; line-height: 1.05; letter-spacing: -.02em;
+}
+
+/* ── marcos ── */
+.milestones { margin: 28px 0; }
+.milestone {
+  display: grid; grid-template-columns: 96px 1fr;
+  gap: 20px; padding: 16px 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: baseline;
+}
+.milestone:last-child { border-bottom: none; }
+.m-date {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px; letter-spacing: .06em; color: var(--muted);
+}
+.m-date.now { color: var(--accent-deep); font-weight: 600; }
+.m-title { font-family: "Fraunces", serif; font-size: 18px; font-weight: 500; line-height: 1.25; }
+.m-sub { font-size: 14px; color: var(--ink-soft); margin: 4px 0 0; font-style: italic; line-height: 1.4; }
+@media (max-width: 640px) {
+  .milestone { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* ── docs strip ── */
+.docs-strip {
+  max-width: 1100px; margin: 0 auto;
+  padding: 48px 28px 80px;
+  border-top: 1px solid var(--rule);
+}
+.docs-label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 20px;
+}
+.docs-list {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.doc-card {
+  background: #fff; border: 1px solid var(--rule); padding: 22px 20px;
+  text-decoration: none; color: var(--ink);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .15s, border-color .15s;
+  display: block;
+}
+.doc-card:hover { border-color: var(--accent); box-shadow: 0 4px 20px -8px rgba(226,90,28,.18); }
+.doc-card .doc-type {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 10px;
+}
+.doc-card .doc-title {
+  font-family: "Fraunces", serif; font-size: 18px; font-weight: 500; line-height: 1.2;
+  margin-bottom: 8px; letter-spacing: -.01em;
+}
+.doc-card .doc-desc { font-size: 13px; line-height: 1.5; color: var(--ink-soft); margin: 0; max-width: none; }
+.doc-card .doc-arrow {
+  font-family: "JetBrains Mono", monospace; font-size: 14px;
+  color: var(--accent); margin-top: 14px; display: block;
+}
+
+/* ── footer ── */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 28px 28px 48px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between;
+  max-width: 1100px; margin: 0 auto;
+}
+footer a { color: var(--accent-deep); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── scroll fade ── */
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+  .fade-in.visible { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- nav -->
+<nav class="site-nav">
+  <a class="nav-brand" href="/sobre.html">Vozes do Oziel</a>
+  <div class="nav-links">
+    <a href="/briefing.html" class="hide-sm">Briefing</a>
+    <a href="/linha-do-tempo.html" class="hide-sm">Linha do tempo</a>
+    <a href="/" class="cta">Jogar →</a>
+  </div>
+</nav>
+
+<!-- hero -->
+<div class="hero">
+  <div class="hero-left fade-in">
+    <p class="kicker">Grupo Diálogos · CriaLab · Minha Campinas · Fundação FEAC</p>
+    <h1>Cidadania <em>Conectada</em></h1>
+    <div class="hero-sub">vozes do Oziel</div>
+    <p class="hero-lead">Serious game web para jovens de 12 a 17 anos do Jardim Oziel, Campinas. Memes, dilemas e as consequências que eles escondem — tudo em 3 minutos, no celular, sem cadastro.</p>
+    <div class="hero-actions">
+      <a href="/" class="btn btn-primary">Jogar agora →</a>
+      <a href="/jogo.html" class="btn btn-outline">Versão offline</a>
+      <a href="/briefing.html" class="btn btn-outline">Briefing do projeto</a>
+    </div>
+  </div>
+
+  <div class="fade-in" style="transition-delay:.1s">
+    <div class="hero-card">
+      <p class="label">Como funciona — exemplo de carta</p>
+      <div class="meme-preview">
+        <p class="meme-text">"Vereador é tudo ladrão mesmo, não adianta votar."</p>
+      </div>
+      <div class="swipe-hint">
+        <div class="swipe-btn swipe-disagree">← Discordo</div>
+        <div class="swipe-btn swipe-agree">Concordo →</div>
+      </div>
+      <div class="consequence">
+        <strong>Você concordou.</strong> A creche do seu sobrinho vai fechar porque ninguém foi na audiência pública. O vereador que aprovou o corte teve 94% de abstenção na sua rua na última eleição.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- sobre o projeto -->
+<section class="section fade-in" id="projeto">
+  <div class="section-tag">01 · O projeto <span class="line"></span></div>
+  <h2>O problema que <em>atacamos</em></h2>
+  <p class="lead">Jovens do Jardim Oziel têm visão restrita da política, medo de se aproximar e descrença com quem está eleito. Faltam linguagem e canais adequados ao dia a dia jovem.</p>
+
+  <div class="pq">
+    <div class="pq-col before">
+      <p class="pq-tag before">O que acontece hoje</p>
+      <p>Política parece distante, complicada e corrompida. O espaço "não é pra eles". Medo de opinar, medo da polarização. Os conteúdos existentes são acadêmicos, densos ou rasos demais.</p>
+    </div>
+    <div class="pq-col after">
+      <p class="pq-tag after">O que passa a acontecer</p>
+      <p>Jovens com mais repertório, confiança e entendimento para debater e fazer política — entendendo que política é do cotidiano, do bairro, que afeta direto a vida deles.</p>
+    </div>
+  </div>
+
+  <p>A inovação é inverter a lógica: em vez de expor o jovem a um ambiente intimidador, oferecemos vivência lúdica. O jogo digital <strong>é</strong> o EAD do curso — não é suplemento. E o meme que normalmente polariza e simplifica vira a porta de entrada para restaurar o que ele apaga.</p>
+</section>
+
+<!-- a mecânica -->
+<section class="section fade-in" id="mecanica">
+  <div class="section-tag">02 · A mecânica <span class="line"></span></div>
+  <h2>Meme como <em>mecânica</em>, não como tempero</h2>
+  <p class="lead">Cada carta abre como um meme cru. O jogo não dá certo ou errado — dá a próxima cena.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <p class="step-title">O meme chega</p>
+      <p>Uma frase polarizante, em 2 segundos de leitura. Igual a um sticker de WhatsApp ou um print de Twitter. A lógica que o jovem já conhece.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <p class="step-title">O swipe decide</p>
+      <p>Arrasta pra direita se concorda, pra esquerda se discorda. A mecânica do TikTok, do Tinder, do Reigns — nativa para o público de 12 a 17.</p>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <p class="step-title">A consequência aparece</p>
+      <p>O contexto que o meme apagou. Quem é afetado, o que acontece depois. Alfabetização midiática embutida em mecânica, não em aula.</p>
+    </div>
+  </div>
+
+  <p>Sessão típica de 3 a 5 minutos — cabe no ponto de ônibus. A memória das escolhas é longitudinal: na semana seguinte o jogo lembra o que o jovem decidiu antes e cobra a consequência. O ciclo culmina numa <strong>micro intervenção real</strong> no bairro, planejada pelos próprios jovens.</p>
+</section>
+
+<!-- galeria -->
+<section class="section fade-in" id="galeria">
+  <div class="section-tag">03 · Galeria <span class="line"></span></div>
+  <h2>O grupo em <em>campo</em></h2>
+  <p class="lead">Fotos da imersão, das reuniões e do processo de criação do jogo.</p>
+
+  <div class="gallery-grid">
+    <div class="gallery-item tall">
+      <div class="gallery-placeholder">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <rect x="2" y="8" width="36" height="26" rx="2" stroke="#766F66" stroke-width="1.5"/>
+          <circle cx="20" cy="21" r="7" stroke="#766F66" stroke-width="1.5"/>
+          <circle cx="29" cy="14" r="2" fill="#766F66"/>
+        </svg>
+        <p class="gallery-placeholder-label">Imersão presencial<br/>16–17 maio</p>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <rect x="2" y="8" width="36" height="26" rx="2" stroke="#766F66" stroke-width="1.5"/>
+          <circle cx="20" cy="21" r="7" stroke="#766F66" stroke-width="1.5"/>
+        </svg>
+        <p class="gallery-placeholder-label">Café Mundial</p>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <rect x="2" y="8" width="36" height="26" rx="2" stroke="#766F66" stroke-width="1.5"/>
+          <circle cx="20" cy="21" r="7" stroke="#766F66" stroke-width="1.5"/>
+        </svg>
+        <p class="gallery-placeholder-label">Formação do grupo</p>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <rect x="2" y="8" width="36" height="26" rx="2" stroke="#766F66" stroke-width="1.5"/>
+          <circle cx="20" cy="21" r="7" stroke="#766F66" stroke-width="1.5"/>
+        </svg>
+        <p class="gallery-placeholder-label">Coautoria dos dilemas</p>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <rect x="2" y="8" width="36" height="26" rx="2" stroke="#766F66" stroke-width="1.5"/>
+          <circle cx="20" cy="21" r="7" stroke="#766F66" stroke-width="1.5"/>
+        </svg>
+        <p class="gallery-placeholder-label">Jardim Oziel</p>
+      </div>
+    </div>
+
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none">
+          <rect x="2" y="8" width="36" height="26" rx="2" stroke="#766F66" stroke-width="1.5"/>
+          <circle cx="20" cy="21" r="7" stroke="#766F66" stroke-width="1.5"/>
+        </svg>
+        <p class="gallery-placeholder-label">Piloto com os jovens</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="gallery-note">Fotos chegam em breve. As legendas marcam onde cada imagem vai.</p>
+</section>
+
+<!-- o grupo -->
+<section class="section fade-in" id="grupo">
+  <div class="section-tag">04 · O grupo <span class="line"></span></div>
+  <h2>Grupo Diálogos — <em>sete pessoas</em></h2>
+  <p class="lead">Formado na imersão presencial de 16 de maio de 2026, no CriaLab da Minha Campinas.</p>
+
+  <div class="team-grid">
+    <div class="team-member">
+      <div class="member-avatar">F</div>
+      <p class="member-name">Flávio</p>
+      <p class="member-role">Facilitadora</p>
+      <p class="member-desc">Garante que o grupo siga a metodologia CriaLab e cumpra os prazos de cada etapa.</p>
+    </div>
+    <div class="team-member">
+      <div class="member-avatar">R</div>
+      <p class="member-name">Ricardo</p>
+      <p class="member-role">Registro</p>
+      <p class="member-desc">Mantém as fichas preenchidas e a ficha de acompanhamento atualizada. Também articula parcerias com escolas do Oziel.</p>
+    </div>
+    <div class="team-member">
+      <div class="member-avatar">V</div>
+      <p class="member-name">Valéria</p>
+      <p class="member-role">Mobilizadora</p>
+      <p class="member-desc">Garante engajamento, lembra reuniões e cuida da integração do grupo.</p>
+    </div>
+    <div class="team-member">
+      <div class="member-avatar">S</div>
+      <p class="member-name">Stefane</p>
+      <p class="member-role">Comunicadora</p>
+      <p class="member-desc">Registro audiovisual e divulgação. Conduz parcerias com escolas e a OZipa no território.</p>
+    </div>
+    <div class="team-member">
+      <div class="member-avatar">L</div>
+      <p class="member-name">Lusi</p>
+      <p class="member-role">Resp. Fundo Semente</p>
+      <p class="member-desc">Recebe o recurso, faz transferências, guarda comprovantes e sobe a prestação de contas.</p>
+    </div>
+    <div class="team-member">
+      <div class="member-avatar">D</div>
+      <p class="member-name">Daniel</p>
+      <p class="member-role">Execução</p>
+      <p class="member-desc">Foco em colocar o projeto em prática. Conduz a frente técnica do jogo.</p>
+    </div>
+    <div class="team-member member-all">
+      <p class="member-role">Criadoras de Solução</p>
+      <p>Papel compartilhado por todo o grupo: planejar, executar e testar a solução junto com os jovens do território.</p>
+    </div>
+  </div>
+</section>
+
+<!-- território -->
+<section class="section fade-in" id="territorio">
+  <div class="section-tag">05 · O território <span class="line"></span></div>
+  <h2>Jardim Oziel, <em>Campinas</em></h2>
+  <p class="lead">Bairro periférico de Campinas onde o projeto vai ser pilotado com jovens de 12 a 17 anos, em parceria com escolas e OSCs locais.</p>
+
+  <div class="territory-block">
+    <div class="territory-map">
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <path d="M28 8C18 8 10 16 10 26C10 39 28 52 28 52C28 52 46 39 46 26C46 16 38 8 28 8Z" stroke="#766F66" stroke-width="1.5"/>
+        <circle cx="28" cy="26" r="6" stroke="#766F66" stroke-width="1.5"/>
+      </svg>
+      <p class="territory-map-label">Jardim Oziel · Campinas · SP</p>
+    </div>
+
+    <div class="territory-stats">
+      <div class="t-stat">
+        <p class="lbl">Público-alvo</p>
+        <p class="val">12–17<span style="font-size:14px;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-left:4px">anos</span></p>
+      </div>
+      <div class="t-stat">
+        <p class="lbl">Piloto</p>
+        <p class="val">Jun/26</p>
+      </div>
+      <div class="t-stat">
+        <p class="lbl">Parcerias</p>
+        <p class="val">Em<span style="font-size:14px;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-left:4px">articulação</span></p>
+      </div>
+      <div class="t-stat">
+        <p class="lbl">Território</p>
+        <p class="val">Oziel<span style="font-size:14px;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-left:4px">CPS</span></p>
+      </div>
+    </div>
+  </div>
+
+  <p>A articulação de parcerias com escolas e com a OZipa está sendo conduzida por <strong>Stefane, Ricardo e Ferrão</strong> em paralelo ao desenvolvimento do jogo. O piloto presencial está previsto para a semana de 15 a 21 de junho.</p>
+</section>
+
+<!-- próximos marcos -->
+<section class="section fade-in" id="marcos">
+  <div class="section-tag">06 · Cronograma <span class="line"></span></div>
+  <h2>O que vem até <em>4 de julho</em></h2>
+
+  <div class="milestones">
+    <div class="milestone">
+      <div class="m-date" style="color:var(--green);font-weight:600">Concluído</div>
+      <div>
+        <p class="m-title">Imersão presencial · Grupo formado</p>
+        <p class="m-sub">16–17 de maio · Café Mundial · CriaLab</p>
+      </div>
+    </div>
+    <div class="milestone">
+      <div class="m-date now">Agora</div>
+      <div>
+        <p class="m-title">Jogo no ar · banco de dilemas em construção</p>
+        <p class="m-sub">Semana 2 · 25–31.05 · Parcerias com escolas em articulação</p>
+      </div>
+    </div>
+    <div class="milestone">
+      <div class="m-date">01–14.06</div>
+      <div>
+        <p class="m-title">Conteúdo e estrutura pedagógica</p>
+        <p class="m-sub">25 dilemas validados · módulos temáticos · painel da facilitadora</p>
+      </div>
+    </div>
+    <div class="milestone">
+      <div class="m-date">15–21.06</div>
+      <div>
+        <p class="m-title">Piloto presencial no Jardim Oziel</p>
+        <p class="m-sub">Laboratório com jovens · questionário pré/pós · micro intervenção planejada por eles</p>
+      </div>
+    </div>
+    <div class="milestone">
+      <div class="m-date">22–26.06</div>
+      <div>
+        <p class="m-title">Relatório e documento de replicação</p>
+        <p class="m-sub">Modelo aberto para outros territórios · prestação de contas do Fundo Semente</p>
+      </div>
+    </div>
+    <div class="milestone">
+      <div class="m-date">04.07</div>
+      <div>
+        <p class="m-title">Apresentação pública · Creative Commons</p>
+        <p class="m-sub">Evento final do CriaLab · tudo entra em domínio público</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- documentação -->
+<div class="docs-strip fade-in">
+  <p class="docs-label">Documentação do projeto</p>
+  <div class="docs-list">
+    <a href="/" class="doc-card">
+      <p class="doc-type">Experiência</p>
+      <p class="doc-title">Jogar o jogo</p>
+      <p class="doc-desc">Versão webapp, mobile-first. 3 minutos. Sem cadastro, sem senha.</p>
+      <span class="doc-arrow">→</span>
+    </a>
+    <a href="/jogo.html" class="doc-card">
+      <p class="doc-type">Standalone</p>
+      <p class="doc-title">Versão HTML offline</p>
+      <p class="doc-desc">Jogo completo num único arquivo HTML. Funciona sem internet depois de aberto.</p>
+      <span class="doc-arrow">→</span>
+    </a>
+    <a href="/briefing.html" class="doc-card">
+      <p class="doc-type">Documentação</p>
+      <p class="doc-title">Briefing do projeto</p>
+      <p class="doc-desc">O quê, como e por quê. Equipe, mecânica, stack técnica, cronograma e decisões.</p>
+      <span class="doc-arrow">→</span>
+    </a>
+    <a href="/linha-do-tempo.html" class="doc-card">
+      <p class="doc-type">Histórico</p>
+      <p class="doc-title">Linha do tempo</p>
+      <p class="doc-desc">Do edital de fevereiro à intervenção no Oziel. Modelo aberto de documentação.</p>
+      <span class="doc-arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div>Grupo Diálogos · Cidadania Conectada: Vozes do Oziel</div>
+  <div>CriaLab · Minha Campinas · Fundação FEAC · CC BY-SA</div>
+</footer>
+
+<script>
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.04 });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+  } else {
+    document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+  }
+</script>
+
+</body>
+</html>

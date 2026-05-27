@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Linha do tempo — Do edital ao Oziel · Grupo Diálogos</title>
+<meta name="description" content="Evolução do cronograma do Grupo Diálogos no CriaLab da Minha Campinas — do edital de fevereiro à intervenção no Jardim Oziel. Modelo de documentação aberta para o LabPop e demais grupos." />
+<meta property="og:title" content="Linha do tempo — Do edital ao Oziel" />
+<meta property="og:description" content="Evolução do cronograma do Grupo Diálogos no CriaLab da Minha Campinas. Modelo de documentação aberta." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#1A1817;
+  --ink-soft:#3D3833;
+  --muted:#766F66;
+  --rule:#D9D1C2;
+  --paper:#F7F3EC;
+  --paper-warm:#EFE8D8;
+  --accent:#E25A1C;
+  --accent-deep:#B5440F;
+  --green:#3F5C3D;
+  --shadow: 0 1px 0 rgba(26,24,23,.04), 0 10px 30px -18px rgba(26,24,23,.15);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{
+  font-family:"Newsreader",Georgia,serif;
+  font-weight:400;
+  font-size:18px;
+  line-height:1.6;
+  color:var(--ink);
+  background:var(--paper);
+  background-image:
+    radial-gradient(at 12% 6%, rgba(226,90,28,.04) 0px, transparent 50%),
+    radial-gradient(at 88% 94%, rgba(63,92,61,.05) 0px, transparent 60%);
+}
+.wrap{max-width:880px;margin:0 auto;padding:48px 28px 96px}
+.mono{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,monospace;letter-spacing:.02em}
+
+/* topbar */
+.topbar{
+  display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:baseline;
+  border-bottom:1px solid var(--rule);
+  padding-bottom:18px;margin-bottom:64px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)
+}
+.topbar .crumb{display:flex;flex-wrap:wrap;gap:14px}
+.topbar .crumb span+span:before{content:"·";margin-right:14px;color:var(--rule)}
+.topbar .ver{color:var(--ink-soft)}
+
+/* hero */
+.kicker{
+  font-family:"JetBrains Mono",monospace;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);
+  margin-bottom:24px
+}
+h1{
+  font-family:"Fraunces",serif;
+  font-weight:340;
+  font-size:clamp(56px,10vw,116px);
+  line-height:.95;
+  letter-spacing:-.03em;
+  color:var(--ink);
+  margin-bottom:8px
+}
+h1 em{font-style:italic;font-weight:340;color:var(--accent-deep)}
+.hero-sub{
+  font-family:"Fraunces",serif;
+  font-style:italic;
+  font-size:clamp(22px,3vw,28px);
+  color:var(--ink-soft);
+  font-weight:300;
+  margin-bottom:40px;
+  letter-spacing:-.01em
+}
+.lede{
+  max-width:640px;font-size:20px;line-height:1.55;color:var(--ink-soft);
+  margin-bottom:56px
+}
+
+/* stats */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  border:1px solid var(--rule);background:var(--paper-warm);
+  margin-bottom:80px;border-radius:2px
+}
+.stat{
+  padding:22px 20px;border-right:1px solid var(--rule)
+}
+.stat:last-child{border-right:none}
+.stat .lbl{
+  font-family:"JetBrains Mono",monospace;
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  margin-bottom:8px
+}
+.stat .val{
+  font-family:"Fraunces",serif;font-size:26px;line-height:1.05;letter-spacing:-.02em;color:var(--ink)
+}
+.stat .val small{font-size:14px;color:var(--muted);font-family:"JetBrains Mono",monospace;letter-spacing:.02em;margin-left:2px}
+.stat.today{background:#FFF7EE}
+.stat.today .lbl{color:var(--accent-deep)}
+@media (max-width:680px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat{border-bottom:1px solid var(--rule)}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(3),.stat:nth-child(4){border-bottom:none}
+}
+
+/* sumário */
+nav.toc{
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  padding:18px 0;margin-bottom:80px;
+  display:grid;grid-template-columns:1fr 1fr;gap:6px 32px;
+  font-family:"JetBrains Mono",monospace;font-size:12px
+}
+nav.toc a{color:var(--ink-soft);text-decoration:none;display:flex;gap:10px;padding:4px 0}
+nav.toc a:hover{color:var(--accent)}
+nav.toc a .n{color:var(--muted)}
+@media (max-width:680px){nav.toc{grid-template-columns:1fr}}
+
+/* sections */
+section{margin-bottom:96px;scroll-margin-top:32px}
+.section-tag{
+  font-family:"JetBrains Mono",monospace;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:18px;
+  display:flex;align-items:center;gap:12px
+}
+.section-tag .line{flex:1;height:1px;background:var(--rule)}
+h2{
+  font-family:"Fraunces",serif;
+  font-weight:340;font-size:clamp(36px,5vw,56px);line-height:1.05;letter-spacing:-.025em;
+  color:var(--ink);margin-bottom:32px;max-width:760px
+}
+h2 em{font-style:italic;font-weight:340;color:var(--accent-deep)}
+h3{
+  font-family:"Fraunces",serif;font-weight:500;font-size:22px;line-height:1.25;
+  letter-spacing:-.01em;color:var(--ink);margin:32px 0 12px
+}
+h4{
+  font-family:"JetBrains Mono",monospace;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  margin:24px 0 10px
+}
+p{margin-bottom:18px;max-width:680px}
+p.lead{font-size:20px;color:var(--ink-soft);max-width:640px}
+.muted{color:var(--muted)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+a.inline{color:var(--accent-deep);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+
+/* listas */
+ul.clean{list-style:none;margin:8px 0 24px}
+ul.clean li{
+  padding:10px 0;border-bottom:1px solid var(--rule);
+  display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:baseline
+}
+ul.clean li:last-child{border-bottom:none}
+ul.clean .when{
+  font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);
+  letter-spacing:.04em
+}
+ul.clean .what strong{display:block;margin-bottom:2px}
+ul.clean .what span{font-size:15px;color:var(--ink-soft)}
+@media (max-width:680px){
+  ul.clean li{grid-template-columns:1fr;gap:4px}
+}
+
+/* citação */
+blockquote{
+  border-left:3px solid var(--accent);
+  padding:8px 0 8px 24px;margin:32px 0;
+  font-family:"Fraunces",serif;font-style:italic;font-size:24px;line-height:1.4;
+  color:var(--ink);letter-spacing:-.01em;max-width:640px
+}
+blockquote cite{
+  display:block;font-style:normal;font-family:"JetBrains Mono",monospace;
+  font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  margin-top:14px;font-weight:500
+}
+
+/* tabela cronograma semanas */
+.weeks{
+  border:1px solid var(--rule);background:#fff;
+  margin:24px 0
+}
+.weeks .row{
+  display:grid;grid-template-columns:90px 1fr 130px;
+  padding:16px 18px;border-bottom:1px solid var(--rule);align-items:baseline;gap:18px
+}
+.weeks .row:last-child{border-bottom:none}
+.weeks .row.is-now{background:#FFF7EE;border-left:3px solid var(--accent);padding-left:15px}
+.weeks .row.is-past{opacity:.65}
+.weeks .week-n{
+  font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted)
+}
+.weeks .row.is-now .week-n{color:var(--accent-deep);font-weight:600}
+.weeks .week-title{font-family:"Fraunces",serif;font-size:18px;line-height:1.3}
+.weeks .week-title small{display:block;font-family:"Newsreader",serif;font-size:14px;color:var(--ink-soft);font-style:italic;margin-top:4px}
+.weeks .week-dates{
+  font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);text-align:right
+}
+@media (max-width:680px){
+  .weeks .row{grid-template-columns:1fr;gap:4px}
+  .weeks .week-dates{text-align:left}
+}
+
+/* grid eixos */
+.axes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:24px 0 8px}
+.axe{
+  background:#fff;border:1px solid var(--rule);padding:18px;border-radius:2px
+}
+.axe .n{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.axe h5{font-family:"Fraunces",serif;font-size:18px;font-weight:500;margin-bottom:8px;line-height:1.2}
+.axe p{font-size:14px;line-height:1.5;color:var(--ink-soft);margin:0}
+@media (max-width:680px){.axes{grid-template-columns:1fr}}
+
+/* glossário */
+.glossary{display:grid;grid-template-columns:1fr;gap:0}
+.gloss-item{
+  border-top:1px solid var(--rule);padding:20px 0;
+  display:grid;grid-template-columns:220px 1fr;gap:32px;align-items:baseline
+}
+.gloss-item:last-child{border-bottom:1px solid var(--rule)}
+.gloss-term{font-family:"Fraunces",serif;font-size:18px;font-weight:500;letter-spacing:-.01em}
+.gloss-term small{display:block;font-family:"Newsreader",serif;font-size:13px;color:var(--muted);font-style:italic;margin-top:4px;font-weight:300}
+.gloss-def{font-size:15px;line-height:1.55;color:var(--ink-soft)}
+@media (max-width:680px){
+  .gloss-item{grid-template-columns:1fr;gap:6px}
+}
+
+/* highlight box */
+.box{
+  background:#fff;border:1px solid var(--rule);padding:24px 26px;margin:24px 0;
+  border-radius:2px;box-shadow:var(--shadow)
+}
+.box.accent{background:#FFF7EE;border-color:#F2C7AE}
+.box h3{margin-top:0}
+
+/* badge */
+.badge{
+  display:inline-block;
+  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 9px;border-radius:99px;
+  background:var(--paper-warm);color:var(--ink-soft);border:1px solid var(--rule);
+  margin-right:6px
+}
+.badge.now{background:var(--accent);color:#fff;border-color:var(--accent)}
+.badge.done{background:#E8E2D2;color:var(--muted)}
+.badge.green{background:#E8EEE2;color:var(--green);border-color:#C7D3BD}
+
+/* footer */
+footer.doc-foot{
+  border-top:1px solid var(--rule);margin-top:40px;padding-top:24px;
+  font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between
+}
+footer.doc-foot a{color:var(--accent-deep);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- topbar -->
+  <div class="topbar">
+    <div class="crumb">
+      <span>Grupo Diálogos</span><span>CriaLab</span><span>Minha Campinas</span><span>Fundação FEAC</span>
+    </div>
+    <div class="ver">Linha do tempo · v1 · 27.05.2026</div>
+  </div>
+
+  <!-- hero -->
+  <div class="kicker">Documento de trabalho · aberto sob Creative Commons</div>
+  <h1>Linha <em>do tempo</em></h1>
+  <div class="hero-sub">Do edital de fevereiro à intervenção no Oziel.</div>
+  <p class="lede">Este documento conta como o Grupo Diálogos chegou até aqui dentro do CriaLab, mostra onde estamos hoje no cronograma e abre o método para que outros grupos da Minha Campinas usem o mesmo formato de registro público. É um irmão do <a class="inline" href="/briefing.html">briefing</a>: o briefing fala do <em>quê</em>; aqui contamos o <em>quando</em>.</p>
+
+  <!-- stats -->
+  <div class="stats">
+    <div class="stat today">
+      <div class="lbl">Hoje · 27.05</div>
+      <div class="val">Dia 10<small>/40</small></div>
+    </div>
+    <div class="stat">
+      <div class="lbl">Jornada</div>
+      <div class="val">18.05 → 26.06</div>
+    </div>
+    <div class="stat">
+      <div class="lbl">Evento público</div>
+      <div class="val">04.07.2026</div>
+    </div>
+    <div class="stat">
+      <div class="lbl">Equipes do CriaLab</div>
+      <div class="val">5<small> · 35 pessoas</small></div>
+    </div>
+  </div>
+
+  <!-- toc -->
+  <nav class="toc" aria-label="Sumário">
+    <a href="#s01"><span class="n">01</span>O CriaLab em uma página</a>
+    <a href="#s02"><span class="n">02</span>Antes da imersão</a>
+    <a href="#s03"><span class="n">03</span>A imersão e o Café Mundial</a>
+    <a href="#s04"><span class="n">04</span>A jornada de aplicação</a>
+    <a href="#s05"><span class="n">05</span>Onde o Grupo Diálogos entra</a>
+    <a href="#s06"><span class="n">06</span>O que vem até 4 de julho</a>
+    <a href="#s07"><span class="n">07</span>Documentação como tecnologia</a>
+    <a href="#s08"><span class="n">08</span>Glossário CriaLab</a>
+  </nav>
+
+  <!-- 01 -->
+  <section id="s01">
+    <div class="section-tag">01 · Contexto<span class="line"></span></div>
+    <h2>O CriaLab em <em>uma página</em></h2>
+    <p class="lead">O CriaLab é o evento-laboratório do LabPop, realizado pela Minha Campinas com investimento da Fundação FEAC. Reúne 35 pessoas em 5 equipes para coproduzir tecnologias sociais que enfrentem barreiras à participação política popular em Campinas.</p>
+
+    <p>O desafio do edital é direto: <em>como criar soluções inovadoras e replicáveis que fortaleçam a participação política popular?</em> A aposta metodológica é a inovação cidadã — gente que vive o problema participa de criar a solução, ao lado de quem traz conhecimento técnico. Tudo o que sai do CriaLab é licenciado sob Creative Commons e pode ser replicado por outros territórios e pelo poder público.</p>
+
+    <h4>Os três eixos de problema do edital</h4>
+    <div class="axes">
+      <div class="axe">
+        <div class="n">Eixo 1</div>
+        <h5>Condições</h5>
+        <p>Tempo, recursos e acesso: o que materialmente impede de participar.</p>
+      </div>
+      <div class="axe">
+        <div class="n">Eixo 2</div>
+        <h5>Pertencimento</h5>
+        <p>Entendimento, identificação com o grupo, violência e dificuldade de se posicionar.</p>
+      </div>
+      <div class="axe">
+        <div class="n">Eixo 3</div>
+        <h5>Desconfiança</h5>
+        <p>Cultura política, corrupção e ruptura do diálogo entre pessoas que pensam diferente.</p>
+      </div>
+    </div>
+
+    <div class="box">
+      <h4>Quem coordena</h4>
+      <p style="margin:0">O <strong>Comitê Autogestionário do LabPop</strong> conduz as decisões estratégicas. É composto por representantes da comunidade, do universo da pesquisa científica, da Coletiva Coringa, da Associação de Promotoras Legais Populares "Cida da Terra" e da Minha Campinas, que é a proponente e executora. Cada equipe tem mentoria permanente de duas pessoas do Comitê.</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="s02">
+    <div class="section-tag">02 · Antes da imersão<span class="line"></span></div>
+    <h2>Quatro meses até a porta <em>se abrir</em></h2>
+    <p class="lead">Da publicação da portaria à imersão presencial, foram quase cem dias de seleção, entrevistas e aquecimento.</p>
+
+    <ul class="clean">
+      <li>
+        <div class="when">05.02 → 22.03</div>
+        <div class="what"><strong>Inscrições</strong><span>Portaria Nº 01/2026 publicada. Formulário aberto pelos canais do LabPop.</span></div>
+      </li>
+      <li>
+        <div class="when">30.03</div>
+        <div class="what"><strong>Pré-selecionadas divulgadas</strong><span>Até 50 pessoas convocadas para a etapa de entrevistas, a partir da análise dos formulários.</span></div>
+      </li>
+      <li>
+        <div class="when">06.04 → 24.04</div>
+        <div class="what"><strong>Entrevistas</strong><span>Conduzidas pelo Comitê Autogestionário, prioritariamente virtuais. Pontuação considera aderência ao desafio, potencial de replicação, engajamento e diversidade.</span></div>
+      </li>
+      <li>
+        <div class="when">24.04 → 28.04</div>
+        <div class="what"><strong>35 selecionadas</strong><span>Resultado final publicado. Confirmação obrigatória em 48h, lista de espera ativada em caso de desistência.</span></div>
+      </li>
+      <li>
+        <div class="when">04.05 → 08.05</div>
+        <div class="what"><strong>Encontros virtuais de aprofundamento</strong><span>Dois encontros obrigatórios para alinhar inovação cidadã, tecnologias sociais e os problemas levantados pelo LabPop.</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 03 -->
+  <section id="s03">
+    <div class="section-tag">03 · 16–17 maio<span class="line"></span></div>
+    <h2>A imersão presencial e o <em>Café Mundial</em></h2>
+    <p class="lead">Dois dias presenciais em Campinas, onde as 35 pessoas se conheceram, mergulharam nos eixos de problema e se dividiram nas 5 equipes que carregam a jornada de aplicação.</p>
+
+    <p>Foi na imersão que surgiu o Grupo Diálogos — sete pessoas que escolheram trabalhar na intersecção entre o <strong>Eixo 2 (pertencimento)</strong> e o <strong>Eixo 3 (desconfiança)</strong>, mirando jovens de 12 a 17 anos do Jardim Oziel que têm visão restrita da política, medo de se aproximar e descrença com quem está eleito.</p>
+
+    <p>O método central de geração de ideias da imersão foi o <strong>Café Mundial</strong>:</p>
+
+    <blockquote>
+      Café Mundial é uma metodologia que vai ajudar vocês a elaborarem possíveis soluções pros problemas de participação política.
+      <cite>— Minha Campinas, imersão presencial · 16.05.2026</cite>
+    </blockquote>
+
+    <p>Funciona assim: pequenas rodas de 4 a 6 pessoas conversam por tempo definido sobre uma pergunta-chave. Uma pessoa fica como "anfitriã" da mesa. As demais giram para outras mesas e levam o que ouviram para fertilizar a próxima conversa. Ao final, a anfitriã sintetiza o que passou. As ideias não pertencem a ninguém — elas <em>polinizam</em> entre rodas.</p>
+
+    <p>O Café Mundial foi desenhado em 1995 por Juanita Brown e David Isaacs justamente para fazer com que grupos grandes conversem como se fossem pequenos. No CriaLab, ele entregou a matéria-prima dos cinco projetos.</p>
+  </section>
+
+  <!-- 04 -->
+  <section id="s04">
+    <div class="section-tag">04 · 18 maio → 26 junho<span class="line"></span></div>
+    <h2>A jornada de <em>aplicação</em> do modelo</h2>
+    <p class="lead">São seis semanas em que cada equipe testa, ajusta e materializa sua tecnologia social no território, com R$ 5.000 de Fundo Semente, mentoria fixa e autonomia para conduzir o ritmo.</p>
+
+    <div class="weeks">
+      <div class="row is-past">
+        <div class="week-n">Sem 1</div>
+        <div class="week-title">Estruturação dos papéis<small>Facilitadora, Registro, Mobilizadora, Comunicadora, Resp. Fundo e Criadoras de Solução assumidos. Ficha de Solução em consolidação.</small></div>
+        <div class="week-dates">18.05 → 24.05</div>
+      </div>
+      <div class="row is-now">
+        <div class="week-n">Sem 2 · hoje</div>
+        <div class="week-title">Solução em desenvolvimento<small>Direção técnica do serious game decidida. Banco de dilemas começa a ser coautorado pelo grupo. Parcerias com escolas e OZipa em articulação.</small></div>
+        <div class="week-dates">25.05 → 31.05</div>
+      </div>
+      <div class="row">
+        <div class="week-n">Sem 3</div>
+        <div class="week-title">Conteúdo e estrutura pedagógica<small>20 a 25 dilemas validados, módulos temáticos, tela coletiva "o que o Oziel decidiu", painel da facilitadora.</small></div>
+        <div class="week-dates">01.06 → 07.06</div>
+      </div>
+      <div class="row">
+        <div class="week-n">Sem 4</div>
+        <div class="week-title">Coautoria aberta<small>Canal de submissão de vídeos-flagrantes da quebrada com moderação. Termo LGPD finalizado para o piloto presencial.</small></div>
+        <div class="week-dates">08.06 → 14.06</div>
+      </div>
+      <div class="row">
+        <div class="week-n">Sem 5</div>
+        <div class="week-title">Piloto presencial no Oziel<small>Laboratório com os jovens, jogo rodando ao vivo, coleta do mini-questionário pré/pós e início da micro intervenção planejada por eles.</small></div>
+        <div class="week-dates">15.06 → 21.06</div>
+      </div>
+      <div class="row">
+        <div class="week-n">Sem 6</div>
+        <div class="week-title">Relatório e documento de replicação<small>Ajustes finais, registro de impacto da micro intervenção, documento que permite a outro território pegar o modelo do zero.</small></div>
+        <div class="week-dates">22.06 → 26.06</div>
+      </div>
+    </div>
+
+    <p class="muted" style="font-size:14px;margin-top:8px">As datas dentro de cada semana são aproximações úteis para planejamento. O cronograma oficial CriaLab fecha em <strong>26.06</strong> com a entrega do relatório à Minha Campinas.</p>
+  </section>
+
+  <!-- 05 -->
+  <section id="s05">
+    <div class="section-tag">05 · O grupo no fluxo<span class="line"></span></div>
+    <h2>Onde o <em>Grupo Diálogos</em> entra</h2>
+    <p class="lead">A solução do grupo é o <a class="inline" href="/briefing.html"><em>Cidadania Conectada: Vozes do Oziel</em></a> — um serious game web que substitui o EAD tradicional por uma mecânica de swipe em dilemas-meme.</p>
+
+    <p>Em vez de pílulas expositivas em vídeo, o jogo usa a gramática do meme para restaurar o que o meme apaga: consequência, contexto, a pessoa do outro lado. Cabe no ponto de ônibus, vive no celular, lembra das escolhas anteriores e culmina numa <strong>micro intervenção real</strong> planejada pelos próprios jovens no bairro.</p>
+
+    <div class="box accent">
+      <h3>Posicionamento dentro dos eixos do edital</h3>
+      <p style="margin-bottom:8px"><span class="badge">Eixo 2</span> <strong>Entendimento</strong> — traduzir política em linguagem nativa do público de 12 a 17.</p>
+      <p style="margin-bottom:8px"><span class="badge">Eixo 2</span> <strong>Grupo</strong> — laços de identidade no território, sem o jovem se sentir fora do lugar.</p>
+      <p style="margin-bottom:0"><span class="badge">Eixo 3</span> <strong>Cultura política</strong> — encarar a descrença sem fingir que ela não existe; usar a descrença como porta de entrada.</p>
+    </div>
+
+    <h4>Estado em 27 de maio</h4>
+    <ul class="clean">
+      <li><div class="when">papéis</div><div class="what"><strong>Energizados</strong><span>Flávio · Ricardo · Valéria · Stefane · Lusi · Daniel + Todes na criação de solução.</span></div></li>
+      <li><div class="when">tese</div><div class="what"><strong>Validada</strong><span>Meme como mecânica central, não como tempero. Direção técnica do serious game confirmada.</span></div></li>
+      <li><div class="when">jogo</div><div class="what"><strong>Em execução</strong><span>Loop de swipe + tela de consequência no ar com 24 dilemas iniciais. Próximas semanas: persistência das escolhas, banco coautorado pelo grupo e pílula de sabedoria visível.</span></div></li>
+      <li><div class="when">parcerias</div><div class="what"><strong>Em articulação</strong><span>Stefane, Ricardo e Ferrão conduzindo conversas com escolas do Oziel e OZipa para destravar o piloto presencial.</span></div></li>
+      <li><div class="when">LGPD</div><div class="what"><strong>Pendente</strong><span>Termo de consentimento para responsáveis legais (Art. 14) a redigir antes do laboratório presencial.</span></div></li>
+    </ul>
+  </section>
+
+  <!-- 06 -->
+  <section id="s06">
+    <div class="section-tag">06 · Próximos marcos<span class="line"></span></div>
+    <h2>O que vem até <em>4 de julho</em></h2>
+    <p class="lead">Trinta e oito dias separam hoje da apresentação pública. O cronograma se desdobra em três blocos.</p>
+
+    <ul class="clean">
+      <li><div class="when">28.05 → 26.06</div><div class="what"><strong>Recta final da Jornada</strong><span>Semanas 2 a 6 da aplicação do modelo. Reuniões semanais com mentoria do Comitê Autogestionário. Piloto presencial entre 15 e 21 de junho.</span></div></li>
+      <li><div class="when">27.06</div><div class="what"><strong>Encerramento interno do CriaLab</strong><span>As 5 equipes se apresentam entre si, recebem ajustes finais antes do evento público. Entrega do relatório.</span></div></li>
+      <li><div class="when">04.07</div><div class="what"><strong>Evento público final</strong><span>Apresentação aberta para a rede de Campinas e potenciais parceiros. As soluções entram no domínio público sob Creative Commons.</span></div></li>
+    </ul>
+
+    <div class="box">
+      <h3>O que precisa estar pronto até cada marco</h3>
+      <p><strong>Até 14.06</strong> — banco de 25 dilemas validado, persistência das escolhas no banco, termo LGPD assinado pelos responsáveis, parceria confirmada com pelo menos uma escola ou OSC do Oziel.</p>
+      <p><strong>Até 21.06</strong> — piloto presencial executado, mini-questionário pré/pós aplicado, primeira versão da micro intervenção planejada pelos jovens.</p>
+      <p style="margin-bottom:0"><strong>Até 26.06</strong> — relatório final, documento de replicação aberto, prestação de contas do Fundo Semente fechada com a Minha Campinas.</p>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section id="s07">
+    <div class="section-tag">07 · Replicabilidade<span class="line"></span></div>
+    <h2>Documentação como <em>tecnologia social</em></h2>
+    <p class="lead">O edital pede que cada solução seja replicável. Esta página é uma tentativa concreta de fazer da própria <em>documentação</em> um produto replicável — um modelo aberto que outros grupos da Minha Campinas possam pegar e adaptar.</p>
+
+    <p>A aposta é simples: a maior parte das tecnologias sociais morre quando o ciclo de quem a criou termina. Sobra um relatório em PDF que ninguém abre. Se cada equipe publicar três páginas vivas — um <em>briefing</em>, uma <em>linha do tempo</em> e um <em>manual de replicação</em> — sob Creative Commons, no mesmo padrão visual e estrutural, o LabPop deixa de produzir relatórios e passa a produzir <strong>infraestrutura aberta de inovação cidadã</strong>.</p>
+
+    <h4>O que esta linha do tempo entrega como modelo</h4>
+    <ul class="clean">
+      <li><div class="when">forma</div><div class="what"><strong>Página única, web, mobile-first</strong><span>Sem PDF, sem login, sem app para baixar. Atualiza em minutos e cabe em qualquer celular.</span></div></li>
+      <li><div class="when">estrutura</div><div class="what"><strong>Oito seções fixas</strong><span>Contexto, pré-imersão, imersão, jornada, posição da equipe, próximos marcos, replicabilidade e glossário. Qualquer grupo preenche.</span></div></li>
+      <li><div class="when">licença</div><div class="what"><strong>Creative Commons BY-SA</strong><span>Replicar, modificar e redistribuir é parte do projeto, não uma exceção.</span></div></li>
+      <li><div class="when">linguagem</div><div class="what"><strong>Glossário em linguagem simples</strong><span>O conhecimento técnico fica acessível para quem nunca ouviu falar das palavras antes.</span></div></li>
+    </ul>
+
+    <div class="box accent">
+      <h3>Convite à Minha Campinas e ao Comitê Autogestionário</h3>
+      <p style="margin-bottom:0">Se este formato fizer sentido como padrão de saída do CriaLab — briefing, linha do tempo e manual de replicação para cada uma das 5 equipes —, o Grupo Diálogos topa estruturar o template em aberto. O custo é zero, o ganho é o LabPop ter um corpo de documentação navegável da próxima edição em diante.</p>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section id="s08">
+    <div class="section-tag">08 · Glossário<span class="line"></span></div>
+    <h2>Palavras difíceis em <em>linguagem simples</em></h2>
+    <p class="lead">Para quem está chegando agora no CriaLab — explicado como se fosse para alguém que nunca ouviu nenhum desses termos.</p>
+
+    <div class="glossary">
+
+      <div class="gloss-item">
+        <div class="gloss-term">Café Mundial<small>World Café</small></div>
+        <div class="gloss-def">É um jeito de fazer várias pessoas conversarem como se estivessem numa mesa de café. As pessoas se sentam em grupos pequenos, conversam sobre uma pergunta, e depois trocam de mesa levando o que ouviram. No fim, todo mundo participou de várias conversas, e as ideias se misturaram entre as mesas.</div>
+      </div>
+
+      <div class="gloss-item">
+        <div class="gloss-term">Inovação Cidadã<small>jeito de pensar do laboratório</small></div>
+        <div class="gloss-def">É quando quem vive um problema participa de criar a solução — não fica só de fora respondendo pesquisa. Vale tanto o conhecimento da universidade quanto o de quem vive no bairro. Aqui no CriaLab, isso é o motor de tudo.</div>
+      </div>
+
+      <div class="gloss-item">
+        <div class="gloss-term">Tecnologia Social<small>o que a gente está criando</small></div>
+        <div class="gloss-def">É uma ferramenta, um jeito de fazer ou uma prática que ajuda a resolver um problema social — e que outras pessoas conseguem pegar e usar de graça. Pode ser um aplicativo, uma cartilha, um jogo, um método de reunião. O que importa é que seja barata, fácil de usar e replicável.</div>
+      </div>
+
+      <div class="gloss-item">
+        <div class="gloss-term">LabPop<small>laboratório-mãe</small></div>
+        <div class="gloss-def">Laboratório de Tecnologias Sociais de Participação Política Popular. É a iniciativa permanente da Minha Campinas que abriga o CriaLab. Pensa o LabPop como a casa e o CriaLab como uma das festas que acontecem nela.</div>
+      </div>
+
+      <div class="gloss-item">
+        <div class="gloss-term">CriaLab<small>evento-laboratório</small></div>
+        <div class="gloss-def">É o evento específico onde 35 pessoas, divididas em 5 equipes, passam cerca de um mês e meio criando e testando soluções juntas. Tem início, meio e fim claros: imersão presencial, jornada de aplicação e evento público final.</div>
+      </div>
+
+      <div class="gloss-item">
+        <div class="gloss-term">Comitê Autogestionário<small>quem decide as coisas grandes</small></div>
+        <div class="gloss-def">É o grupo de pessoas que cuida das decisões importantes do LabPop. Não é a chefia de ninguém — é uma instância coletiva onde todo mundo tem voz. Tem gente da comunidade, da pesquisa, dos coletivos e da Minha Campinas.</div>
+      </div>
+
+      <div class="gloss-item">
+        <div class="gloss-term">Fundo Semente<small>os R$ 5.000 de cada equipe</small></div>
+        <div class="gloss-def">É a grana que cada equipe recebe para tirar a solução do papel: comprar materiais, pagar serviços, fazer impressões, garantir transporte e lanches. Não pode ser usada para pagar quem trabalha na equipe — esse trabalho é voluntário.</div>
+      </div>
+
+      <div class="gloss-item">
+        <div class="gloss-term">Bolsa Ativista<small>o auxílio individual</small></div>
+        <div class="gloss-def">São R$ 1.500 que cada pessoa selecionada recebe por participar do CriaLab inteiro. Vem em duas partes: R$ 750 depois da imersão presencial e R$ 750 depois da apresentação final. Existe para que ninguém deixe de participar por falta de grana.</div>
+      </div>
+
+      <div class="gloss-item">
+        <div class="gloss-term">Espaço político<small>onde a política acontece</small></div>
+        <div class="gloss-def">Não é só a Câmara, a Prefeitura e o dia da eleição. É também o conselho do bairro, a audiência pública, a associação de moradores, o grupo do WhatsApp da rua — qualquer lugar onde as pessoas se organizam para mudar alguma coisa.</div>
+      </div>
+
+      <div class="gloss-item">
+        <div class="gloss-term">Território periférico<small>onde a maior parte da gente vive</small></div>
+        <div class="gloss-def">São os bairros que historicamente recebem menos investimento público — em saúde, em escola, em transporte, em segurança. Não é só uma questão de distância do centro: é de acesso a direitos.</div>
+      </div>
+
+      <div class="gloss-item">
+        <div class="gloss-term">Mentoria<small>apoio fixo durante a jornada</small></div>
+        <div class="gloss-def">Cada equipe tem duas pessoas do Comitê Autogestionário que acompanham toda a aplicação do modelo. Tira dúvidas, ajuda com o Fundo Semente, dá conselho técnico, mantém a equipe no caminho.</div>
+      </div>
+
+      <div class="gloss-item">
+        <div class="gloss-term">Creative Commons<small>licença aberta</small></div>
+        <div class="gloss-def">É um tipo de "carimbo" jurídico que diz: este trabalho pode ser copiado, melhorado e compartilhado por qualquer pessoa, contanto que dê crédito a quem criou. Tudo que sai do CriaLab vai pra rua com esse carimbo.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="doc-foot">
+    <div>Grupo Diálogos · Cidadania Conectada · Vozes do Oziel</div>
+    <div>Documento de trabalho · CC BY-SA · v1 27.05.2026</div>
+  </footer>
+
+</div>
+</body>
+</html>
