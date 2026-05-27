@@ -8,6 +8,7 @@ export interface Dilema {
   verificacao_status?: "falso" | "enganoso" | "contexto_ausente" | "verdadeiro"
   dificuldade?: 1 | 2 | 3
   impacto_real?: string
+  video_url?: string
 }
 
 export const MODULO_COR: Record<string, string> = {

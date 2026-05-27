@@ -25,6 +25,7 @@ export default function SwipeCard({ dilema, onSwipe, isTop }: Props) {
   const isDragging = useRef(false)
 
   async function flyOff(direction: "right" | "left") {
+    if (typeof navigator !== "undefined" && navigator.vibrate) navigator.vibrate(40)
     await animate(x, direction === "right" ? 600 : -600, { duration: 0.3, ease: "easeIn" })
     onSwipe(direction)
   }

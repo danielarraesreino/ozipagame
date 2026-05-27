@@ -12,9 +12,17 @@ interface Props {
   total: number
 }
 
+const VERIF_LABEL: Record<string, { label: string; color: string }> = {
+  falso:           { label: "❌ falso",           color: "#E84040" },
+  enganoso:        { label: "⚠️ enganoso",        color: "#F59E0B" },
+  contexto_ausente:{ label: "🔍 sem contexto",    color: "#888" },
+  verdadeiro:      { label: "✅ verdadeiro",       color: "#2DD4A0" },
+}
+
 export default function ConsequenceScreen({ dilema, choice, onNext, current, total }: Props) {
   const agreed = choice === "right"
   const moduloCor = MODULO_COR[dilema.modulo] ?? "#888"
+  const verif = dilema.verificacao_status ? VERIF_LABEL[dilema.verificacao_status] : null
 
   return (
     <motion.div
@@ -49,9 +57,19 @@ export default function ConsequenceScreen({ dilema, choice, onNext, current, tot
 
       {/* Consequence */}
       <div className="flex-1 bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-6 mb-6">
-        <p className="text-[10px] font-mono tracking-widest uppercase text-[#E8431E] mb-4">
-          o que o meme apaga
-        </p>
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-[10px] font-mono tracking-widest uppercase text-[#E8431E]">
+            o que o meme apaga
+          </p>
+          {verif && (
+            <span
+              className="text-[10px] font-mono px-2 py-0.5 rounded-full border"
+              style={{ color: verif.color, borderColor: verif.color }}
+            >
+              {verif.label}
+            </span>
+          )}
+        </div>
         <p className="text-lg sm:text-xl text-[#F5F0E8] leading-relaxed">
           {dilema.contexto_oculto}
         </p>
