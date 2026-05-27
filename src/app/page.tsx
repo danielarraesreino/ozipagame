@@ -81,8 +81,10 @@ export default function Home() {
         <p className="text-center text-[#444] text-xs mt-4 font-mono">
           sem cadastro · sem senha · sem rastreio
         </p>
-        <p className="text-center text-[#E8431E] text-xs mt-4 font-mono">
-          ou <a href="/jogo.html" className="underline">jogar em HTML standalone</a>
+        <p className="text-center text-[#444] text-xs mt-4 font-mono">
+          ou <a href="/jogo.html" className="underline text-[#E8431E]">jogar em HTML standalone</a>
+          {" · "}
+          <a href="/sobre.html" className="underline">sobre o projeto</a>
         </p>
       </div>
     </main>
