@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import type { Dilema } from "@/lib/dilemas"
+import { MODULO_COR } from "@/lib/dilemas"
 
 interface Props {
   dilema: Dilema
@@ -13,6 +14,7 @@ interface Props {
 
 export default function ConsequenceScreen({ dilema, choice, onNext, current, total }: Props) {
   const agreed = choice === "right"
+  const moduloCor = MODULO_COR[dilema.modulo] ?? "#888"
 
   return (
     <motion.div
@@ -21,8 +23,8 @@ export default function ConsequenceScreen({ dilema, choice, onNext, current, tot
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      {/* Choice badge */}
-      <div className="mb-6">
+      {/* Choice badge + module */}
+      <div className="mb-6 flex items-center gap-3">
         <span
           className={`inline-block text-xs font-mono tracking-widest uppercase px-3 py-1 rounded-full border ${
             agreed
@@ -31,6 +33,12 @@ export default function ConsequenceScreen({ dilema, choice, onNext, current, tot
           }`}
         >
           {agreed ? "você concordou" : "você discordou"}
+        </span>
+        <span
+          className="text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded-full"
+          style={{ color: moduloCor, border: `1px solid ${moduloCor}` }}
+        >
+          {dilema.modulo}
         </span>
       </div>
 
@@ -51,6 +59,21 @@ export default function ConsequenceScreen({ dilema, choice, onNext, current, tot
           fonte: {dilema.fonte}
         </p>
       </div>
+
+      {/* Pílula de sabedoria */}
+      {dilema.pilula_sabedoria && (
+        <div
+          className="rounded-xl px-5 py-4 mb-6"
+          style={{ borderLeft: `3px solid ${moduloCor}`, background: "#1C1C1E" }}
+        >
+          <p className="text-[10px] font-mono tracking-widest uppercase mb-2" style={{ color: moduloCor }}>
+            pílula de sabedoria
+          </p>
+          <p className="text-base text-[#F5F0E8] leading-relaxed">
+            {dilema.pilula_sabedoria}
+          </p>
+        </div>
+      )}
 
       {/* Next button */}
       <button

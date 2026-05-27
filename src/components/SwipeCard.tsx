@@ -3,6 +3,7 @@
 import { motion, useMotionValue, useTransform, animate } from "framer-motion"
 import { useRef } from "react"
 import type { Dilema } from "@/lib/dilemas"
+import { MODULO_COR } from "@/lib/dilemas"
 
 interface Props {
   dilema: Dilema
@@ -14,6 +15,7 @@ const THRESHOLD = 90
 
 export default function SwipeCard({ dilema, onSwipe, isTop }: Props) {
   const x = useMotionValue(0)
+  const moduloCor = MODULO_COR[dilema.modulo] ?? "#888"
   const rotate = useTransform(x, [-200, 200], [-18, 18])
   const cardOpacity = useTransform(x, [-200, -THRESHOLD, 0, THRESHOLD, 200], [0.6, 1, 1, 1, 0.6])
 
@@ -47,7 +49,10 @@ export default function SwipeCard({ dilema, onSwipe, isTop }: Props) {
 
         {/* Module tag */}
         <div className="flex justify-between items-center">
-          <span className="text-[10px] tracking-widest uppercase text-[#888] font-mono">
+          <span
+            className="text-[10px] tracking-widest uppercase font-mono"
+            style={{ color: moduloCor }}
+          >
             {dilema.modulo}
           </span>
           <span className="text-[10px] tracking-widest uppercase text-[#555] font-mono">
