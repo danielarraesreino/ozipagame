@@ -42,6 +42,18 @@ export default function GamePage() {
     else setPlayer(p)
   }, [router])
 
+  // Busca video_urls do Supabase e injeta nos dilemas
+  useEffect(() => {
+    fetch("/api/videos")
+      .then((r) => r.json())
+      .then((map: Record<string, string>) => {
+        for (const d of dilemas) {
+          if (map[d.id]) d.video_url = map[d.id]
+        }
+      })
+      .catch(() => {})
+  }, [])
+
   function handleSwipe(direction: "right" | "left") {
     setLastChoice(direction)
     setPhase("consequence")
