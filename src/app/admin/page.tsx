@@ -17,20 +17,23 @@ export default function AdminPage() {
   const [loginErr, setLoginErr] = useState(false)
   const [videos, setVideos] = useState<VideoMap>({})
   const [saveStates, setSaveStates] = useState<Record<string, SaveState>>({})
+  const [lastSaved, setLastSaved] = useState<string | null>(null)
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({})
 
-  // Verifica se já tem sessão
+  // Verifica se já tem sessão e carrega URLs salvas
   useEffect(() => {
-    fetch("/api/videos")
-      .then((r) => r.json())
-      .then((data) => {
-        setVideos(data)
-        // Testa se tem cookie de admin
-        return fetch("/api/admin/videos", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ dilema_id: "__check__", url: "" }) })
-      })
-      .then((r) => {
-        if (r.status !== 401) setAuthed(true)
-      })
+    fetch("/video_urls.json")
+      .then((r) => (r.ok ? r.json() : {}))
+      .then((data) => setVideos(data))
+      .catch(() => {})
+
+    // Testa cookie de admin
+    fetch("/api/admin/videos", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dilema_id: "__check__", url: "" }),
+    })
+      .then((r) => { if (r.status !== 401) setAuthed(true) })
       .catch(() => {})
       .finally(() => setChecking(false))
   }, [])
@@ -45,8 +48,6 @@ export default function AdminPage() {
     })
     if (res.ok) {
       setAuthed(true)
-      const data = await fetch("/api/videos").then((r) => r.json())
-      setVideos(data)
     } else {
       setLoginErr(true)
       setPassword("")
@@ -68,7 +69,10 @@ export default function AdminPage() {
     })
     const state: SaveState = res.ok ? "ok" : "err"
     setSaveStates((s) => ({ ...s, [dilemaId]: state }))
-    if (res.ok) setVideos((v) => ({ ...v, [dilemaId]: url }))
+    if (res.ok) {
+      setVideos((v) => ({ ...v, [dilemaId]: url }))
+      setLastSaved(dilemaId)
+    }
     setTimeout(() => setSaveStates((s) => ({ ...s, [dilemaId]: "idle" })), 2000)
   }
 
@@ -132,8 +136,14 @@ export default function AdminPage() {
         </button>
       </div>
 
+      {lastSaved && (
+        <div className="mb-6 bg-[#2DD4A0]/10 border border-[#2DD4A0]/30 rounded-xl px-4 py-3 text-[#2DD4A0] text-sm font-mono">
+          ✓ Salvo — publicando no jogo em ~30s
+        </div>
+      )}
+
       <p className="text-[#888] text-sm mb-8 leading-relaxed">
-        Cole a URL do TikTok ou YouTube Shorts em cada dilema. O vídeo aparece no jogo logo depois da pílula de sabedoria.
+        Cole a URL do TikTok ou YouTube Shorts. O vídeo aparece no jogo após a pílula de sabedoria.
       </p>
 
       <div className="space-y-4">

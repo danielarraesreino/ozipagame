@@ -42,10 +42,10 @@ export default function GamePage() {
     else setPlayer(p)
   }, [router])
 
-  // Busca video_urls do Supabase e injeta nos dilemas
+  // Busca video_urls (arquivo estático) e injeta nos dilemas
   useEffect(() => {
-    fetch("/api/videos")
-      .then((r) => r.json())
+    fetch("/video_urls.json")
+      .then((r) => (r.ok ? r.json() : {}))
       .then((map: Record<string, string>) => {
         for (const d of dilemas) {
           if (map[d.id]) d.video_url = map[d.id]
