@@ -1,4 +1,14 @@
 {
-  "CRIA26": { "label": "Encontro CriaLab Mai/2026", "ativo": true },
-  "OZIEL-VIVO": { "label": "Encontro presencial Oziel", "ativo": true }
+  "CRIA26": {
+    "label": "Encontro CriaLab Mai/2026",
+    "ativo": true
+  },
+  "OZIEL-VIVO": {
+    "label": "Encontro presencial Oziel",
+    "ativo": true
+  },
+  "TESTE27": {
+    "label": "Código de teste da sessão",
+    "ativo": true
+  }
 }
