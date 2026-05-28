@@ -9,6 +9,8 @@ export interface Dilema {
   dificuldade?: 1 | 2 | 3
   impacto_real?: string
   video_url?: string
+  fase?: 1 | 2          // 1 = sempre disponível · 2 = pós-oficina (desbloqueado por código)
+  espelho_de?: string   // id do dilema da fase 1 que este repete (para o sistema de mirror)
 }
 
 export const MODULO_COR: Record<string, string> = {
@@ -70,5 +72,36 @@ export const dilemas: Dilema[] = [
     fonte: "TSE — resultado eleições 2024 Campinas",
     verificacao_status: "enganoso",
     dificuldade: 1,
+  },
+
+  // ── Fase 2: pós-oficina — desbloqueados com código do encontro ───────────
+
+  {
+    id: "d04b",
+    fase: 2,
+    espelho_de: "d04",
+    modulo: "eleição",
+    meme: '"Depois do que vi hoje, ainda acho que política não é pra mim?"',
+    contexto_oculto:
+      "A facilitadora trouxe o caso real: 480 votos elegeram o vereador que fechou o posto. Vocês são mais de 3.000 jovens nesse bairro. A conta não fecha — a menos que a gente apareça.",
+    pilula_sabedoria:
+      "Não é sobre gostar de política. É sobre decidir quem decide pela sua vida.",
+    fonte: "TSE — resultado eleições 2024 Campinas",
+    verificacao_status: "enganoso",
+    dificuldade: 2,
+  },
+  {
+    id: "d01b",
+    fase: 2,
+    espelho_de: "d01",
+    modulo: "participação",
+    meme: '"Bom, depois da conversa de hoje, ainda acho que nem adianta ir?"',
+    contexto_oculto:
+      "A creche do Jardim Oziel fechou por dois votos. O encontro de hoje mostrou que presença física em audiência pública tem peso de lei — e que 200 assinaturas não substituem três pessoas na sala.",
+    pilula_sabedoria:
+      "A mudança não precisa de todo mundo. Precisa de você — que agora já sabe disso.",
+    fonte: "Câmara Municipal de Campinas",
+    verificacao_status: "enganoso",
+    dificuldade: 2,
   },
 ]

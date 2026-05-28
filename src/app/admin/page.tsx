@@ -9,6 +9,10 @@ const allDilemas: Dilema[] = [...hardcoded, ...gerados]
 
 type VideoMap = Record<string, string>
 type SaveState = "idle" | "saving" | "ok" | "err"
+type Aba = "videos" | "codigos"
+
+interface RoomCode { label: string; ativo: boolean }
+type CodesMap = Record<string, RoomCode>
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState(false)
@@ -18,6 +22,11 @@ export default function AdminPage() {
   const [videos, setVideos] = useState<VideoMap>({})
   const [saveStates, setSaveStates] = useState<Record<string, SaveState>>({})
   const [lastSaved, setLastSaved] = useState<string | null>(null)
+  const [aba, setAba] = useState<Aba>("videos")
+  const [codes, setCodes] = useState<CodesMap>({})
+  const [novoCodigo, setNovoCodigo] = useState("")
+  const [novoLabel, setNovoLabel] = useState("")
+  const [codeState, setCodeState] = useState<SaveState>("idle")
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({})
 
   // Verifica se já tem sessão e carrega URLs salvas
@@ -25,6 +34,11 @@ export default function AdminPage() {
     fetch("/video_urls.json")
       .then((r) => (r.ok ? r.json() : {}))
       .then((data) => setVideos(data))
+      .catch(() => {})
+
+    fetch("/room_codes.json")
+      .then((r) => (r.ok ? r.json() : {}))
+      .then((data) => setCodes(data))
       .catch(() => {})
 
     // Testa cookie de admin
@@ -118,15 +132,45 @@ export default function AdminPage() {
     )
   }
 
+  async function handleAddCode() {
+    if (!novoCodigo.trim()) return
+    setCodeState("saving")
+    const res = await fetch("/api/admin/codes", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ codigo: novoCodigo.trim(), label: novoLabel.trim() || novoCodigo.trim(), ativo: true }),
+    })
+    if (res.ok) {
+      setCodes((c) => ({ ...c, [novoCodigo.toUpperCase()]: { label: novoLabel || novoCodigo, ativo: true } }))
+      setNovoCodigo("")
+      setNovoLabel("")
+      setCodeState("ok")
+      setLastSaved("code")
+    } else {
+      setCodeState("err")
+    }
+    setTimeout(() => setCodeState("idle"), 2000)
+  }
+
+  async function handleRemoveCode(codigo: string) {
+    await fetch("/api/admin/codes", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ codigo, ativo: false }),
+    })
+    setCodes((c) => { const n = { ...c }; delete n[codigo]; return n })
+    setLastSaved("code")
+  }
+
   // ── CMS ──────────────────────────────────────────────────────────────────
   return (
     <main className="min-h-screen bg-[#0F0F10] px-4 py-8 max-w-2xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-6">
         <div>
           <p className="text-[11px] font-mono tracking-widest uppercase text-[#E8431E] mb-1">
             Admin · Vozes do Oziel
           </p>
-          <h1 className="text-2xl font-black text-[#F5F0E8]">Gerenciar Vídeos</h1>
+          <h1 className="text-2xl font-black text-[#F5F0E8]">Painel da equipe</h1>
         </div>
         <button
           onClick={handleLogout}
@@ -136,18 +180,37 @@ export default function AdminPage() {
         </button>
       </div>
 
+      {/* Abas */}
+      <div className="flex gap-2 mb-6">
+        {(["videos", "codigos"] as Aba[]).map((a) => (
+          <button
+            key={a}
+            onClick={() => setAba(a)}
+            className={`px-4 py-2 rounded-xl text-sm font-mono transition-colors ${
+              aba === a
+                ? "bg-[#E8431E] text-white"
+                : "bg-[#1C1C1E] border border-[#2C2C2E] text-[#888] hover:text-[#F5F0E8]"
+            }`}
+          >
+            {a === "videos" ? "🎬 Vídeos" : "🔑 Códigos de encontro"}
+          </button>
+        ))}
+      </div>
+
       {lastSaved && (
         <div className="mb-6 bg-[#2DD4A0]/10 border border-[#2DD4A0]/30 rounded-xl px-4 py-3 text-[#2DD4A0] text-sm font-mono">
           ✓ Salvo — publicando no jogo em ~30s
         </div>
       )}
 
-      <p className="text-[#888] text-sm mb-8 leading-relaxed">
-        Cole a URL do TikTok ou YouTube Shorts. O vídeo aparece no jogo após a pílula de sabedoria.
-      </p>
-
-      <div className="space-y-4">
-        {allDilemas.map((d) => {
+      {/* ── Aba Vídeos ──────────────────────────────────────────────────── */}
+      {aba === "videos" && (
+        <>
+          <p className="text-[#888] text-sm mb-6 leading-relaxed">
+            Cole a URL do TikTok ou YouTube Shorts. O vídeo aparece no jogo após a pílula de sabedoria.
+          </p>
+          <div className="space-y-4">
+            {allDilemas.map((d) => {
           const state = saveStates[d.id] ?? "idle"
           const hasVideo = !!videos[d.id]
           return (
@@ -199,7 +262,74 @@ export default function AdminPage() {
             </div>
           )
         })}
-      </div>
+          </div>
+        </>
+      )}
+
+      {/* ── Aba Códigos ─────────────────────────────────────────────────── */}
+      {aba === "codigos" && (
+        <>
+          <p className="text-[#888] text-sm mb-6 leading-relaxed">
+            Crie um código curto para revelar na lousa no final do encontro presencial.
+            Quando o jovem digita na tela inicial, desbloqueia o módulo pós-oficina.
+          </p>
+
+          {/* Criar novo código */}
+          <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-4 mb-6">
+            <p className="text-[10px] font-mono tracking-widest uppercase text-[#555] mb-4">novo código</p>
+            <div className="space-y-2">
+              <input
+                type="text"
+                value={novoCodigo}
+                onChange={(e) => setNovoCodigo(e.target.value.toUpperCase())}
+                placeholder="EX: CRIA26"
+                maxLength={12}
+                className="w-full bg-[#0F0F10] border border-[#2C2C2E] rounded-xl px-3 py-2 text-[#F5F0E8] placeholder-[#333] focus:outline-none focus:border-[#E8431E] transition-colors text-sm font-mono tracking-wider"
+              />
+              <input
+                type="text"
+                value={novoLabel}
+                onChange={(e) => setNovoLabel(e.target.value)}
+                placeholder="descrição (ex: Encontro Mai/2026)"
+                className="w-full bg-[#0F0F10] border border-[#2C2C2E] rounded-xl px-3 py-2 text-[#F5F0E8] placeholder-[#333] focus:outline-none focus:border-[#E8431E] transition-colors text-sm"
+              />
+              <button
+                onClick={handleAddCode}
+                disabled={!novoCodigo.trim() || codeState === "saving"}
+                className={`w-full py-2 rounded-xl font-bold text-sm transition-all active:scale-95 ${
+                  codeState === "ok" ? "bg-[#2DD4A0] text-black"
+                  : codeState === "err" ? "bg-[#E84040] text-white"
+                  : "bg-[#E8431E] text-white disabled:opacity-30"
+                }`}
+              >
+                {codeState === "saving" ? "criando…" : codeState === "ok" ? "✓ criado" : "criar código"}
+              </button>
+            </div>
+          </div>
+
+          {/* Lista de códigos ativos */}
+          <div className="space-y-3">
+            {Object.keys(codes).length === 0 ? (
+              <p className="text-[#555] text-sm font-mono text-center py-8">nenhum código ativo</p>
+            ) : (
+              Object.entries(codes).map(([code, info]) => (
+                <div key={code} className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-xl p-4 flex items-center justify-between">
+                  <div>
+                    <p className="text-[#F5F0E8] font-mono font-bold tracking-widest">{code}</p>
+                    <p className="text-[#555] text-xs mt-1">{info.label}</p>
+                  </div>
+                  <button
+                    onClick={() => handleRemoveCode(code)}
+                    className="text-[#555] hover:text-[#E84040] font-mono text-xs transition-colors"
+                  >
+                    remover
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        </>
+      )}
 
       <p className="text-[#333] text-xs font-mono text-center mt-12">
         Vozes do Oziel · equipe CriaLab

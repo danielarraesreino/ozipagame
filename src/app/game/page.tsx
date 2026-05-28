@@ -4,18 +4,18 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { dilemas as hardcoded } from "@/lib/dilemas"
 import { dilemas as gerados } from "@/lib/dilemas_gerados"
-import { loadPlayer } from "@/lib/store"
+import { loadPlayer, loadRespostas, saveRespostas, isPosOficinaUnlocked } from "@/lib/store"
+import type { RespostasMap } from "@/lib/store"
 import SwipeCard from "@/components/SwipeCard"
 import ConsequenceScreen from "@/components/ConsequenceScreen"
 import VideoScreen from "@/components/VideoScreen"
 import { AnimatePresence, motion } from "framer-motion"
 
-const dilemas = [...hardcoded, ...gerados]
-
 type Phase = "swipe" | "consequence" | "video" | "end"
 
 interface CardResult {
   modulo: string
+  dilemaId: string
   choice: "right" | "left"
   status?: string
 }
@@ -27,14 +27,171 @@ const STATUS_LABEL: Record<string, string> = {
   verdadeiro: "✅ verdadeiro",
 }
 
+function buildDilemas() {
+  const todos = [...hardcoded, ...gerados]
+  const desbloqueado = isPosOficinaUnlocked()
+  return todos.filter((d) => !d.fase || d.fase === 1 || (d.fase === 2 && desbloqueado))
+}
+
+// ── Tela de resultado ──────────────────────────────────────────────────────────
+
+function EndScreen({
+  player, results, respostas1, onReplay,
+}: {
+  player: { apelido: string; bairro: string }
+  results: CardResult[]
+  respostas1: RespostasMap
+  onReplay: () => void
+}) {
+  const statusCount: Record<string, number> = {}
+  const moduloSet = new Set<string>()
+  let discordou = 0
+
+  for (const r of results) {
+    if (r.status) statusCount[r.status] = (statusCount[r.status] ?? 0) + 1
+    moduloSet.add(r.modulo)
+    if (r.choice === "left") discordou++
+  }
+
+  // Mirror: detecta mudanças de opinião em relação à fase 1
+  const mudancas: { de: string; para: string; meme: string }[] = []
+  const todosD = buildDilemas()
+  for (const r of results) {
+    const dilema = todosD.find((d) => d.id === r.dilemaId)
+    if (dilema?.espelho_de && respostas1[dilema.espelho_de]) {
+      const antes = respostas1[dilema.espelho_de]
+      const depois = r.choice
+      if (antes !== depois) {
+        mudancas.push({
+          de: antes === "right" ? "concordou" : "discordou",
+          para: depois === "right" ? "concordou" : "discordou",
+          meme: dilema.meme.replace(/^"/, "").replace(/"$/, ""),
+        })
+      }
+    }
+  }
+
+  const topStatus = Object.entries(statusCount).sort((a, b) => b[1] - a[1])
+
+  const whatsappText = encodeURIComponent(
+    `Joguei Vozes do Oziel 🎮\n` +
+    `${results.length} dilemas do bairro analisados.\n` +
+    topStatus.map(([s, n]) => `${STATUS_LABEL[s] ?? s}: ${n}`).join(" · ") +
+    (mudancas.length ? `\n\nMudei de ideia ${mudancas.length}x depois da oficina.` : "") +
+    `\n\nVocê também sabe mais do que pensa 👇\nhttps://jogoozipa.vercel.app`
+  )
+
+  return (
+    <main className="h-full flex flex-col px-4 py-8 max-w-md mx-auto">
+      <motion.div
+        className="flex flex-col flex-1 justify-between"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <div>
+          <p className="text-[11px] font-mono tracking-widest uppercase text-[#E8431E] mb-6">
+            você chegou até aqui
+          </p>
+          <h2 className="text-4xl font-black leading-tight text-[#F5F0E8] mb-2">
+            {player.bairro} tem voz.
+          </h2>
+          <p className="text-[#888] leading-relaxed mb-6">
+            Cada escolha nesse jogo acontece de verdade no bairro.
+            Você já sabe mais do que a maioria.
+          </p>
+
+          {/* Mirror — epifania de mudança */}
+          {mudancas.length > 0 && (
+            <motion.div
+              className="bg-[#2DD4A0]/10 border border-[#2DD4A0]/40 rounded-2xl p-5 mb-6"
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              <p className="text-[10px] font-mono tracking-widest uppercase text-[#2DD4A0] mb-3">
+                você evoluiu
+              </p>
+              {mudancas.map((m, i) => (
+                <p key={i} className="text-[#F5F0E8] text-sm leading-relaxed mb-2">
+                  Antes da oficina você <strong>{m.de}</strong> com{" "}
+                  <em>"{m.meme}"</em>. Hoje você <strong>{m.para}</strong>.
+                </p>
+              ))}
+              <p className="text-[#2DD4A0] text-xs font-mono mt-3">
+                isso é o que a informação faz — muda o que a gente pensa.
+              </p>
+            </motion.div>
+          )}
+
+          {/* Stats */}
+          <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-5 space-y-3">
+            <p className="text-[10px] font-mono tracking-widest uppercase text-[#555] mb-4">
+              seu resumo
+            </p>
+            <div className="flex justify-between">
+              <span className="text-[#888] text-sm">dilemas vistos</span>
+              <span className="text-[#F5F0E8] font-bold">{results.length}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-[#888] text-sm">vezes que discordou</span>
+              <span className="text-[#F5F0E8] font-bold">{discordou}</span>
+            </div>
+            {topStatus.map(([s, n]) => (
+              <div key={s} className="flex justify-between">
+                <span className="text-[#888] text-sm">{STATUS_LABEL[s] ?? s}</span>
+                <span className="text-[#F5F0E8] font-bold">{n}</span>
+              </div>
+            ))}
+            {mudancas.length > 0 && (
+              <div className="flex justify-between">
+                <span className="text-[#888] text-sm">mudanças de opinião</span>
+                <span className="text-[#2DD4A0] font-bold">{mudancas.length}</span>
+              </div>
+            )}
+            {moduloSet.size > 0 && (
+              <div className="pt-2 border-t border-[#2C2C2E]">
+                <span className="text-[#555] text-xs font-mono">
+                  módulos: {[...moduloSet].join(" · ")}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="space-y-3 mt-8">
+          <a
+            href={`https://wa.me/?text=${whatsappText}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full py-4 bg-[#25D366] text-white font-bold text-base rounded-xl active:scale-95 transition-transform"
+          >
+            compartilhar no WhatsApp
+          </a>
+          <button
+            onClick={onReplay}
+            className="w-full py-4 border border-[#2C2C2E] text-[#888] font-bold text-base rounded-xl active:scale-95 transition-transform"
+          >
+            jogar de novo
+          </button>
+        </div>
+      </motion.div>
+    </main>
+  )
+}
+
+// ── Game ──────────────────────────────────────────────────────────────────────
+
 export default function GamePage() {
   const router = useRouter()
   const [player, setPlayer] = useState<{ apelido: string; bairro: string } | null>(null)
+  const [dilemas] = useState(() => buildDilemas())
   const [index, setIndex] = useState(0)
   const [phase, setPhase] = useState<Phase>("swipe")
   const [lastChoice, setLastChoice] = useState<"right" | "left">("right")
   const [cardKey, setCardKey] = useState(0)
   const [results, setResults] = useState<CardResult[]>([])
+  const [respostas1] = useState<RespostasMap>(() => loadRespostas(1))
+  const [respostasAtuais, setRespostasAtuais] = useState<RespostasMap>({})
 
   useEffect(() => {
     const p = loadPlayer()
@@ -42,7 +199,6 @@ export default function GamePage() {
     else setPlayer(p)
   }, [router])
 
-  // Busca video_urls (arquivo estático) e injeta nos dilemas
   useEffect(() => {
     fetch("/video_urls.json")
       .then((r) => (r.ok ? r.json() : {}))
@@ -52,7 +208,7 @@ export default function GamePage() {
         }
       })
       .catch(() => {})
-  }, [])
+  }, [dilemas])
 
   function handleSwipe(direction: "right" | "left") {
     setLastChoice(direction)
@@ -61,10 +217,12 @@ export default function GamePage() {
 
   function handleConsequenceNext() {
     const d = dilemas[index]
-    setResults((prev) => [
-      ...prev,
-      { modulo: d.modulo, choice: lastChoice, status: d.verificacao_status },
-    ])
+    const novasRespostas = { ...respostasAtuais, [d.id]: lastChoice }
+    setRespostasAtuais(novasRespostas)
+
+    const r: CardResult = { modulo: d.modulo, dilemaId: d.id, choice: lastChoice, status: d.verificacao_status }
+    setResults((prev) => [...prev, r])
+
     if (d.video_url) {
       setPhase("video")
     } else {
@@ -74,6 +232,13 @@ export default function GamePage() {
 
   function advanceCard() {
     if (index + 1 >= dilemas.length) {
+      // Salva respostas antes de ir para a tela final
+      const fase1Ids = dilemas.filter((d) => !d.fase || d.fase === 1).map((d) => d.id)
+      const rf1: RespostasMap = {}
+      for (const [id, v] of Object.entries(respostasAtuais)) {
+        if (fase1Ids.includes(id)) rf1[id] = v
+      }
+      saveRespostas(rf1, 1)
       setPhase("end")
     } else {
       setIndex((i) => i + 1)
@@ -84,109 +249,29 @@ export default function GamePage() {
 
   if (!player) return null
 
+  if (phase === "end") {
+    return (
+      <EndScreen
+        player={player}
+        results={results}
+        respostas1={respostas1}
+        onReplay={() => {
+          setIndex(0)
+          setCardKey((k) => k + 1)
+          setResults([])
+          setRespostasAtuais({})
+          setPhase("swipe")
+        }}
+      />
+    )
+  }
+
   const current = dilemas[index]
   const progressIndex = index + (phase !== "swipe" ? 1 : 0)
   const progress = (progressIndex / dilemas.length) * 100
 
-  // ── Tela de resultado ──────────────────────────────────────────────────────
-  if (phase === "end") {
-    const statusCount: Record<string, number> = {}
-    const moduloSet = new Set<string>()
-    let discordou = 0
-
-    for (const r of results) {
-      if (r.status) statusCount[r.status] = (statusCount[r.status] ?? 0) + 1
-      moduloSet.add(r.modulo)
-      if (r.choice === "left") discordou++
-    }
-
-    const topStatus = Object.entries(statusCount).sort((a, b) => b[1] - a[1])
-
-    const whatsappText = encodeURIComponent(
-      `Joguei Vozes do Oziel 🎮\n` +
-      `${results.length} dilemas do bairro analisados.\n` +
-      topStatus.map(([s, n]) => `${STATUS_LABEL[s] ?? s}: ${n}`).join(" · ") +
-      `\n\nVocê também sabe mais do que pensa 👇\nlocalhost:3000`
-    )
-
-    return (
-      <main className="h-full flex flex-col px-4 py-8 max-w-md mx-auto">
-        <motion.div
-          className="flex flex-col flex-1 justify-between"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div>
-            <p className="text-[11px] font-mono tracking-widest uppercase text-[#E8431E] mb-6">
-              você chegou até aqui
-            </p>
-            <h2 className="text-4xl font-black leading-tight text-[#F5F0E8] mb-2">
-              {player.bairro} tem voz.
-            </h2>
-            <p className="text-[#888] leading-relaxed mb-8">
-              Cada escolha nesse jogo acontece de verdade no bairro.
-              Você já sabe mais do que a maioria.
-            </p>
-
-            {/* Stats */}
-            <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-5 space-y-3">
-              <p className="text-[10px] font-mono tracking-widest uppercase text-[#555] mb-4">
-                seu resumo
-              </p>
-              <div className="flex justify-between">
-                <span className="text-[#888] text-sm">dilemas vistos</span>
-                <span className="text-[#F5F0E8] font-bold">{results.length}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-[#888] text-sm">vezes que discordou</span>
-                <span className="text-[#F5F0E8] font-bold">{discordou}</span>
-              </div>
-              {topStatus.map(([s, n]) => (
-                <div key={s} className="flex justify-between">
-                  <span className="text-[#888] text-sm">{STATUS_LABEL[s] ?? s}</span>
-                  <span className="text-[#F5F0E8] font-bold">{n}</span>
-                </div>
-              ))}
-              {moduloSet.size > 0 && (
-                <div className="pt-2 border-t border-[#2C2C2E]">
-                  <span className="text-[#555] text-xs font-mono">
-                    módulos: {[...moduloSet].join(" · ")}
-                  </span>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-3 mt-8">
-            <a
-              href={`https://wa.me/?text=${whatsappText}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-4 bg-[#25D366] text-white font-bold text-base rounded-xl active:scale-95 transition-transform"
-            >
-              <span>compartilhar no WhatsApp</span>
-            </a>
-            <button
-              onClick={() => {
-                setIndex(0)
-                setCardKey((k) => k + 1)
-                setResults([])
-                setPhase("swipe")
-              }}
-              className="w-full py-4 border border-[#2C2C2E] text-[#888] font-bold text-base rounded-xl active:scale-95 transition-transform"
-            >
-              jogar de novo
-            </button>
-          </div>
-        </motion.div>
-      </main>
-    )
-  }
-
-  // ── Jogo ──────────────────────────────────────────────────────────────────
   return (
     <main className="h-full flex flex-col px-4 py-6 max-w-md mx-auto">
-      {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <span className="text-sm text-[#888]">
           oi, <strong className="text-[#F5F0E8]">{player.apelido}</strong>
@@ -196,7 +281,6 @@ export default function GamePage() {
         </span>
       </div>
 
-      {/* Progress bar */}
       <div className="w-full h-1 bg-[#1C1C1E] rounded-full mb-6 overflow-hidden">
         <motion.div
           className="h-full bg-[#E8431E] rounded-full"
@@ -205,7 +289,6 @@ export default function GamePage() {
         />
       </div>
 
-      {/* Main area */}
       <div className="flex-1 relative min-h-0">
         <AnimatePresence mode="wait">
           {phase === "swipe" && (
@@ -217,12 +300,7 @@ export default function GamePage() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <SwipeCard
-                key={cardKey}
-                dilema={current}
-                onSwipe={handleSwipe}
-                isTop
-              />
+              <SwipeCard key={cardKey} dilema={current} onSwipe={handleSwipe} isTop />
             </motion.div>
           )}
 

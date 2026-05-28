@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { savePlayer } from "@/lib/store"
+import { savePlayer, unlockModulo, isPosOficinaUnlocked } from "@/lib/store"
 
 const bairros = [
   "Jardim Oziel",
@@ -16,6 +16,27 @@ export default function Home() {
   const router = useRouter()
   const [apelido, setApelido] = useState("")
   const [bairro, setBairro] = useState("")
+  const [codigo, setCodigo] = useState("")
+  const [codigoStatus, setCodigoStatus] = useState<"idle" | "ok" | "err">("idle")
+  const [mostrarCodigo, setMostrarCodigo] = useState(false)
+  const jaDesbloqueado = isPosOficinaUnlocked()
+
+  async function validarCodigo(c: string) {
+    const val = c.trim().toUpperCase()
+    if (!val) return
+    try {
+      const data = await fetch("/room_codes.json").then((r) => r.json())
+      const entry = data[val]
+      if (entry?.ativo) {
+        unlockModulo(val)
+        setCodigoStatus("ok")
+      } else {
+        setCodigoStatus("err")
+      }
+    } catch {
+      setCodigoStatus("err")
+    }
+  }
 
   function handleStart() {
     if (!apelido.trim() || !bairro) return
@@ -67,6 +88,56 @@ export default function Home() {
               ))}
             </select>
           </div>
+
+          {/* Código de encontro */}
+          <div>
+            {jaDesbloqueado ? (
+              <div className="flex items-center gap-2 px-4 py-3 bg-[#2DD4A0]/10 border border-[#2DD4A0]/30 rounded-xl">
+                <span className="text-[#2DD4A0] text-sm">✓</span>
+                <span className="text-[#2DD4A0] text-sm font-mono">modo pós-oficina ativo</span>
+              </div>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setMostrarCodigo(!mostrarCodigo)}
+                  className="text-[10px] font-mono tracking-widest uppercase text-[#555] hover:text-[#888] transition-colors"
+                >
+                  {mostrarCodigo ? "▲" : "▼"} tenho um código de oficina
+                </button>
+
+                {mostrarCodigo && (
+                  <div className="mt-2 flex gap-2">
+                    <input
+                      type="text"
+                      value={codigo}
+                      onChange={(e) => { setCodigo(e.target.value.toUpperCase()); setCodigoStatus("idle") }}
+                      placeholder="EX: CRIA26"
+                      maxLength={16}
+                      className={`flex-1 bg-[#1C1C1E] border rounded-xl px-4 py-3 text-[#F5F0E8] placeholder-[#444] focus:outline-none transition-colors text-base font-mono tracking-wider ${
+                        codigoStatus === "ok" ? "border-[#2DD4A0]"
+                        : codigoStatus === "err" ? "border-[#E84040]"
+                        : "border-[#2C2C2E] focus:border-[#E8431E]"
+                      }`}
+                    />
+                    <button
+                      onClick={() => validarCodigo(codigo)}
+                      className="px-4 py-3 bg-[#1C1C1E] border border-[#2C2C2E] rounded-xl text-[#888] font-mono text-sm hover:border-[#E8431E] transition-colors"
+                    >
+                      ok
+                    </button>
+                  </div>
+                )}
+
+                {codigoStatus === "ok" && (
+                  <p className="mt-2 text-[#2DD4A0] text-xs font-mono">✓ módulo pós-oficina desbloqueado!</p>
+                )}
+                {codigoStatus === "err" && (
+                  <p className="mt-2 text-[#E84040] text-xs font-mono">código inválido — confere com a facilitadora</p>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
 
@@ -81,7 +152,7 @@ export default function Home() {
         <p className="text-center text-[#444] text-xs mt-4 font-mono">
           sem cadastro · sem senha · sem rastreio
         </p>
-        <p className="text-center text-[#444] text-xs mt-4 font-mono">
+        <p className="text-center text-[#444] text-xs mt-2 font-mono">
           ou <a href="/jogo.html" className="underline text-[#E8431E]">jogar em HTML standalone</a>
           {" · "}
           <a href="/sobre.html" className="underline">sobre o projeto</a>
