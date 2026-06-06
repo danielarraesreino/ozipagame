@@ -9,6 +9,7 @@ import type { RespostasMap } from "@/lib/store"
 import SwipeCard from "@/components/SwipeCard"
 import ConsequenceScreen from "@/components/ConsequenceScreen"
 import VideoScreen from "@/components/VideoScreen"
+import { fetchImportados } from "@/lib/cards"
 import { AnimatePresence, motion } from "framer-motion"
 
 type Phase = "swipe" | "consequence" | "video" | "end"
@@ -184,7 +185,7 @@ function EndScreen({
 export default function GamePage() {
   const router = useRouter()
   const [player, setPlayer] = useState<{ apelido: string; bairro: string } | null>(null)
-  const [dilemas] = useState(() => buildDilemas())
+  const [dilemas, setDilemas] = useState(() => buildDilemas())
   const [index, setIndex] = useState(0)
   const [phase, setPhase] = useState<Phase>("swipe")
   const [lastChoice, setLastChoice] = useState<"right" | "left">("right")
@@ -198,6 +199,24 @@ export default function GamePage() {
     if (!p) router.replace("/")
     else setPlayer(p)
   }, [router])
+
+  // Cards importados do pipeline (runtime). Acrescenta os que não colidem de id,
+  // respeitando o filtro de fase (pós-oficina fica travado sem código).
+  useEffect(() => {
+    const desbloqueado = isPosOficinaUnlocked()
+    fetchImportados().then((extras) => {
+      if (!extras.length) return
+      setDilemas((atuais) => {
+        const ids = new Set(atuais.map((d) => d.id))
+        const novos = extras.filter(
+          (d) =>
+            !ids.has(d.id) &&
+            (!d.fase || d.fase === 1 || (d.fase === 2 && desbloqueado)),
+        )
+        return novos.length ? [...atuais, ...novos] : atuais
+      })
+    })
+  }, [])
 
   useEffect(() => {
     fetch("/video_urls.json")

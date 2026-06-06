@@ -8,9 +8,12 @@ export interface Dilema {
   verificacao_status?: "falso" | "enganoso" | "contexto_ausente" | "verdadeiro"
   dificuldade?: 1 | 2 | 3
   impacto_real?: string
-  video_url?: string
+  video_url?: string    // vídeo da PÍLULA, exibido DEPOIS da escolha (não é o meme)
+  meme_imagem?: string  // imagem do próprio meme, exibida NO card
+  meme_video?: string   // vídeo do próprio meme, exibido NO card (tem prioridade sobre imagem)
   fase?: 1 | 2          // 1 = sempre disponível · 2 = pós-oficina (desbloqueado por código)
   espelho_de?: string   // id do dilema da fase 1 que este repete (para o sistema de mirror)
+  importado?: boolean   // veio do pipeline ozielmemes via /dilemas_importados.json
 }
 
 export const MODULO_COR: Record<string, string> = {

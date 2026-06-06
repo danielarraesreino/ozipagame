@@ -9,7 +9,7 @@ const allDilemas: Dilema[] = [...hardcoded, ...gerados]
 
 type VideoMap = Record<string, string>
 type SaveState = "idle" | "saving" | "ok" | "err"
-type Aba = "videos" | "codigos"
+type Aba = "videos" | "cards" | "codigos"
 
 interface RoomCode { label: string; ativo: boolean }
 type CodesMap = Record<string, RoomCode>
@@ -28,6 +28,9 @@ export default function AdminPage() {
   const [novoLabel, setNovoLabel] = useState("")
   const [codeState, setCodeState] = useState<SaveState>("idle")
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({})
+  const [importados, setImportados] = useState<Dilema[]>([])
+  const [ativos, setAtivos] = useState<Record<string, boolean>>({})
+  const [cardBusy, setCardBusy] = useState<string | null>(null)
 
   // Verifica se já tem sessão e carrega URLs salvas
   useEffect(() => {
@@ -39,6 +42,16 @@ export default function AdminPage() {
     fetch("/room_codes.json")
       .then((r) => (r.ok ? r.json() : {}))
       .then((data) => setCodes(data))
+      .catch(() => {})
+
+    fetch("/dilemas_importados.json")
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data: Dilema[]) => setImportados(Array.isArray(data) ? data : []))
+      .catch(() => {})
+
+    fetch("/cards_ativos.json")
+      .then((r) => (r.ok ? r.json() : {}))
+      .then((data) => setAtivos(data))
       .catch(() => {})
 
     // Testa cookie de admin
@@ -152,6 +165,26 @@ export default function AdminPage() {
     setTimeout(() => setCodeState("idle"), 2000)
   }
 
+  // Card importado entra ativo por padrão; só fica inativo se explicitamente false.
+  function cardAtivo(id: string) {
+    return ativos[id] !== false
+  }
+
+  async function handleToggleCard(id: string) {
+    const novo = !cardAtivo(id)
+    setCardBusy(id)
+    const res = await fetch("/api/admin/cards", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dilema_id: id, ativo: novo }),
+    })
+    if (res.ok) {
+      setAtivos((a) => ({ ...a, [id]: novo }))
+      setLastSaved(id)
+    }
+    setCardBusy(null)
+  }
+
   async function handleRemoveCode(codigo: string) {
     await fetch("/api/admin/codes", {
       method: "PUT",
@@ -182,7 +215,7 @@ export default function AdminPage() {
 
       {/* Abas */}
       <div className="flex gap-2 mb-6">
-        {(["videos", "codigos"] as Aba[]).map((a) => (
+        {(["videos", "cards", "codigos"] as Aba[]).map((a) => (
           <button
             key={a}
             onClick={() => setAba(a)}
@@ -192,7 +225,7 @@ export default function AdminPage() {
                 : "bg-[#1C1C1E] border border-[#2C2C2E] text-[#888] hover:text-[#F5F0E8]"
             }`}
           >
-            {a === "videos" ? "🎬 Vídeos" : "🔑 Códigos de encontro"}
+            {a === "videos" ? "🎬 Vídeos" : a === "cards" ? "📥 Cards" : "🔑 Códigos"}
           </button>
         ))}
       </div>
@@ -263,6 +296,61 @@ export default function AdminPage() {
           )
         })}
           </div>
+        </>
+      )}
+
+      {/* ── Aba Cards importados ────────────────────────────────────────── */}
+      {aba === "cards" && (
+        <>
+          <p className="text-[#888] text-sm mb-2 leading-relaxed">
+            Cards vindos do pipeline OzielMemes. Já entram <strong>ativos</strong> no jogo —
+            desligue aqui qualquer um que ainda não deva aparecer.
+          </p>
+          <p className="text-[#555] text-xs font-mono mb-6">
+            {importados.length} importado(s) · {importados.filter((d) => cardAtivo(d.id)).length} ativo(s)
+          </p>
+
+          {importados.length === 0 ? (
+            <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-6 text-center">
+              <p className="text-[#888] text-sm mb-2">Nenhum card importado ainda.</p>
+              <p className="text-[#555] text-xs font-mono leading-relaxed">
+                No painel OzielMemes (Streamlit), use a página 🎬 Vídeos →
+                &ldquo;Exportar vídeos + cards pro jogo&rdquo;. Os cards aparecem aqui.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {importados.map((d) => {
+                const on = cardAtivo(d.id)
+                const busy = cardBusy === d.id
+                return (
+                  <div key={d.id} className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-[10px] font-mono text-[#555] uppercase tracking-widest">{d.id}</span>
+                      <span className="text-[10px] font-mono text-[#E8431E] uppercase tracking-widest">{d.modulo}</span>
+                      {d.meme_video && <span className="text-[10px] font-mono text-[#2DD4A0]">🎬 vídeo</span>}
+                      {!d.meme_video && d.meme_imagem && <span className="text-[10px] font-mono text-[#2DD4A0]">🖼️ imagem</span>}
+                    </div>
+                    <p className="text-[#F5F0E8] text-sm font-semibold mb-1 line-clamp-2">{d.meme}</p>
+                    {d.pilula_sabedoria && (
+                      <p className="text-[#888] text-xs italic mb-4 line-clamp-2">💡 {d.pilula_sabedoria}</p>
+                    )}
+                    <button
+                      onClick={() => handleToggleCard(d.id)}
+                      disabled={busy}
+                      className={`w-full py-2 rounded-xl font-bold text-sm transition-all active:scale-95 ${
+                        on
+                          ? "bg-[#2DD4A0]/15 border border-[#2DD4A0]/40 text-[#2DD4A0]"
+                          : "bg-[#1C1C1E] border border-[#2C2C2E] text-[#666]"
+                      } disabled:opacity-50`}
+                    >
+                      {busy ? "…" : on ? "✓ no jogo — toque pra tirar" : "fora do jogo — toque pra ativar"}
+                    </button>
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </>
       )}
 
