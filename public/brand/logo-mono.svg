@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <clipPath id="bub">
+      <rect x="34" y="28" width="188" height="152" rx="60"/>
+      <path d="M 80 168 L 120 172 L 70 218 Z"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#bub)">
+    <rect x="0" y="0" width="256" height="256" fill="#1C1C1E"/>
+    <path d="M 132 18 C 112 70, 148 122, 128 204 L 256 256 L 256 0 Z" fill="#1C1C1E"/>
+  </g>
+  <g clip-path="url(#bub)"></g>
+  <circle cx="124" cy="100" r="38" fill="#FFFFFF"/>
+  <polyline points="121,82 101,100 121,118" fill="none" stroke="#1C1C1E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="127,82 147,100 127,118" fill="none" stroke="#1C1C1E" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

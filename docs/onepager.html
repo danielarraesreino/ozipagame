@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Vozes do Oziel — One Pager</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 210mm; height: 297mm;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #0E0E0F;
+    color: #F5F0E8;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page { width: 210mm; height: 297mm; padding: 14mm 14mm 10mm; display: flex; flex-direction: column; }
+
+  /* HEADER */
+  .eyebrow { font-size: 8.5pt; letter-spacing: 3px; text-transform: uppercase; color: #E8431E; font-weight: 700; margin-bottom: 6px; }
+  h1 { font-size: 40pt; font-weight: 900; line-height: 0.92; letter-spacing: -1px; }
+  h1 .o { color: #E8431E; }
+  .tagline { font-size: 11pt; color: #B8B0A4; margin-top: 10px; max-width: 130mm; line-height: 1.4; }
+  .header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+  .url-badge { text-align: right; flex-shrink: 0; }
+  .url-badge .play { display: inline-block; background: #E8431E; color: #fff; font-weight: 800; font-size: 9.5pt; padding: 8px 14px; border-radius: 8px; white-space: nowrap; }
+  .url-badge .meta { font-size: 7.5pt; color: #777; font-family: ui-monospace, monospace; margin-top: 6px; letter-spacing: 0.5px; }
+
+  .rule { height: 2px; background: linear-gradient(90deg, #E8431E 0%, #2C2C2E 60%, transparent 100%); margin: 14px 0 0; }
+
+  /* WHAT IS */
+  .lead { font-size: 10pt; line-height: 1.5; color: #D8D0C4; margin: 14px 0 4px; }
+  .lead b { color: #F5F0E8; }
+
+  /* FLOW STRIP */
+  .flow { display: flex; align-items: stretch; gap: 0; margin: 12px 0 2px; }
+  .step { flex: 1; background: #1C1C1E; border: 1px solid #2C2C2E; border-radius: 8px; padding: 8px 8px; text-align: center; position: relative; }
+  .step .n { font-size: 7pt; font-family: ui-monospace, monospace; color: #E8431E; letter-spacing: 1px; }
+  .step .t { font-size: 8pt; font-weight: 700; margin-top: 3px; line-height: 1.2; }
+  .step .d { font-size: 6.8pt; color: #888; margin-top: 2px; line-height: 1.2; }
+  .arrow { display: flex; align-items: center; color: #E8431E; font-size: 12pt; padding: 0 4px; }
+
+  /* COLUMNS */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 14px; flex: 1; }
+  .card { background: #141416; border: 1px solid #26262A; border-radius: 10px; padding: 11px 13px; }
+  .card h3 { font-size: 10pt; font-weight: 800; display: flex; align-items: center; gap: 7px; margin-bottom: 7px; }
+  .card h3 .ic { font-size: 12pt; }
+  .card ul { list-style: none; }
+  .card li { font-size: 8.2pt; line-height: 1.45; color: #C8C0B4; padding-left: 12px; position: relative; margin-bottom: 4px; }
+  .card li::before { content: "›"; position: absolute; left: 0; color: #E8431E; font-weight: 700; }
+  .card li b { color: #F5F0E8; }
+
+  .accent-play h3 { color: #2DD4A0; }
+  .accent-school h3 { color: #3B82F6; }
+  .accent-media h3 { color: #F59E0B; }
+  .accent-dev h3 { color: #E8431E; }
+
+  /* STATS BAR */
+  .stats { display: flex; gap: 8px; margin-top: 12px; }
+  .stat { flex: 1; background: #1C1C1E; border: 1px solid #2C2C2E; border-radius: 8px; padding: 8px; text-align: center; }
+  .stat .big { font-size: 15pt; font-weight: 900; color: #E8431E; line-height: 1; }
+  .stat .lbl { font-size: 6.6pt; text-transform: uppercase; letter-spacing: 1px; color: #888; margin-top: 4px; }
+
+  /* FOOTER */
+  .footer { margin-top: 12px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #26262A; padding-top: 8px; }
+  .footer .who { font-size: 8pt; color: #999; }
+  .footer .who b { color: #F5F0E8; }
+  .footer .stack { font-size: 6.8pt; font-family: ui-monospace, monospace; color: #666; letter-spacing: 0.5px; }
+  .quote { font-size: 11pt; font-weight: 800; color: #E8431E; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header-row">
+    <div>
+      <div class="eyebrow">Grupo Diálogos · CriaLab · FEAC · Campinas-SP</div>
+      <h1>Vozes<br>d<span class="o">o</span> Oziel</h1>
+    </div>
+    <div class="url-badge">
+      <span class="play">▶ jogoozipa.vercel.app</span>
+      <div class="meta">3–5 MIN · MOBILE<br>SEM CADASTRO · SEM RASTREIO</div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <p class="lead">
+    Um <b>serious game</b> sobre política, memes e o que eles escondem — feito por e para a juventude do
+    Jardim Oziel. Formato Tinder: o jogador arrasta <b>memes políticos reais</b> para concordar ou discordar,
+    e cada escolha revela <b>o contexto que o meme apaga</b> — e por que aquilo importa pro bairro.
+  </p>
+
+  <!-- FLOW -->
+  <div class="flow">
+    <div class="step"><div class="n">01</div><div class="t">Entra</div><div class="d">apelido + bairro</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="n">02</div><div class="t">Arrasta o meme</div><div class="d">concordo / discordo</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="n">03</div><div class="t">Revelação</div><div class="d">o que o meme apaga + fact-check</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="n">04</div><div class="t">Vídeo da galera</div><div class="d">TikTok / Shorts</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="n">05</div><div class="t">Resultado</div><div class="d">resumo + compartilha</div></div>
+  </div>
+
+  <!-- COLUMNS -->
+  <div class="cols">
+
+    <div class="card accent-play">
+      <h3><span class="ic">👾</span> Para jogadores</h3>
+      <ul>
+        <li>Igual Tinder, mas com <b>memes políticos</b>: arrasta e descobre a real.</li>
+        <li>Selo em cada meme: <b>❌ falso · ⚠️ enganoso · ✅ verdadeiro</b>.</li>
+        <li><b>Sem nota, sem certo ou errado</b> — é pra pensar, não pra passar de fase.</li>
+        <li>Roda no celular, não baixa nada, não pede seus dados.</li>
+      </ul>
+    </div>
+
+    <div class="card accent-school">
+      <h3><span class="ic">🤝</span> Para escolas</h3>
+      <ul>
+        <li>Educação <b>cívica e midiática</b> para adolescentes de <b>12 a 17 anos</b>.</li>
+        <li>Sessão de 3–5 min: cabe na aula e rende debate em grupo.</li>
+        <li><b>Código de oficina</b> conecta a atividade presencial ao jogo.</li>
+        <li>Seguro para menores: <b>LGPD-friendly</b>, sem coleta de dados.</li>
+      </ul>
+    </div>
+
+    <div class="card accent-media">
+      <h3><span class="ic">📰</span> Para a mídia</h3>
+      <ul>
+        <li>Jogo de <b>combate à desinformação</b> criado na periferia, pela periferia.</li>
+        <li>Conteúdo de <b>memes reais checados</b> + vídeos feitos pelos jovens.</li>
+        <li>Estética crua, mobile-first — a linguagem da própria galera.</li>
+        <li>Devolve protagonismo a quem mais sofre com fake news.</li>
+      </ul>
+    </div>
+
+    <div class="card accent-dev">
+      <h3><span class="ic">🛠️</span> Para devs</h3>
+      <ul>
+        <li><b>Next.js 16 + React 19 + Tailwind 4</b>, deploy contínuo na Vercel.</li>
+        <li><b>CMS sem banco</b>: edita pelo celular → commit no GitHub → live em ~30s.</li>
+        <li>Pipeline de conteúdo desacoplada com <b>37 testes TDD</b>.</li>
+        <li>Zero rastreio por design + fallback HTML puro standalone.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="big">12–17</div><div class="lbl">faixa etária</div></div>
+    <div class="stat"><div class="big">3–5 min</div><div class="lbl">por sessão</div></div>
+    <div class="stat"><div class="big">4</div><div class="lbl">módulos temáticos</div></div>
+    <div class="stat"><div class="big">100%</div><div class="lbl">sem rastreio</div></div>
+    <div class="stat"><div class="big">0</div><div class="lbl">cadastro / senha</div></div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="who">
+      <b>Vozes do Oziel</b> — Semana Cívica 2026 · Jardim Oziel, Campinas-SP<br>
+      <span class="stack">github.com/danielarraesreino/ozipagame · jogoozipa.vercel.app</span>
+    </div>
+    <div class="quote">"O Oziel tem voz."</div>
+  </div>
+
+</div>
+</body>
+</html>

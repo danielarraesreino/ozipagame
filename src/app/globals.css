@@ -1,9 +1,68 @@
 @import "tailwindcss";
 
+/* ───────────────────────────────────────────────────────────
+   VOZES DO OZIEL — sistema de marca (Grupo Diálogos · CriaLab)
+   Paleta e tokens oficiais do guia VozesDoOziel_Marca.pdf
+   ─────────────────────────────────────────────────────────── */
+@theme {
+  /* paleta da marca */
+  --color-grafite: #13130E;     /* fundo base */
+  --color-grafite-2: #1E1E18;   /* superfícies / cards */
+  --color-grafite-3: #2A2A22;   /* bordas / divisores */
+  --color-creme: #F7F1E6;       /* texto principal */
+  --color-creme-soft: #B8B2A6;  /* texto secundário */
+  --color-laranja: #EA5B1E;     /* destaque / ação */
+  --color-amarelo: #FFD21E;     /* atenção / acento */
+  --color-verde: #26C79A;       /* concordo */
+  --color-vermelho: #E8402F;    /* discordo */
+
+  /* tipografia */
+  --font-display: var(--font-archivo), system-ui, sans-serif;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
+}
+
 html, body, #__next {
   height: 100%;
-  background: #0E0E0F;
-  color: #F5F0E8;
+  background: var(--color-grafite);
+  color: var(--color-creme);
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
+  font-family: var(--font-sans);
+}
+
+/* Lockup da marca: display preta, condensada, caixa-alta, leading curto */
+.brand-lockup {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.86;
+  letter-spacing: -0.01em;
+}
+
+/* Rótulos e tagline em mono espaçado (estilo zine/risograph) */
+.brand-label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+
+/* Textura halftone risograph (creme sobre grafite) usada de fundo */
+.bg-halftone {
+  background-color: var(--color-grafite);
+  background-image: url("/brand/bg-halftone.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Véu para legibilidade quando o halftone fica atrás de texto */
+.bg-halftone-veil {
+  position: relative;
+}
+.bg-halftone-veil::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(19,19,14,0.55) 0%, rgba(19,19,14,0.92) 100%);
+  pointer-events: none;
 }

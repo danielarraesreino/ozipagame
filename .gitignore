@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# brand source material (raw exports / zips / AI-gen variants — usamos os tratados em public/brand)
+*.zip
+/fundos/
+/megafone/
+/megafone (2)/
+/logo com o/
+/o que é/
+/o que é (2)/
+/o que é (3)/
+/insta 9-16/
+/A3_VozesDoOziel*.pdf
+/seedream-*.jpg
+/lucid-origin*.jpg
