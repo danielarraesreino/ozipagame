@@ -18,20 +18,24 @@ async function ghGet() {
   return res.json()
 }
 
-// PUT { trilha } — define (ou remove, se vazio) a URL da trilha sonora de fundo.
+interface Faixa { nome: string; url: string }
+
+// PUT { trilhas: Faixa[] } — substitui a playlist inteira da trilha de fundo.
 export async function PUT(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ ok: false }, { status: 401 })
 
-  const { trilha } = await req.json()
+  const body = await req.json()
+  const trilhas: Faixa[] = Array.isArray(body.trilhas)
+    ? body.trilhas
+        .filter((f: Faixa) => f && typeof f.url === "string" && f.url)
+        .map((f: Faixa) => ({ nome: String(f.nome || "faixa").slice(0, 80), url: f.url }))
+    : []
 
   const file = await ghGet()
-  const current: Record<string, string> = file.content
-    ? JSON.parse(Buffer.from(file.content, "base64").toString())
-    : {}
+  // Mantém compat: grava a lista nova e espelha a 1ª faixa em `trilha`.
+  const novo = { trilhas, trilha: trilhas[0]?.url ?? "" }
 
-  current.trilha = typeof trilha === "string" ? trilha : ""
-
-  const newContent = Buffer.from(JSON.stringify(current, null, 2)).toString("base64")
+  const newContent = Buffer.from(JSON.stringify(novo, null, 2)).toString("base64")
 
   await fetch(`https://api.github.com/repos/${REPO}/contents/${FILE}`, {
     method: "PUT",
@@ -41,7 +45,7 @@ export async function PUT(req: NextRequest) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      message: `cms: ${current.trilha ? "define" : "remove"} trilha sonora`,
+      message: `cms: atualiza playlist (${trilhas.length} faixa(s))`,
       content: newContent,
       sha: file.sha,
     }),

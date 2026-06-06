@@ -15,6 +15,7 @@ type Aba = "videos" | "cards" | "trilha" | "codigos"
 
 interface RoomCode { label: string; ativo: boolean }
 type CodesMap = Record<string, RoomCode>
+interface Faixa { nome: string; url: string }
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState(false)
@@ -34,10 +35,11 @@ export default function AdminPage() {
   const [importados, setImportados] = useState<Dilema[]>([])
   const [ativos, setAtivos] = useState<Record<string, boolean>>({})
   const [cardBusy, setCardBusy] = useState<string | null>(null)
-  const [trilha, setTrilha] = useState("")
+  const [trilhas, setTrilhas] = useState<Faixa[]>([])
   const [trilhaState, setTrilhaState] = useState<SaveState>("idle")
   const [trilhaUpload, setTrilhaUpload] = useState<UploadState>("idle")
-  const trilhaRef = useRef<HTMLInputElement | null>(null)
+  const trilhaUrlRef = useRef<HTMLInputElement | null>(null)
+  const trilhaNomeRef = useRef<HTMLInputElement | null>(null)
 
   // Verifica se já tem sessão e carrega URLs salvas
   useEffect(() => {
@@ -62,8 +64,14 @@ export default function AdminPage() {
       .catch(() => {})
 
     fetch("/audio_config.json")
-      .then((r) => (r.ok ? r.json() : { trilha: "" }))
-      .then((data) => setTrilha(typeof data.trilha === "string" ? data.trilha : ""))
+      .then((r) => (r.ok ? r.json() : {}))
+      .then((data: { trilhas?: Faixa[]; trilha?: string }) => {
+        if (Array.isArray(data.trilhas) && data.trilhas.length) {
+          setTrilhas(data.trilhas.filter((f) => f?.url))
+        } else if (typeof data.trilha === "string" && data.trilha) {
+          setTrilhas([{ nome: "trilha", url: data.trilha }])
+        }
+      })
       .catch(() => {})
 
     // Testa cookie de admin
@@ -139,24 +147,30 @@ export default function AdminPage() {
     setTimeout(() => setUploadStates((u) => ({ ...u, [dilemaId]: "idle" })), 2500)
   }
 
-  // ── Trilha sonora (rap) ────────────────────────────────────────────────────
-  async function salvarTrilha(url: string) {
+  // ── Trilha sonora (playlist de rap) ─────────────────────────────────────────
+  // Salva a playlist inteira (a API substitui o array). Atualiza a UI ao OK.
+  async function salvarTrilhas(lista: Faixa[]) {
     setTrilhaState("saving")
     const res = await fetch("/api/admin/audio", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ trilha: url }),
+      body: JSON.stringify({ trilhas: lista }),
     })
     setTrilhaState(res.ok ? "ok" : "err")
     if (res.ok) {
-      setTrilha(url)
+      setTrilhas(lista)
       setLastSaved("trilha")
     }
     setTimeout(() => setTrilhaState("idle"), 2000)
   }
 
-  async function handleSaveTrilha() {
-    await salvarTrilha(trilhaRef.current?.value ?? "")
+  async function handleAddUrl() {
+    const url = trilhaUrlRef.current?.value?.trim()
+    if (!url) return
+    const nome = trilhaNomeRef.current?.value?.trim() || "faixa"
+    await salvarTrilhas([...trilhas, { nome, url }])
+    if (trilhaUrlRef.current) trilhaUrlRef.current.value = ""
+    if (trilhaNomeRef.current) trilhaNomeRef.current.value = ""
   }
 
   async function handleUploadTrilha(file: File) {
@@ -166,13 +180,17 @@ export default function AdminPage() {
         access: "public",
         handleUploadUrl: "/api/admin/upload",
       })
-      if (trilhaRef.current) trilhaRef.current.value = blob.url
-      await salvarTrilha(blob.url)
+      const nome = file.name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ")
+      await salvarTrilhas([...trilhas, { nome, url: blob.url }])
       setTrilhaUpload("ok")
     } catch {
       setTrilhaUpload("err")
     }
     setTimeout(() => setTrilhaUpload("idle"), 2500)
+  }
+
+  async function handleRemoveTrilha(url: string) {
+    await salvarTrilhas(trilhas.filter((t) => t.url !== url))
   }
 
   if (checking) {
@@ -462,57 +480,59 @@ export default function AdminPage() {
         )
       })()}
 
-      {/* ── Aba Trilha sonora ───────────────────────────────────────────── */}
+      {/* ── Aba Trilha sonora (playlist) ────────────────────────────────── */}
       {aba === "trilha" && (
         <>
-          <p className="text-creme-soft text-sm mb-6 leading-relaxed">
-            Suba um <strong>rap</strong> (.mp3, .m4a, .wav) ou cole uma URL. Toca de fundo
-            durante o jogo, baixinho, com botão de mudo. Começa no primeiro toque do jogador.
+          <p className="text-creme-soft text-sm mb-2 leading-relaxed">
+            Playlist de <strong>raps</strong> que tocam de fundo no jogo. Suba quantas
+            quiser (.mp3, .m4a, .wav) ou cole URLs. O jogador troca de faixa ou silencia
+            por botões pequenos no canto da tela.
+          </p>
+          <p className="text-creme-soft/70 text-xs font-mono mb-6">
+            {trilhas.length} faixa(s) na playlist
           </p>
 
-          <div className="bg-grafite-2 border border-grafite-3 rounded-2xl p-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[10px] font-mono text-laranja uppercase tracking-widest">trilha atual</span>
-              {trilha
-                ? <span className="text-[10px] font-mono text-verde">🎵 definida</span>
-                : <span className="text-[10px] font-mono text-creme-soft/50">nenhuma</span>}
-            </div>
-
-            {trilha && (
-              // eslint-disable-next-line jsx-a11y/media-has-caption
-              <audio src={trilha} controls className="w-full mb-3" />
+          {/* Faixas atuais */}
+          <div className="space-y-3 mb-6">
+            {trilhas.length === 0 && (
+              <p className="text-creme-soft/60 text-sm font-mono text-center py-4">
+                nenhuma faixa ainda
+              </p>
             )}
+            {trilhas.map((t, i) => (
+              <div key={t.url} className="bg-grafite-2 border border-grafite-3 rounded-2xl p-4">
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <span className="text-creme text-sm font-bold truncate">
+                    {i + 1}. {t.nome}
+                  </span>
+                  <button
+                    onClick={() => handleRemoveTrilha(t.url)}
+                    className="shrink-0 text-creme-soft/70 hover:text-vermelho font-mono text-xs transition-colors"
+                  >
+                    remover
+                  </button>
+                </div>
+                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+                <audio src={t.url} controls preload="none" className="w-full" />
+              </div>
+            ))}
+          </div>
 
-            <div className="flex gap-2">
-              <input
-                ref={trilhaRef}
-                type="url"
-                defaultValue={trilha}
-                placeholder="https://…/rap.mp3"
-                className="flex-1 bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme-soft/30 focus:outline-none focus:border-laranja transition-colors text-sm font-mono"
-              />
-              <button
-                onClick={handleSaveTrilha}
-                disabled={trilhaState === "saving"}
-                className={`px-4 py-2 rounded-xl font-bold text-sm transition-all active:scale-95 ${
-                  trilhaState === "ok" ? "bg-verde text-grafite"
-                  : trilhaState === "err" ? "bg-vermelho text-creme"
-                  : "bg-laranja text-grafite disabled:opacity-50"
-                }`}
-              >
-                {trilhaState === "saving" ? "…" : trilhaState === "ok" ? "✓" : trilhaState === "err" ? "!" : "salvar"}
-              </button>
-            </div>
+          {/* Adicionar faixa */}
+          <div className="bg-grafite-2 border border-grafite-3 rounded-2xl p-4">
+            <p className="text-[10px] font-mono tracking-widest uppercase text-creme-soft/70 mb-4">
+              adicionar faixa
+            </p>
 
             <label
-              className={`mt-2 flex items-center justify-center gap-2 py-2 rounded-xl border border-dashed text-xs font-mono cursor-pointer transition-colors active:scale-95 ${
+              className={`flex items-center justify-center gap-2 py-3 rounded-xl border border-dashed text-sm font-mono cursor-pointer transition-colors active:scale-95 ${
                 trilhaUpload === "ok" ? "border-verde/50 text-verde"
                 : trilhaUpload === "err" ? "border-vermelho/50 text-vermelho"
                 : "border-grafite-3 text-creme-soft hover:text-creme hover:border-creme-soft/40"
               } ${trilhaUpload === "uploading" ? "opacity-60 pointer-events-none" : ""}`}
             >
-              {trilhaUpload === "uploading" ? "enviando trilha…"
-                : trilhaUpload === "ok" ? "✓ trilha enviada"
+              {trilhaUpload === "uploading" ? "enviando faixa…"
+                : trilhaUpload === "ok" ? "✓ faixa adicionada"
                 : trilhaUpload === "err" ? "! falhou — tente de novo"
                 : "📤 subir rap (.mp3 / .m4a / .wav)"}
               <input
@@ -527,14 +547,35 @@ export default function AdminPage() {
               />
             </label>
 
-            {trilha && (
-              <button
-                onClick={() => { if (trilhaRef.current) trilhaRef.current.value = ""; salvarTrilha("") }}
-                className="mt-3 w-full py-2 rounded-xl text-xs font-mono text-creme-soft/70 hover:text-vermelho transition-colors"
-              >
-                remover trilha
-              </button>
-            )}
+            <p className="text-center text-creme-soft/40 text-[10px] font-mono my-3">ou cole uma URL</p>
+
+            <div className="space-y-2">
+              <input
+                ref={trilhaNomeRef}
+                type="text"
+                placeholder="nome da faixa (ex: Laranja no Horizonte)"
+                className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme-soft/30 focus:outline-none focus:border-laranja transition-colors text-sm"
+              />
+              <div className="flex gap-2">
+                <input
+                  ref={trilhaUrlRef}
+                  type="url"
+                  placeholder="https://…/rap.mp3"
+                  className="flex-1 bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme-soft/30 focus:outline-none focus:border-laranja transition-colors text-sm font-mono"
+                />
+                <button
+                  onClick={handleAddUrl}
+                  disabled={trilhaState === "saving"}
+                  className={`px-4 py-2 rounded-xl font-bold text-sm transition-all active:scale-95 ${
+                    trilhaState === "ok" ? "bg-verde text-grafite"
+                    : trilhaState === "err" ? "bg-vermelho text-creme"
+                    : "bg-laranja text-grafite disabled:opacity-50"
+                  }`}
+                >
+                  {trilhaState === "saving" ? "…" : trilhaState === "ok" ? "✓" : trilhaState === "err" ? "!" : "+ add"}
+                </button>
+              </div>
+            </div>
           </div>
         </>
       )}
