@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { upload } from "@vercel/blob/client"
 import { dilemas as hardcoded } from "@/lib/dilemas"
 import { dilemas as gerados } from "@/lib/dilemas_gerados"
 import type { Dilema } from "@/lib/dilemas"
@@ -9,6 +10,7 @@ const allDilemas: Dilema[] = [...hardcoded, ...gerados]
 
 type VideoMap = Record<string, string>
 type SaveState = "idle" | "saving" | "ok" | "err"
+type UploadState = "idle" | "uploading" | "ok" | "err"
 type Aba = "videos" | "cards" | "codigos"
 
 interface RoomCode { label: string; ativo: boolean }
@@ -21,6 +23,7 @@ export default function AdminPage() {
   const [loginErr, setLoginErr] = useState(false)
   const [videos, setVideos] = useState<VideoMap>({})
   const [saveStates, setSaveStates] = useState<Record<string, SaveState>>({})
+  const [uploadStates, setUploadStates] = useState<Record<string, UploadState>>({})
   const [lastSaved, setLastSaved] = useState<string | null>(null)
   const [aba, setAba] = useState<Aba>("videos")
   const [codes, setCodes] = useState<CodesMap>({})
@@ -101,6 +104,30 @@ export default function AdminPage() {
       setLastSaved(dilemaId)
     }
     setTimeout(() => setSaveStates((s) => ({ ...s, [dilemaId]: "idle" })), 2000)
+  }
+
+  // Sobe o mp4 direto pro Blob e salva a URL pública no video_urls.json.
+  async function handleUploadVideo(dilemaId: string, file: File) {
+    setUploadStates((u) => ({ ...u, [dilemaId]: "uploading" }))
+    try {
+      const blob = await upload(`${dilemaId}-${file.name}`, file, {
+        access: "public",
+        handleUploadUrl: "/api/admin/upload",
+      })
+      const res = await fetch("/api/admin/videos", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dilema_id: dilemaId, url: blob.url }),
+      })
+      if (!res.ok) throw new Error("falha ao salvar a URL")
+      setVideos((v) => ({ ...v, [dilemaId]: blob.url }))
+      if (inputRefs.current[dilemaId]) inputRefs.current[dilemaId]!.value = blob.url
+      setLastSaved(dilemaId)
+      setUploadStates((u) => ({ ...u, [dilemaId]: "ok" }))
+    } catch {
+      setUploadStates((u) => ({ ...u, [dilemaId]: "err" }))
+    }
+    setTimeout(() => setUploadStates((u) => ({ ...u, [dilemaId]: "idle" })), 2500)
   }
 
   if (checking) {
@@ -240,7 +267,8 @@ export default function AdminPage() {
       {aba === "videos" && (
         <>
           <p className="text-[#888] text-sm mb-6 leading-relaxed">
-            Cole a URL do TikTok ou YouTube Shorts. O vídeo aparece no jogo após a pílula de sabedoria.
+            Cole a URL do TikTok / YouTube Shorts <strong>ou</strong> suba um vídeo
+            pronto (.mp4) do celular. Aparece no jogo após a pílula de sabedoria.
           </p>
           <div className="space-y-4">
             {allDilemas.map((d) => {
@@ -292,6 +320,40 @@ export default function AdminPage() {
                   {state === "saving" ? "…" : state === "ok" ? "✓" : state === "err" ? "!" : "salvar"}
                 </button>
               </div>
+
+              {/* Upload de mp4 pronto (alternativa a colar link) */}
+              {(() => {
+                const up = uploadStates[d.id] ?? "idle"
+                return (
+                  <label
+                    className={`mt-2 flex items-center justify-center gap-2 py-2 rounded-xl border border-dashed text-xs font-mono cursor-pointer transition-colors active:scale-95 ${
+                      up === "ok"
+                        ? "border-[#2DD4A0]/50 text-[#2DD4A0]"
+                        : up === "err"
+                        ? "border-[#E84040]/50 text-[#E84040]"
+                        : "border-[#2C2C2E] text-[#888] hover:text-[#F5F0E8] hover:border-[#444]"
+                    } ${up === "uploading" ? "opacity-60 pointer-events-none" : ""}`}
+                  >
+                    {up === "uploading"
+                      ? "enviando vídeo…"
+                      : up === "ok"
+                      ? "✓ vídeo enviado"
+                      : up === "err"
+                      ? "! falhou — tente de novo"
+                      : "📤 subir vídeo (.mp4)"}
+                    <input
+                      type="file"
+                      accept="video/mp4,video/webm,video/quicktime,video/x-m4v"
+                      className="hidden"
+                      onChange={(e) => {
+                        const f = e.target.files?.[0]
+                        if (f) handleUploadVideo(d.id, f)
+                        e.target.value = ""
+                      }}
+                    />
+                  </label>
+                )
+              })()}
             </div>
           )
         })}
