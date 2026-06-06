@@ -24,7 +24,8 @@
     "dificuldade": 2,
     "impacto_real": "A dúvida gerada fez eleitores não comparecerem — especialmente idosos e pessoas de baixa escolaridade mais suscetíveis à desinformação",
     "video_url": "/videos/m005.mp4",
-    "meme_imagem": "/meme_imagens/m005.png"
+    "meme_imagem": "/meme_imagens/m005.png",
+    "meme_video": "/meme_videos/m005.mp4"
   },
   {
     "id": "d07",
@@ -37,7 +38,8 @@
     "dificuldade": 2,
     "impacto_real": "Crianças sem vacinar no Oziel: sarampão e coqueluche voltaram em bairros onde a cobertura vacinal caiu abaixo de 70%",
     "video_url": "/videos/m006.mp4",
-    "meme_imagem": "/meme_imagens/m006.png"
+    "meme_imagem": "/meme_imagens/m006.png",
+    "meme_video": "/meme_videos/m006.mp4"
   },
   {
     "id": "d08",
@@ -50,7 +52,8 @@
     "dificuldade": 3,
     "impacto_real": "Medo gerado fez pais retirarem filhos de escolas públicas e apoiarem cortes no ensino de ciências e história",
     "video_url": "/videos/m007.mp4",
-    "meme_imagem": "/meme_imagens/m007.png"
+    "meme_imagem": "/meme_imagens/m007.png",
+    "meme_video": "/meme_videos/m007.mp4"
   },
   {
     "id": "d09",
@@ -62,7 +65,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "Jovens que internalizam esse discurso apoiam políticas que reduzem direitos trabalhistas sem perceber o impacto na própria vida",
-    "meme_imagem": "/meme_imagens/m008.png"
+    "meme_imagem": "/meme_imagens/m008.png",
+    "meme_video": "/meme_videos/m008.mp4"
   },
   {
     "id": "d10",
@@ -75,7 +79,8 @@
     "dificuldade": 2,
     "impacto_real": "Discurso anti-imposto beneficia quem quer reduzir gasto social — o SUS, a escola pública e o CAPS dependem de arrecadação",
     "video_url": "/videos/m009.mp4",
-    "meme_imagem": "/meme_imagens/m009.png"
+    "meme_imagem": "/meme_imagens/m009.png",
+    "meme_video": "/meme_videos/m009.mp4"
   },
   {
     "id": "d11",
@@ -88,7 +93,8 @@
     "dificuldade": 3,
     "impacto_real": "Revisão histórica normaliza autoritarismo e faz jovens apoiarem candidatos que pregam ruptura democrática",
     "video_url": "/videos/m010.mp4",
-    "meme_imagem": "/meme_imagens/m010.png"
+    "meme_imagem": "/meme_imagens/m010.png",
+    "meme_video": "/meme_videos/m010.mp4"
   },
   {
     "id": "d12",
@@ -101,7 +107,8 @@
     "dificuldade": 3,
     "impacto_real": "Discurso simplificado bloqueia debate real sobre reforma agrária e propriedade improdutiva — e afasta jovens urbanos de questões agrárias que impactam preço dos alimentos",
     "video_url": "/videos/m011.mp4",
-    "meme_imagem": "/meme_imagens/m011.png"
+    "meme_imagem": "/meme_imagens/m011.png",
+    "meme_video": "/meme_videos/m011.mp4"
   },
   {
     "id": "d13",
@@ -114,7 +121,8 @@
     "dificuldade": 1,
     "impacto_real": "Abstenção concentrada em periferias significa sub-representação — bairros ricos têm mais eleitores votando proporcionalmente",
     "video_url": "/videos/m012.mp4",
-    "meme_imagem": "/meme_imagens/m012.png"
+    "meme_imagem": "/meme_imagens/m012.png",
+    "meme_video": "/meme_videos/m012.mp4"
   },
   {
     "id": "d14",
@@ -126,7 +134,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "Discurso anti-ONG gerou cortes de repasse para organizações que atendem dependentes químicos, acolhem jovens em vulnerabilidade e fazem assistência social em periferias",
-    "meme_imagem": "/meme_imagens/m013.png"
+    "meme_imagem": "/meme_imagens/m013.png",
+    "meme_video": "/meme_videos/m013.mp4"
   },
   {
     "id": "d15",
@@ -138,7 +147,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 3,
     "impacto_real": "Medo gerado pelo meme leva eleitores a votos de pânico e afasta jovens de debate real sobre o país",
-    "meme_imagem": "/meme_imagens/m014.png"
+    "meme_imagem": "/meme_imagens/m014.png",
+    "meme_video": "/meme_videos/m014.mp4"
   },
   {
     "id": "d16",
@@ -150,7 +160,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "Quem não confia em nenhuma fonte fica vulnerável às fontes sem critério — geralmente WhatsApp e canais sem verificação",
-    "meme_imagem": "/meme_imagens/m015.png"
+    "meme_imagem": "/meme_imagens/m015.png",
+    "meme_video": "/meme_videos/m015.mp4"
   },
   {
     "id": "d17",
@@ -162,7 +173,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "A reforma trabalhista de 2017 foi aprovada por 225 x 224 — um único voto. Ela mudou as regras de contratação de toda uma geração de trabalhadores",
-    "meme_imagem": "/meme_imagens/m016.png"
+    "meme_imagem": "/meme_imagens/m016.png",
+    "meme_video": "/meme_videos/m016.mp4"
   },
   {
     "id": "d18",
@@ -174,7 +186,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "Deslegitimar manifestações reduz pressão popular sobre parlamentares e facilita aprovação de leis impopulares sem resistência",
-    "meme_imagem": "/meme_imagens/m017.png"
+    "meme_imagem": "/meme_imagens/m017.png",
+    "meme_video": "/meme_videos/m017.mp4"
   },
   {
     "id": "d19",
@@ -186,7 +199,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "Eleição do Conselho Tutelar do Oziel foi decidida com menos de 300 votos totais. Quem é eleito decide quais famílias do bairro recebem proteção",
-    "meme_imagem": "/meme_imagens/m018.png"
+    "meme_imagem": "/meme_imagens/m018.png",
+    "meme_video": "/meme_videos/m018.mp4"
   },
   {
     "id": "d20",
@@ -198,7 +212,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "Concentração de votos nulos em periferias diminui o poder eleitoral dessas regiões, sem enviar nenhuma mensagem política formal",
-    "meme_imagem": "/meme_imagens/m019.png"
+    "meme_imagem": "/meme_imagens/m019.png",
+    "meme_video": "/meme_videos/m019.mp4"
   },
   {
     "id": "d21",
@@ -210,7 +225,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "Deslegitimar ativismo jovem afasta jovens de espaços de participação e perpetua ausência da juventude periférica nas decisões",
-    "meme_imagem": "/meme_imagens/m020.png"
+    "meme_imagem": "/meme_imagens/m020.png",
+    "meme_video": "/meme_videos/m020.mp4"
   },
   {
     "id": "d22",
@@ -222,7 +238,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 3,
     "impacto_real": "Medo gerado mobilizou votos de uma agenda que flexibilizou porte e posse — com aumento de armas em circulação e homicídios em periferias",
-    "meme_imagem": "/meme_imagens/m021.png"
+    "meme_imagem": "/meme_imagens/m021.png",
+    "meme_video": "/meme_videos/m021.mp4"
   },
   {
     "id": "d23",
@@ -234,7 +251,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "A distorção afasta homens jovens do debate de gênero — que inclui questões que os afetam como masculinidade tóxica, pressão econômica e saúde mental masculina",
-    "meme_imagem": "/meme_imagens/m022.png"
+    "meme_imagem": "/meme_imagens/m022.png",
+    "meme_video": "/meme_videos/m022.mp4"
   },
   {
     "id": "d24",
@@ -246,7 +264,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 3,
     "impacto_real": "Hostilidade a cotas afasta jovens negros do acesso ao ensino superior e mantém desigualdade estrutural",
-    "meme_imagem": "/meme_imagens/m024.png"
+    "meme_imagem": "/meme_imagens/m024.png",
+    "meme_video": "/meme_videos/m024.mp4"
   },
   {
     "id": "d25",
@@ -258,7 +277,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "A descrença faz bairros periféricos votarem menos no OP, concentrando recursos em bairros que participam mais",
-    "meme_imagem": "/meme_imagens/m025.png"
+    "meme_imagem": "/meme_imagens/m025.png",
+    "meme_video": "/meme_videos/m025.mp4"
   },
   {
     "id": "d26",
@@ -270,7 +290,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "Discurso anti-DH facilitou cortes em programas de proteção a adolescentes em vulnerabilidade — exatamente o público do Jardim Oziel",
-    "meme_imagem": "/meme_imagens/m026.png"
+    "meme_imagem": "/meme_imagens/m026.png",
+    "meme_video": "/meme_videos/m026.mp4"
   },
   {
     "id": "d27",
@@ -282,7 +303,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "Jovens que internalizam isso abrem mão de ferramentas de participação que foram pensadas pra eles — como o grêmio estudantil",
-    "meme_imagem": "/meme_imagens/m027.png"
+    "meme_imagem": "/meme_imagens/m027.png",
+    "meme_video": "/meme_videos/m027.mp4"
   },
   {
     "id": "d28",
@@ -295,7 +317,8 @@
     "dificuldade": 3,
     "impacto_real": "O discurso aumenta rejeição familiar de adolescentes LGBTQ+ — principal fator de risco para suicídio nessa população",
     "video_url": "/videos/m028.mp4",
-    "meme_imagem": "/meme_imagens/m028.png"
+    "meme_imagem": "/meme_imagens/m028.png",
+    "meme_video": "/meme_videos/m028.mp4"
   },
   {
     "id": "d29",
@@ -307,7 +330,8 @@
     "verificacao_status": "enganoso",
     "dificuldade": 2,
     "impacto_real": "O medo da 'censura' é usado para normalizar ofensas a grupos vulneráveis e afastar jovens do debate sobre respeito",
-    "meme_imagem": "/meme_imagens/m029.png"
+    "meme_imagem": "/meme_imagens/m029.png",
+    "meme_video": "/meme_videos/m029.mp4"
   },
   {
     "id": "d30",
@@ -320,6 +344,7 @@
     "dificuldade": 3,
     "impacto_real": "O preconceito afasta beneficiários de exercer o voto com autonomia — por vergonha — e legitima narrativas que criminalizam a pobreza",
     "video_url": "/videos/m030.mp4",
-    "meme_imagem": "/meme_imagens/m030.png"
+    "meme_imagem": "/meme_imagens/m030.png",
+    "meme_video": "/meme_videos/m030.mp4"
   }
 ]
