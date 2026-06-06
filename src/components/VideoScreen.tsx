@@ -10,6 +10,11 @@ interface Props {
   total: number
 }
 
+// Vídeo de arquivo (mp4/webm/mov), local ou direto — toca com <video>, não iframe.
+function isArquivoVideo(url: string): boolean {
+  return /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(url) || url.startsWith("/videos/")
+}
+
 function getEmbedUrl(url: string): string {
   // TikTok: https://www.tiktok.com/@user/video/123456
   const tiktokMatch = url.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/)
@@ -32,6 +37,7 @@ function getEmbedUrl(url: string): string {
 export default function VideoScreen({ dilema, onNext, current, total }: Props) {
   if (!dilema.video_url) return null
 
+  const arquivo = isArquivoVideo(dilema.video_url)
   const embedUrl = getEmbedUrl(dilema.video_url)
 
   return (
@@ -54,16 +60,26 @@ export default function VideoScreen({ dilema, onNext, current, total }: Props) {
         </button>
       </div>
 
-      {/* Embed */}
+      {/* Player: arquivo mp4 local toca com <video>; TikTok/YouTube via iframe */}
       <div className="flex-1 relative bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl overflow-hidden min-h-0">
-        <iframe
-          src={embedUrl}
-          className="absolute inset-0 w-full h-full"
-          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
-          allowFullScreen
-          style={{ border: "none" }}
-          title={`Vídeo: ${dilema.modulo}`}
-        />
+        {arquivo ? (
+          <video
+            src={dilema.video_url}
+            className="absolute inset-0 w-full h-full object-contain bg-black"
+            autoPlay
+            playsInline
+            controls
+          />
+        ) : (
+          <iframe
+            src={embedUrl}
+            className="absolute inset-0 w-full h-full"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
+            allowFullScreen
+            style={{ border: "none" }}
+            title={`Vídeo: ${dilema.modulo}`}
+          />
+        )}
       </div>
 
       {/* Next */}
