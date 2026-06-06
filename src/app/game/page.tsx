@@ -9,9 +9,10 @@ import type { RespostasMap } from "@/lib/store"
 import SwipeCard from "@/components/SwipeCard"
 import ConsequenceScreen from "@/components/ConsequenceScreen"
 import VideoScreen from "@/components/VideoScreen"
-import { fetchImportados } from "@/lib/cards"
+import { fetchImportados, fetchAtivos } from "@/lib/cards"
 import { AnimatePresence, motion } from "framer-motion"
 import Logo from "@/components/Logo"
+import AudioBg from "@/components/AudioBg"
 
 type Phase = "swipe" | "consequence" | "video" | "end"
 
@@ -208,21 +209,21 @@ export default function GamePage() {
     else setPlayer(p)
   }, [router])
 
-  // Cards importados do pipeline (runtime). Acrescenta os que não colidem de id,
-  // respeitando o filtro de fase (pós-oficina fica travado sem código).
+  // Monta a lista final no runtime (sem rebuild): cards fixos + importados,
+  // filtrando por fase (pós-oficina trava sem código) e por ocultar/mostrar do
+  // admin (cards_ativos.json). Ausente no mapa = ativo; só sai com false.
   useEffect(() => {
     const desbloqueado = isPosOficinaUnlocked()
-    fetchImportados().then((extras) => {
-      if (!extras.length) return
-      setDilemas((atuais) => {
-        const ids = new Set(atuais.map((d) => d.id))
-        const novos = extras.filter(
-          (d) =>
-            !ids.has(d.id) &&
-            (!d.fase || d.fase === 1 || (d.fase === 2 && desbloqueado)),
-        )
-        return novos.length ? [...atuais, ...novos] : atuais
-      })
+    const faseOk = (d: { fase?: 1 | 2 }) =>
+      !d.fase || d.fase === 1 || (d.fase === 2 && desbloqueado)
+
+    Promise.all([fetchImportados(), fetchAtivos()]).then(([extras, ativos]) => {
+      const base = [...hardcoded, ...gerados].filter(
+        (d) => faseOk(d) && ativos[d.id] !== false,
+      )
+      const ids = new Set(base.map((d) => d.id))
+      const novos = extras.filter((d) => !ids.has(d.id) && faseOk(d))
+      setDilemas([...base, ...novos])
     })
   }, [])
 
@@ -276,20 +277,25 @@ export default function GamePage() {
 
   if (!player) return null
 
+  // Trilha de fundo montada uma única vez — toca contínua por todas as fases,
+  // incluindo a tela final ("no jogo todo").
   if (phase === "end") {
     return (
-      <EndScreen
-        player={player}
-        results={results}
-        respostas1={respostas1}
-        onReplay={() => {
-          setIndex(0)
-          setCardKey((k) => k + 1)
-          setResults([])
-          setRespostasAtuais({})
-          setPhase("swipe")
-        }}
-      />
+      <>
+        <AudioBg />
+        <EndScreen
+          player={player}
+          results={results}
+          respostas1={respostas1}
+          onReplay={() => {
+            setIndex(0)
+            setCardKey((k) => k + 1)
+            setResults([])
+            setRespostasAtuais({})
+            setPhase("swipe")
+          }}
+        />
+      </>
     )
   }
 
@@ -299,6 +305,7 @@ export default function GamePage() {
 
   return (
     <main className="h-full flex flex-col px-4 py-6 max-w-md mx-auto">
+      <AudioBg />
       <div className="flex justify-between items-center mb-4">
         <span className="text-sm text-creme-soft">
           oi, <strong className="text-creme">{player.apelido}</strong>

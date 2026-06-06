@@ -11,7 +11,7 @@ const allDilemas: Dilema[] = [...hardcoded, ...gerados]
 type VideoMap = Record<string, string>
 type SaveState = "idle" | "saving" | "ok" | "err"
 type UploadState = "idle" | "uploading" | "ok" | "err"
-type Aba = "videos" | "cards" | "codigos"
+type Aba = "videos" | "cards" | "trilha" | "codigos"
 
 interface RoomCode { label: string; ativo: boolean }
 type CodesMap = Record<string, RoomCode>
@@ -34,6 +34,10 @@ export default function AdminPage() {
   const [importados, setImportados] = useState<Dilema[]>([])
   const [ativos, setAtivos] = useState<Record<string, boolean>>({})
   const [cardBusy, setCardBusy] = useState<string | null>(null)
+  const [trilha, setTrilha] = useState("")
+  const [trilhaState, setTrilhaState] = useState<SaveState>("idle")
+  const [trilhaUpload, setTrilhaUpload] = useState<UploadState>("idle")
+  const trilhaRef = useRef<HTMLInputElement | null>(null)
 
   // Verifica se já tem sessão e carrega URLs salvas
   useEffect(() => {
@@ -55,6 +59,11 @@ export default function AdminPage() {
     fetch("/cards_ativos.json")
       .then((r) => (r.ok ? r.json() : {}))
       .then((data) => setAtivos(data))
+      .catch(() => {})
+
+    fetch("/audio_config.json")
+      .then((r) => (r.ok ? r.json() : { trilha: "" }))
+      .then((data) => setTrilha(typeof data.trilha === "string" ? data.trilha : ""))
       .catch(() => {})
 
     // Testa cookie de admin
@@ -128,6 +137,42 @@ export default function AdminPage() {
       setUploadStates((u) => ({ ...u, [dilemaId]: "err" }))
     }
     setTimeout(() => setUploadStates((u) => ({ ...u, [dilemaId]: "idle" })), 2500)
+  }
+
+  // ── Trilha sonora (rap) ────────────────────────────────────────────────────
+  async function salvarTrilha(url: string) {
+    setTrilhaState("saving")
+    const res = await fetch("/api/admin/audio", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ trilha: url }),
+    })
+    setTrilhaState(res.ok ? "ok" : "err")
+    if (res.ok) {
+      setTrilha(url)
+      setLastSaved("trilha")
+    }
+    setTimeout(() => setTrilhaState("idle"), 2000)
+  }
+
+  async function handleSaveTrilha() {
+    await salvarTrilha(trilhaRef.current?.value ?? "")
+  }
+
+  async function handleUploadTrilha(file: File) {
+    setTrilhaUpload("uploading")
+    try {
+      const blob = await upload(`trilha-${file.name}`, file, {
+        access: "public",
+        handleUploadUrl: "/api/admin/upload",
+      })
+      if (trilhaRef.current) trilhaRef.current.value = blob.url
+      await salvarTrilha(blob.url)
+      setTrilhaUpload("ok")
+    } catch {
+      setTrilhaUpload("err")
+    }
+    setTimeout(() => setTrilhaUpload("idle"), 2500)
   }
 
   if (checking) {
@@ -242,17 +287,17 @@ export default function AdminPage() {
 
       {/* Abas */}
       <div className="flex gap-2 mb-6">
-        {(["videos", "cards", "codigos"] as Aba[]).map((a) => (
+        {(["videos", "cards", "trilha", "codigos"] as Aba[]).map((a) => (
           <button
             key={a}
             onClick={() => setAba(a)}
-            className={`px-4 py-2 rounded-xl text-sm font-mono transition-colors ${
+            className={`px-3 py-2 rounded-xl text-sm font-mono transition-colors ${
               aba === a
                 ? "bg-laranja text-grafite"
                 : "bg-grafite-2 border border-grafite-3 text-creme-soft hover:text-creme"
             }`}
           >
-            {a === "videos" ? "🎬 Vídeos" : a === "cards" ? "📥 Cards" : "🔑 Códigos"}
+            {a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : "🔑 Códigos"}
           </button>
         ))}
       </div>
@@ -361,35 +406,36 @@ export default function AdminPage() {
         </>
       )}
 
-      {/* ── Aba Cards importados ────────────────────────────────────────── */}
-      {aba === "cards" && (
-        <>
-          <p className="text-creme-soft text-sm mb-2 leading-relaxed">
-            Cards vindos do pipeline OzielMemes. Já entram <strong>ativos</strong> no jogo —
-            desligue aqui qualquer um que ainda não deva aparecer.
-          </p>
-          <p className="text-creme-soft/70 text-xs font-mono mb-6">
-            {importados.length} importado(s) · {importados.filter((d) => cardAtivo(d.id)).length} ativo(s)
-          </p>
+      {/* ── Aba Cards: ocultar/mostrar (todos os cards) ─────────────────── */}
+      {aba === "cards" && (() => {
+        // Lista completa: cards fixos + gerados + importados (sem duplicar id).
+        const todosCards = [
+          ...allDilemas,
+          ...importados.filter((i) => !allDilemas.some((a) => a.id === i.id)),
+        ]
+        const ativosCount = todosCards.filter((d) => cardAtivo(d.id)).length
+        return (
+          <>
+            <p className="text-creme-soft text-sm mb-2 leading-relaxed">
+              Todos os cards do jogo. Toque para <strong>tirar</strong> (ocultar) ou
+              <strong> mostrar</strong> qualquer um — fixos ou importados. Salva na hora,
+              sem apagar o conteúdo.
+            </p>
+            <p className="text-creme-soft/70 text-xs font-mono mb-6">
+              {todosCards.length} card(s) · {ativosCount} no jogo · {todosCards.length - ativosCount} oculto(s)
+            </p>
 
-          {importados.length === 0 ? (
-            <div className="bg-grafite-2 border border-grafite-3 rounded-2xl p-6 text-center">
-              <p className="text-creme-soft text-sm mb-2">Nenhum card importado ainda.</p>
-              <p className="text-creme-soft/70 text-xs font-mono leading-relaxed">
-                No painel OzielMemes (Streamlit), use a página 🎬 Vídeos →
-                &ldquo;Exportar vídeos + cards pro jogo&rdquo;. Os cards aparecem aqui.
-              </p>
-            </div>
-          ) : (
             <div className="space-y-4">
-              {importados.map((d) => {
+              {todosCards.map((d) => {
                 const on = cardAtivo(d.id)
                 const busy = cardBusy === d.id
+                const fixo = !importados.some((i) => i.id === d.id)
                 return (
-                  <div key={d.id} className="bg-grafite-2 border border-grafite-3 rounded-2xl p-4">
-                    <div className="flex items-center gap-2 mb-2">
+                  <div key={d.id} className={`bg-grafite-2 border rounded-2xl p-4 ${on ? "border-grafite-3" : "border-grafite-3/40 opacity-70"}`}>
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
                       <span className="text-[10px] font-mono text-creme-soft/70 uppercase tracking-widest">{d.id}</span>
                       <span className="text-[10px] font-mono text-laranja uppercase tracking-widest">{d.modulo}</span>
+                      <span className="text-[10px] font-mono text-creme-soft/40 uppercase tracking-widest">{fixo ? "fixo" : "importado"}</span>
                       {d.meme_video && <span className="text-[10px] font-mono text-verde">🎬 vídeo</span>}
                       {!d.meme_video && d.meme_imagem && <span className="text-[10px] font-mono text-verde">🖼️ imagem</span>}
                     </div>
@@ -406,13 +452,90 @@ export default function AdminPage() {
                           : "bg-grafite-2 border border-grafite-3 text-creme-soft/60"
                       } disabled:opacity-50`}
                     >
-                      {busy ? "…" : on ? "✓ no jogo — toque pra tirar" : "fora do jogo — toque pra ativar"}
+                      {busy ? "…" : on ? "✓ no jogo — toque pra ocultar" : "oculto — toque pra mostrar"}
                     </button>
                   </div>
                 )
               })}
             </div>
-          )}
+          </>
+        )
+      })()}
+
+      {/* ── Aba Trilha sonora ───────────────────────────────────────────── */}
+      {aba === "trilha" && (
+        <>
+          <p className="text-creme-soft text-sm mb-6 leading-relaxed">
+            Suba um <strong>rap</strong> (.mp3, .m4a, .wav) ou cole uma URL. Toca de fundo
+            durante o jogo, baixinho, com botão de mudo. Começa no primeiro toque do jogador.
+          </p>
+
+          <div className="bg-grafite-2 border border-grafite-3 rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[10px] font-mono text-laranja uppercase tracking-widest">trilha atual</span>
+              {trilha
+                ? <span className="text-[10px] font-mono text-verde">🎵 definida</span>
+                : <span className="text-[10px] font-mono text-creme-soft/50">nenhuma</span>}
+            </div>
+
+            {trilha && (
+              // eslint-disable-next-line jsx-a11y/media-has-caption
+              <audio src={trilha} controls className="w-full mb-3" />
+            )}
+
+            <div className="flex gap-2">
+              <input
+                ref={trilhaRef}
+                type="url"
+                defaultValue={trilha}
+                placeholder="https://…/rap.mp3"
+                className="flex-1 bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme-soft/30 focus:outline-none focus:border-laranja transition-colors text-sm font-mono"
+              />
+              <button
+                onClick={handleSaveTrilha}
+                disabled={trilhaState === "saving"}
+                className={`px-4 py-2 rounded-xl font-bold text-sm transition-all active:scale-95 ${
+                  trilhaState === "ok" ? "bg-verde text-grafite"
+                  : trilhaState === "err" ? "bg-vermelho text-creme"
+                  : "bg-laranja text-grafite disabled:opacity-50"
+                }`}
+              >
+                {trilhaState === "saving" ? "…" : trilhaState === "ok" ? "✓" : trilhaState === "err" ? "!" : "salvar"}
+              </button>
+            </div>
+
+            <label
+              className={`mt-2 flex items-center justify-center gap-2 py-2 rounded-xl border border-dashed text-xs font-mono cursor-pointer transition-colors active:scale-95 ${
+                trilhaUpload === "ok" ? "border-verde/50 text-verde"
+                : trilhaUpload === "err" ? "border-vermelho/50 text-vermelho"
+                : "border-grafite-3 text-creme-soft hover:text-creme hover:border-creme-soft/40"
+              } ${trilhaUpload === "uploading" ? "opacity-60 pointer-events-none" : ""}`}
+            >
+              {trilhaUpload === "uploading" ? "enviando trilha…"
+                : trilhaUpload === "ok" ? "✓ trilha enviada"
+                : trilhaUpload === "err" ? "! falhou — tente de novo"
+                : "📤 subir rap (.mp3 / .m4a / .wav)"}
+              <input
+                type="file"
+                accept="audio/mpeg,audio/mp4,audio/aac,audio/wav,audio/x-wav,audio/ogg,.mp3,.m4a,.wav,.ogg"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0]
+                  if (f) handleUploadTrilha(f)
+                  e.target.value = ""
+                }}
+              />
+            </label>
+
+            {trilha && (
+              <button
+                onClick={() => { if (trilhaRef.current) trilhaRef.current.value = ""; salvarTrilha("") }}
+                className="mt-3 w-full py-2 rounded-xl text-xs font-mono text-creme-soft/70 hover:text-vermelho transition-colors"
+              >
+                remover trilha
+              </button>
+            )}
+          </div>
         </>
       )}
 

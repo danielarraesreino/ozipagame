@@ -12,9 +12,16 @@ const TIPOS_PERMITIDOS = [
   "video/webm",
   "video/quicktime", // .mov do iPhone
   "video/x-m4v",
+  // trilha sonora (rap) — formatos comuns de celular/web
+  "audio/mpeg", // .mp3
+  "audio/mp4",  // .m4a
+  "audio/aac",
+  "audio/wav",
+  "audio/x-wav",
+  "audio/ogg",
 ]
 
-const TAMANHO_MAX = 80 * 1024 * 1024 // 80MB — folga pra vídeo de celular
+const TAMANHO_MAX = 80 * 1024 * 1024 // 80MB — folga pra vídeo de celular ou faixa
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   const body = (await req.json()) as HandleUploadBody

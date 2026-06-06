@@ -6,6 +6,17 @@ import type { Dilema } from "./dilemas"
 // igual ao /video_urls.json. A exportação do ozielmemes grava esses dois arquivos
 // em public/. O mapa de ativos é mantido pelo admin (commit no GitHub).
 
+// Mapa { dilema_id → ativo }. Mantido pelo admin (commit no GitHub). Default:
+// ausente = ativo; só fica fora do jogo quando explicitamente false.
+export async function fetchAtivos(): Promise<Record<string, boolean>> {
+  try {
+    const res = await fetch("/cards_ativos.json", { cache: "no-store" })
+    return res.ok ? await res.json() : {}
+  } catch {
+    return {}
+  }
+}
+
 export async function fetchImportados(): Promise<Dilema[]> {
   try {
     const [cardsRes, ativosRes] = await Promise.all([

@@ -4,6 +4,7 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion"
 import { useRef } from "react"
 import type { Dilema } from "@/lib/dilemas"
 import { MODULO_COR } from "@/lib/dilemas"
+import { playConcordo, playDiscordo } from "@/lib/sfx"
 
 interface Props {
   dilema: Dilema
@@ -26,6 +27,8 @@ export default function SwipeCard({ dilema, onSwipe, isTop }: Props) {
 
   async function flyOff(direction: "right" | "left") {
     if (typeof navigator !== "undefined" && navigator.vibrate) navigator.vibrate(40)
+    if (direction === "right") playConcordo()
+    else playDiscordo()
     await animate(x, direction === "right" ? 600 : -600, { duration: 0.3, ease: "easeIn" })
     onSwipe(direction)
   }
@@ -108,18 +111,36 @@ export default function SwipeCard({ dilema, onSwipe, isTop }: Props) {
               className="max-h-full max-w-full rounded-xl object-contain pointer-events-none"
             />
           ) : (
-            // Sem mídia: estiliza o texto como um "print" de corrente/post viral
-            <div className="w-full max-w-sm rounded-2xl rounded-tl-sm bg-grafite border-2 border-grafite-3 px-5 py-5 shadow-lg">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="w-6 h-6 rounded-full bg-grafite-3 flex items-center justify-center text-xs">👤</span>
-                <span className="text-creme-soft/70 text-xs font-mono">recebida no grupo</span>
+            // Sem mídia: estiliza o texto como um print de corrente de WhatsApp
+            <div className="w-full max-w-sm select-none">
+              {/* topo do "app": grupo + horário */}
+              <div className="flex items-center gap-2 mb-2 px-1">
+                <span className="w-8 h-8 rounded-full bg-verde/90 flex items-center justify-center text-base">👥</span>
+                <div className="leading-tight">
+                  <p className="text-creme text-sm font-bold">Família ❤️</p>
+                  <p className="text-creme-soft/50 text-[10px] font-mono">12 participantes</p>
+                </div>
               </div>
-              <p className="text-xl sm:text-2xl font-extrabold text-creme leading-snug">
-                {dilema.meme}
+
+              {/* balão da mensagem encaminhada */}
+              <div className="relative bg-[#0F2A22] border border-verde/20 rounded-2xl rounded-tl-sm px-4 pt-2.5 pb-2 shadow-[4px_4px_0_0_rgba(0,0,0,0.4)]">
+                <div className="flex items-center gap-1 mb-1.5 text-creme-soft/55">
+                  <span className="text-[11px]">↪</span>
+                  <span className="text-[10px] font-mono italic">Encaminhada muitas vezes</span>
+                </div>
+                <p className="text-lg sm:text-xl font-bold text-creme leading-snug">
+                  {dilema.meme}
+                </p>
+                <div className="flex items-center justify-end gap-1 mt-2">
+                  <span className="text-creme-soft/45 text-[10px] font-mono">09:41</span>
+                  <span className="text-[#53BDEB] text-[11px] leading-none">✓✓</span>
+                </div>
+              </div>
+
+              {/* "digitando" — dá vida de conversa real */}
+              <p className="text-creme-soft/40 text-[10px] font-mono mt-2 px-1">
+                tio zé está digitando…
               </p>
-              <div className="flex justify-end mt-3">
-                <span className="text-creme-soft/50 text-[10px] font-mono">encaminhada muitas vezes ⤳</span>
-              </div>
             </div>
           )}
 
