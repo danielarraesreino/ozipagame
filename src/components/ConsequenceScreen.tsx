@@ -13,20 +13,20 @@ interface Props {
 }
 
 const VERIF_LABEL: Record<string, { label: string; color: string }> = {
-  falso:           { label: "❌ falso",           color: "#E84040" },
-  enganoso:        { label: "⚠️ enganoso",        color: "#F59E0B" },
-  contexto_ausente:{ label: "🔍 sem contexto",    color: "#888" },
-  verdadeiro:      { label: "✅ verdadeiro",       color: "#2DD4A0" },
+  falso:           { label: "❌ falso",           color: "#E8402F" },
+  enganoso:        { label: "⚠️ enganoso",        color: "#FFD21E" },
+  contexto_ausente:{ label: "🔍 sem contexto",    color: "#B8B2A6" },
+  verdadeiro:      { label: "✅ verdadeiro",       color: "#26C79A" },
 }
 
 export default function ConsequenceScreen({ dilema, choice, onNext, current, total }: Props) {
   const agreed = choice === "right"
-  const moduloCor = MODULO_COR[dilema.modulo] ?? "#888"
+  const moduloCor = MODULO_COR[dilema.modulo] ?? "#B8B2A6"
   const verif = dilema.verificacao_status ? VERIF_LABEL[dilema.verificacao_status] : null
 
   return (
     <motion.div
-      className="flex flex-col h-full"
+      className="flex flex-col h-full no-scrollbar"
       initial={{ opacity: 0, y: 32 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
@@ -34,46 +34,46 @@ export default function ConsequenceScreen({ dilema, choice, onNext, current, tot
       {/* Choice badge + module */}
       <div className="mb-6 flex items-center gap-3">
         <span
-          className={`inline-block text-xs font-mono tracking-widest uppercase px-3 py-1 rounded-full border ${
+          className={`inline-block brand-stamp text-xs px-3 py-1 rounded-md ${
             agreed
-              ? "border-[#2DD4A0] text-[#2DD4A0]"
-              : "border-[#E84040] text-[#E84040]"
+              ? "bg-verde text-grafite"
+              : "bg-vermelho text-creme"
           }`}
         >
           {agreed ? "você concordou" : "você discordou"}
         </span>
         <span
-          className="text-[10px] font-mono tracking-widest uppercase px-2 py-1 rounded-full"
-          style={{ color: moduloCor, border: `1px solid ${moduloCor}` }}
+          className="brand-stamp text-[10px] px-2 py-1 rounded-md"
+          style={{ color: moduloCor, border: `2px solid ${moduloCor}` }}
         >
           {dilema.modulo}
         </span>
       </div>
 
       {/* Original meme */}
-      <p className="text-base text-[#888] italic mb-6 leading-relaxed">
+      <p className="text-base text-creme-soft italic mb-6 leading-relaxed">
         {dilema.meme}
       </p>
 
       {/* Consequence */}
-      <div className="flex-1 bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-6 mb-6">
+      <div className="grain relative flex-1 bg-grafite-2 border-2 border-grafite-3 rounded-2xl p-6 mb-6 zine-edge">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-[10px] font-mono tracking-widest uppercase text-[#E8431E]">
+          <p className="brand-stamp text-[10px] text-laranja">
             o que o meme apaga
           </p>
           {verif && (
             <span
-              className="text-[10px] font-mono px-2 py-0.5 rounded-full border"
-              style={{ color: verif.color, borderColor: verif.color }}
+              className="brand-stamp text-[10px] px-2 py-0.5 rounded-md"
+              style={{ color: verif.color, border: `2px solid ${verif.color}` }}
             >
               {verif.label}
             </span>
           )}
         </div>
-        <p className="text-lg sm:text-xl text-[#F5F0E8] leading-relaxed">
+        <p className="text-lg sm:text-xl text-creme leading-relaxed">
           {dilema.contexto_oculto}
         </p>
-        <p className="text-xs text-[#555] font-mono mt-6">
+        <p className="text-xs text-creme-soft/60 font-mono mt-6">
           fonte: {dilema.fonte}
         </p>
       </div>
@@ -81,13 +81,13 @@ export default function ConsequenceScreen({ dilema, choice, onNext, current, tot
       {/* Pílula de sabedoria */}
       {dilema.pilula_sabedoria && (
         <div
-          className="rounded-xl px-5 py-4 mb-6"
-          style={{ borderLeft: `3px solid ${moduloCor}`, background: "#1C1C1E" }}
+          className="rounded-xl px-5 py-4 mb-6 bg-grafite-2"
+          style={{ borderLeft: `5px solid ${moduloCor}` }}
         >
-          <p className="text-[10px] font-mono tracking-widest uppercase mb-2" style={{ color: moduloCor }}>
+          <p className="brand-stamp text-[10px] mb-2" style={{ color: moduloCor }}>
             pílula de sabedoria
           </p>
-          <p className="text-base text-[#F5F0E8] leading-relaxed">
+          <p className="text-base text-creme leading-relaxed">
             {dilema.pilula_sabedoria}
           </p>
         </div>
@@ -96,7 +96,7 @@ export default function ConsequenceScreen({ dilema, choice, onNext, current, tot
       {/* Next button */}
       <button
         onClick={onNext}
-        className="w-full py-4 bg-[#E8431E] text-white font-bold text-base rounded-xl active:scale-95 transition-transform"
+        className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl active:scale-95 active:shadow-none transition-all"
       >
         {current < total ? "próxima →" : "ver resultado →"}
       </button>

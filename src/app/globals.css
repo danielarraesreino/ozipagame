@@ -66,3 +66,44 @@ html, body, #__next {
   background: linear-gradient(180deg, rgba(19,19,14,0.55) 0%, rgba(19,19,14,0.92) 100%);
   pointer-events: none;
 }
+
+/* ───────────────────────────────────────────────────────────
+   Detalhes de estética zine / risograph
+   ─────────────────────────────────────────────────────────── */
+
+/* Carimbo de rótulo: bloco mono em caixa-alta, cara de selo de protesto */
+.brand-stamp {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 700;
+}
+
+/* Filete de grão fino sobre superfícies, dá textura de papel impresso */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Borda/sombra dura estilo print de zine (offset sólido, sem blur) */
+.zine-edge {
+  box-shadow: 6px 6px 0 0 rgba(0, 0, 0, 0.55);
+}
+
+/* Etiqueta diagonal "veredito" usada nos overlays de decisão */
+.verdict-stamp {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Esconde a scrollbar mantendo o scroll (telas de revelação) */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

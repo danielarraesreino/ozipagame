@@ -49,19 +49,19 @@ export default function VideoScreen({ dilema, onNext, current, total }: Props) {
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <p className="text-[10px] font-mono tracking-widest uppercase text-[#E8431E]">
+        <p className="brand-stamp text-[10px] text-laranja">
           o vídeo do oziel
         </p>
         <button
           onClick={onNext}
-          className="text-xs text-[#555] font-mono hover:text-[#888] transition-colors py-1 px-2"
+          className="text-xs text-creme-soft/70 font-mono hover:text-creme transition-colors py-1 px-2"
         >
           pular →
         </button>
       </div>
 
       {/* Player: arquivo mp4 local toca com <video>; TikTok/YouTube via iframe */}
-      <div className="flex-1 relative bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl overflow-hidden min-h-0">
+      <div className="flex-1 relative bg-grafite-2 border-2 border-grafite-3 rounded-2xl zine-edge overflow-hidden min-h-0">
         {arquivo ? (
           <video
             src={dilema.video_url}
@@ -85,7 +85,7 @@ export default function VideoScreen({ dilema, onNext, current, total }: Props) {
       {/* Next */}
       <button
         onClick={onNext}
-        className="mt-4 w-full py-4 bg-[#E8431E] text-white font-bold text-base rounded-xl active:scale-95 transition-transform"
+        className="zine-edge mt-4 w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl active:scale-95 active:shadow-none transition-all"
       >
         {current < total ? "próxima →" : "ver resultado →"}
       </button>

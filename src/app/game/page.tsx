@@ -11,6 +11,7 @@ import ConsequenceScreen from "@/components/ConsequenceScreen"
 import VideoScreen from "@/components/VideoScreen"
 import { fetchImportados } from "@/lib/cards"
 import { AnimatePresence, motion } from "framer-motion"
+import Logo from "@/components/Logo"
 
 type Phase = "swipe" | "consequence" | "video" | "end"
 
@@ -83,99 +84,106 @@ function EndScreen({
   )
 
   return (
-    <main className="h-full flex flex-col px-4 py-8 max-w-md mx-auto">
-      <motion.div
-        className="flex flex-col flex-1 justify-between"
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        <div>
-          <p className="text-[11px] font-mono tracking-widest uppercase text-[#E8431E] mb-6">
-            você chegou até aqui
-          </p>
-          <h2 className="text-4xl font-black leading-tight text-[#F5F0E8] mb-2">
-            {player.bairro} tem voz.
-          </h2>
-          <p className="text-[#888] leading-relaxed mb-6">
-            Cada escolha nesse jogo acontece de verdade no bairro.
-            Você já sabe mais do que a maioria.
-          </p>
-
-          {/* Mirror — epifania de mudança */}
-          {mudancas.length > 0 && (
-            <motion.div
-              className="bg-[#2DD4A0]/10 border border-[#2DD4A0]/40 rounded-2xl p-5 mb-6"
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              <p className="text-[10px] font-mono tracking-widest uppercase text-[#2DD4A0] mb-3">
-                você evoluiu
+    <main className="bg-halftone bg-halftone-veil h-full overflow-y-auto no-scrollbar">
+      <div className="relative z-10 min-h-full flex flex-col px-4 py-8 max-w-md mx-auto">
+        <motion.div
+          className="flex flex-col flex-1 justify-between"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <div>
+            <div className="flex items-center gap-2 mb-6">
+              <Logo size={32} variant="cor" />
+              <p className="brand-stamp text-[10px] text-laranja">
+                você chegou até aqui
               </p>
-              {mudancas.map((m, i) => (
-                <p key={i} className="text-[#F5F0E8] text-sm leading-relaxed mb-2">
-                  Antes da oficina você <strong>{m.de}</strong> com{" "}
-                  <em>"{m.meme}"</em>. Hoje você <strong>{m.para}</strong>.
-                </p>
-              ))}
-              <p className="text-[#2DD4A0] text-xs font-mono mt-3">
-                isso é o que a informação faz — muda o que a gente pensa.
-              </p>
-            </motion.div>
-          )}
-
-          {/* Stats */}
-          <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-5 space-y-3">
-            <p className="text-[10px] font-mono tracking-widest uppercase text-[#555] mb-4">
-              seu resumo
+            </div>
+            <h2 className="brand-lockup text-creme text-[clamp(2.5rem,12vw,3.5rem)] mb-3">
+              {player.bairro}
+              <br />
+              <span className="text-laranja">tem voz.</span>
+            </h2>
+            <p className="text-creme-soft leading-relaxed mb-6 max-w-[36ch]">
+              Cada escolha nesse jogo acontece de verdade no bairro.
+              Você já sabe mais do que a maioria.
             </p>
-            <div className="flex justify-between">
-              <span className="text-[#888] text-sm">dilemas vistos</span>
-              <span className="text-[#F5F0E8] font-bold">{results.length}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-[#888] text-sm">vezes que discordou</span>
-              <span className="text-[#F5F0E8] font-bold">{discordou}</span>
-            </div>
-            {topStatus.map(([s, n]) => (
-              <div key={s} className="flex justify-between">
-                <span className="text-[#888] text-sm">{STATUS_LABEL[s] ?? s}</span>
-                <span className="text-[#F5F0E8] font-bold">{n}</span>
-              </div>
-            ))}
-            {mudancas.length > 0 && (
-              <div className="flex justify-between">
-                <span className="text-[#888] text-sm">mudanças de opinião</span>
-                <span className="text-[#2DD4A0] font-bold">{mudancas.length}</span>
-              </div>
-            )}
-            {moduloSet.size > 0 && (
-              <div className="pt-2 border-t border-[#2C2C2E]">
-                <span className="text-[#555] text-xs font-mono">
-                  módulos: {[...moduloSet].join(" · ")}
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
 
-        <div className="space-y-3 mt-8">
-          <a
-            href={`https://wa.me/?text=${whatsappText}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-4 bg-[#25D366] text-white font-bold text-base rounded-xl active:scale-95 transition-transform"
-          >
-            compartilhar no WhatsApp
-          </a>
-          <button
-            onClick={onReplay}
-            className="w-full py-4 border border-[#2C2C2E] text-[#888] font-bold text-base rounded-xl active:scale-95 transition-transform"
-          >
-            jogar de novo
-          </button>
-        </div>
-      </motion.div>
+            {/* Mirror — epifania de mudança */}
+            {mudancas.length > 0 && (
+              <motion.div
+                className="bg-verde/10 border-2 border-verde/40 rounded-2xl p-5 mb-6"
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                <p className="brand-stamp text-[10px] text-verde mb-3">
+                  você evoluiu
+                </p>
+                {mudancas.map((m, i) => (
+                  <p key={i} className="text-creme text-sm leading-relaxed mb-2">
+                    Antes da oficina você <strong>{m.de}</strong> com{" "}
+                    <em>"{m.meme}"</em>. Hoje você <strong>{m.para}</strong>.
+                  </p>
+                ))}
+                <p className="text-verde text-xs font-mono mt-3">
+                  isso é o que a informação faz — muda o que a gente pensa.
+                </p>
+              </motion.div>
+            )}
+
+            {/* Stats */}
+            <div className="grain relative bg-grafite-2 border-2 border-grafite-3 rounded-2xl p-5 space-y-3 zine-edge">
+              <p className="brand-stamp text-[10px] text-creme-soft mb-4">
+                seu resumo
+              </p>
+              <div className="flex justify-between">
+                <span className="text-creme-soft text-sm">dilemas vistos</span>
+                <span className="text-creme brand-lockup text-xl">{results.length}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-creme-soft text-sm">vezes que discordou</span>
+                <span className="text-creme brand-lockup text-xl">{discordou}</span>
+              </div>
+              {topStatus.map(([s, n]) => (
+                <div key={s} className="flex justify-between">
+                  <span className="text-creme-soft text-sm">{STATUS_LABEL[s] ?? s}</span>
+                  <span className="text-creme brand-lockup text-xl">{n}</span>
+                </div>
+              ))}
+              {mudancas.length > 0 && (
+                <div className="flex justify-between">
+                  <span className="text-creme-soft text-sm">mudanças de opinião</span>
+                  <span className="text-verde brand-lockup text-xl">{mudancas.length}</span>
+                </div>
+              )}
+              {moduloSet.size > 0 && (
+                <div className="pt-2 border-t-2 border-grafite-3">
+                  <span className="text-creme-soft/70 text-xs font-mono">
+                    módulos: {[...moduloSet].join(" · ")}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="space-y-3 mt-8">
+            <a
+              href={`https://wa.me/?text=${whatsappText}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="zine-edge flex items-center justify-center gap-2 w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl active:scale-95 active:shadow-none transition-all"
+            >
+              compartilhar no WhatsApp
+            </a>
+            <button
+              onClick={onReplay}
+              className="w-full py-4 border-2 border-grafite-3 text-creme-soft font-bold text-base rounded-xl hover:border-laranja hover:text-creme active:scale-95 transition-all"
+            >
+              jogar de novo
+            </button>
+          </div>
+        </motion.div>
+      </div>
     </main>
   )
 }
@@ -292,17 +300,17 @@ export default function GamePage() {
   return (
     <main className="h-full flex flex-col px-4 py-6 max-w-md mx-auto">
       <div className="flex justify-between items-center mb-4">
-        <span className="text-sm text-[#888]">
-          oi, <strong className="text-[#F5F0E8]">{player.apelido}</strong>
+        <span className="text-sm text-creme-soft">
+          oi, <strong className="text-creme">{player.apelido}</strong>
         </span>
-        <span className="text-[11px] font-mono text-[#555]">
+        <span className="brand-stamp text-[11px] text-creme-soft/70">
           {index + 1}/{dilemas.length}
         </span>
       </div>
 
-      <div className="w-full h-1 bg-[#1C1C1E] rounded-full mb-6 overflow-hidden">
+      <div className="w-full h-1.5 bg-grafite-2 rounded-full mb-6 overflow-hidden">
         <motion.div
-          className="h-full bg-[#E8431E] rounded-full"
+          className="h-full bg-laranja rounded-full"
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.4 }}
         />

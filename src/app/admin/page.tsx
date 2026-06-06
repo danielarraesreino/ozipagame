@@ -132,8 +132,8 @@ export default function AdminPage() {
 
   if (checking) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-[#0F0F10]">
-        <span className="text-[#555] font-mono text-sm">carregando…</span>
+      <main className="min-h-screen flex items-center justify-center bg-grafite">
+        <span className="text-creme-soft/70 font-mono text-sm">carregando…</span>
       </main>
     )
   }
@@ -141,12 +141,12 @@ export default function AdminPage() {
   // ── Login ────────────────────────────────────────────────────────────────
   if (!authed) {
     return (
-      <main className="min-h-screen flex flex-col items-center justify-center bg-[#0F0F10] px-6">
+      <main className="min-h-screen flex flex-col items-center justify-center bg-grafite px-6">
         <div className="w-full max-w-sm">
-          <p className="text-[11px] font-mono tracking-widest uppercase text-[#E8431E] mb-6">
+          <p className="text-[11px] font-mono tracking-widest uppercase text-laranja mb-6">
             Admin · Vozes do Oziel
           </p>
-          <h1 className="text-3xl font-black text-[#F5F0E8] mb-8">Área restrita</h1>
+          <h1 className="text-3xl font-black text-creme mb-8">Área restrita</h1>
           <form onSubmit={handleLogin} className="space-y-4">
             <input
               type="password"
@@ -154,15 +154,15 @@ export default function AdminPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="senha da equipe"
               autoFocus
-              className="w-full bg-[#1C1C1E] border border-[#2C2C2E] rounded-xl px-4 py-3 text-[#F5F0E8] placeholder-[#444] focus:outline-none focus:border-[#E8431E] transition-colors text-base"
+              className="w-full bg-grafite-2 border border-grafite-3 rounded-xl px-4 py-3 text-creme placeholder-creme-soft/40 focus:outline-none focus:border-laranja transition-colors text-base"
             />
             {loginErr && (
-              <p className="text-[#E84040] text-sm font-mono">senha incorreta</p>
+              <p className="text-vermelho text-sm font-mono">senha incorreta</p>
             )}
             <button
               type="submit"
               disabled={!password}
-              className="w-full py-4 bg-[#E8431E] text-white font-bold text-base rounded-xl disabled:opacity-30 active:scale-95 transition-transform"
+              className="w-full py-4 bg-laranja text-grafite font-bold text-base rounded-xl disabled:opacity-30 active:scale-95 transition-transform"
             >
               entrar
             </button>
@@ -224,17 +224,17 @@ export default function AdminPage() {
 
   // ── CMS ──────────────────────────────────────────────────────────────────
   return (
-    <main className="min-h-screen bg-[#0F0F10] px-4 py-8 max-w-2xl mx-auto">
+    <main className="min-h-screen bg-grafite px-4 py-8 max-w-2xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <p className="text-[11px] font-mono tracking-widest uppercase text-[#E8431E] mb-1">
+          <p className="text-[11px] font-mono tracking-widest uppercase text-laranja mb-1">
             Admin · Vozes do Oziel
           </p>
-          <h1 className="text-2xl font-black text-[#F5F0E8]">Painel da equipe</h1>
+          <h1 className="text-2xl font-black text-creme">Painel da equipe</h1>
         </div>
         <button
           onClick={handleLogout}
-          className="text-xs text-[#555] font-mono hover:text-[#888] transition-colors"
+          className="text-xs text-creme-soft/70 font-mono hover:text-creme transition-colors"
         >
           sair →
         </button>
@@ -248,8 +248,8 @@ export default function AdminPage() {
             onClick={() => setAba(a)}
             className={`px-4 py-2 rounded-xl text-sm font-mono transition-colors ${
               aba === a
-                ? "bg-[#E8431E] text-white"
-                : "bg-[#1C1C1E] border border-[#2C2C2E] text-[#888] hover:text-[#F5F0E8]"
+                ? "bg-laranja text-grafite"
+                : "bg-grafite-2 border border-grafite-3 text-creme-soft hover:text-creme"
             }`}
           >
             {a === "videos" ? "🎬 Vídeos" : a === "cards" ? "📥 Cards" : "🔑 Códigos"}
@@ -258,7 +258,7 @@ export default function AdminPage() {
       </div>
 
       {lastSaved && (
-        <div className="mb-6 bg-[#2DD4A0]/10 border border-[#2DD4A0]/30 rounded-xl px-4 py-3 text-[#2DD4A0] text-sm font-mono">
+        <div className="mb-6 bg-verde/10 border border-verde/30 rounded-xl px-4 py-3 text-verde text-sm font-mono">
           ✓ Salvo — publicando no jogo em ~30s
         </div>
       )}
@@ -266,7 +266,7 @@ export default function AdminPage() {
       {/* ── Aba Vídeos ──────────────────────────────────────────────────── */}
       {aba === "videos" && (
         <>
-          <p className="text-[#888] text-sm mb-6 leading-relaxed">
+          <p className="text-creme-soft text-sm mb-6 leading-relaxed">
             Cole a URL do TikTok / YouTube Shorts <strong>ou</strong> suba um vídeo
             pronto (.mp4) do celular. Aparece no jogo após a pílula de sabedoria.
           </p>
@@ -277,23 +277,23 @@ export default function AdminPage() {
           return (
             <div
               key={d.id}
-              className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-4"
+              className="bg-grafite-2 border border-grafite-3 rounded-2xl p-4"
             >
               {/* Cabeçalho do card */}
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-[10px] font-mono text-[#555] uppercase tracking-widest">
+                <span className="text-[10px] font-mono text-creme-soft/70 uppercase tracking-widest">
                   {d.id}
                 </span>
-                <span className="text-[10px] font-mono text-[#E8431E] uppercase tracking-widest">
+                <span className="text-[10px] font-mono text-laranja uppercase tracking-widest">
                   {d.modulo}
                 </span>
                 {hasVideo && (
-                  <span className="text-[10px] font-mono text-[#2DD4A0]">✓ com vídeo</span>
+                  <span className="text-[10px] font-mono text-verde">✓ com vídeo</span>
                 )}
               </div>
 
               {/* Texto do meme */}
-              <p className="text-[#888] text-sm italic mb-4 line-clamp-2">
+              <p className="text-creme-soft text-sm italic mb-4 line-clamp-2">
                 {d.meme}
               </p>
 
@@ -304,17 +304,17 @@ export default function AdminPage() {
                   type="url"
                   defaultValue={videos[d.id] ?? ""}
                   placeholder="https://www.tiktok.com/@usuario/video/..."
-                  className="flex-1 bg-[#0F0F10] border border-[#2C2C2E] rounded-xl px-3 py-2 text-[#F5F0E8] placeholder-[#333] focus:outline-none focus:border-[#E8431E] transition-colors text-sm font-mono"
+                  className="flex-1 bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme-soft/30 focus:outline-none focus:border-laranja transition-colors text-sm font-mono"
                 />
                 <button
                   onClick={() => handleSave(d.id)}
                   disabled={state === "saving"}
                   className={`px-4 py-2 rounded-xl font-bold text-sm transition-all active:scale-95 ${
                     state === "ok"
-                      ? "bg-[#2DD4A0] text-black"
+                      ? "bg-verde text-grafite"
                       : state === "err"
-                      ? "bg-[#E84040] text-white"
-                      : "bg-[#E8431E] text-white disabled:opacity-50"
+                      ? "bg-vermelho text-creme"
+                      : "bg-laranja text-grafite disabled:opacity-50"
                   }`}
                 >
                   {state === "saving" ? "…" : state === "ok" ? "✓" : state === "err" ? "!" : "salvar"}
@@ -328,10 +328,10 @@ export default function AdminPage() {
                   <label
                     className={`mt-2 flex items-center justify-center gap-2 py-2 rounded-xl border border-dashed text-xs font-mono cursor-pointer transition-colors active:scale-95 ${
                       up === "ok"
-                        ? "border-[#2DD4A0]/50 text-[#2DD4A0]"
+                        ? "border-verde/50 text-verde"
                         : up === "err"
-                        ? "border-[#E84040]/50 text-[#E84040]"
-                        : "border-[#2C2C2E] text-[#888] hover:text-[#F5F0E8] hover:border-[#444]"
+                        ? "border-vermelho/50 text-vermelho"
+                        : "border-grafite-3 text-creme-soft hover:text-creme hover:border-creme-soft/40"
                     } ${up === "uploading" ? "opacity-60 pointer-events-none" : ""}`}
                   >
                     {up === "uploading"
@@ -364,18 +364,18 @@ export default function AdminPage() {
       {/* ── Aba Cards importados ────────────────────────────────────────── */}
       {aba === "cards" && (
         <>
-          <p className="text-[#888] text-sm mb-2 leading-relaxed">
+          <p className="text-creme-soft text-sm mb-2 leading-relaxed">
             Cards vindos do pipeline OzielMemes. Já entram <strong>ativos</strong> no jogo —
             desligue aqui qualquer um que ainda não deva aparecer.
           </p>
-          <p className="text-[#555] text-xs font-mono mb-6">
+          <p className="text-creme-soft/70 text-xs font-mono mb-6">
             {importados.length} importado(s) · {importados.filter((d) => cardAtivo(d.id)).length} ativo(s)
           </p>
 
           {importados.length === 0 ? (
-            <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-6 text-center">
-              <p className="text-[#888] text-sm mb-2">Nenhum card importado ainda.</p>
-              <p className="text-[#555] text-xs font-mono leading-relaxed">
+            <div className="bg-grafite-2 border border-grafite-3 rounded-2xl p-6 text-center">
+              <p className="text-creme-soft text-sm mb-2">Nenhum card importado ainda.</p>
+              <p className="text-creme-soft/70 text-xs font-mono leading-relaxed">
                 No painel OzielMemes (Streamlit), use a página 🎬 Vídeos →
                 &ldquo;Exportar vídeos + cards pro jogo&rdquo;. Os cards aparecem aqui.
               </p>
@@ -386,24 +386,24 @@ export default function AdminPage() {
                 const on = cardAtivo(d.id)
                 const busy = cardBusy === d.id
                 return (
-                  <div key={d.id} className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-4">
+                  <div key={d.id} className="bg-grafite-2 border border-grafite-3 rounded-2xl p-4">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-[10px] font-mono text-[#555] uppercase tracking-widest">{d.id}</span>
-                      <span className="text-[10px] font-mono text-[#E8431E] uppercase tracking-widest">{d.modulo}</span>
-                      {d.meme_video && <span className="text-[10px] font-mono text-[#2DD4A0]">🎬 vídeo</span>}
-                      {!d.meme_video && d.meme_imagem && <span className="text-[10px] font-mono text-[#2DD4A0]">🖼️ imagem</span>}
+                      <span className="text-[10px] font-mono text-creme-soft/70 uppercase tracking-widest">{d.id}</span>
+                      <span className="text-[10px] font-mono text-laranja uppercase tracking-widest">{d.modulo}</span>
+                      {d.meme_video && <span className="text-[10px] font-mono text-verde">🎬 vídeo</span>}
+                      {!d.meme_video && d.meme_imagem && <span className="text-[10px] font-mono text-verde">🖼️ imagem</span>}
                     </div>
-                    <p className="text-[#F5F0E8] text-sm font-semibold mb-1 line-clamp-2">{d.meme}</p>
+                    <p className="text-creme text-sm font-semibold mb-1 line-clamp-2">{d.meme}</p>
                     {d.pilula_sabedoria && (
-                      <p className="text-[#888] text-xs italic mb-4 line-clamp-2">💡 {d.pilula_sabedoria}</p>
+                      <p className="text-creme-soft text-xs italic mb-4 line-clamp-2">💡 {d.pilula_sabedoria}</p>
                     )}
                     <button
                       onClick={() => handleToggleCard(d.id)}
                       disabled={busy}
                       className={`w-full py-2 rounded-xl font-bold text-sm transition-all active:scale-95 ${
                         on
-                          ? "bg-[#2DD4A0]/15 border border-[#2DD4A0]/40 text-[#2DD4A0]"
-                          : "bg-[#1C1C1E] border border-[#2C2C2E] text-[#666]"
+                          ? "bg-verde/15 border border-verde/40 text-verde"
+                          : "bg-grafite-2 border border-grafite-3 text-creme-soft/60"
                       } disabled:opacity-50`}
                     >
                       {busy ? "…" : on ? "✓ no jogo — toque pra tirar" : "fora do jogo — toque pra ativar"}
@@ -419,14 +419,14 @@ export default function AdminPage() {
       {/* ── Aba Códigos ─────────────────────────────────────────────────── */}
       {aba === "codigos" && (
         <>
-          <p className="text-[#888] text-sm mb-6 leading-relaxed">
+          <p className="text-creme-soft text-sm mb-6 leading-relaxed">
             Crie um código curto para revelar na lousa no final do encontro presencial.
             Quando o jovem digita na tela inicial, desbloqueia o módulo pós-oficina.
           </p>
 
           {/* Criar novo código */}
-          <div className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl p-4 mb-6">
-            <p className="text-[10px] font-mono tracking-widest uppercase text-[#555] mb-4">novo código</p>
+          <div className="bg-grafite-2 border border-grafite-3 rounded-2xl p-4 mb-6">
+            <p className="text-[10px] font-mono tracking-widest uppercase text-creme-soft/70 mb-4">novo código</p>
             <div className="space-y-2">
               <input
                 type="text"
@@ -434,22 +434,22 @@ export default function AdminPage() {
                 onChange={(e) => setNovoCodigo(e.target.value.toUpperCase())}
                 placeholder="EX: CRIA26"
                 maxLength={12}
-                className="w-full bg-[#0F0F10] border border-[#2C2C2E] rounded-xl px-3 py-2 text-[#F5F0E8] placeholder-[#333] focus:outline-none focus:border-[#E8431E] transition-colors text-sm font-mono tracking-wider"
+                className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme-soft/30 focus:outline-none focus:border-laranja transition-colors text-sm font-mono tracking-wider"
               />
               <input
                 type="text"
                 value={novoLabel}
                 onChange={(e) => setNovoLabel(e.target.value)}
                 placeholder="descrição (ex: Encontro Mai/2026)"
-                className="w-full bg-[#0F0F10] border border-[#2C2C2E] rounded-xl px-3 py-2 text-[#F5F0E8] placeholder-[#333] focus:outline-none focus:border-[#E8431E] transition-colors text-sm"
+                className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme-soft/30 focus:outline-none focus:border-laranja transition-colors text-sm"
               />
               <button
                 onClick={handleAddCode}
                 disabled={!novoCodigo.trim() || codeState === "saving"}
                 className={`w-full py-2 rounded-xl font-bold text-sm transition-all active:scale-95 ${
-                  codeState === "ok" ? "bg-[#2DD4A0] text-black"
-                  : codeState === "err" ? "bg-[#E84040] text-white"
-                  : "bg-[#E8431E] text-white disabled:opacity-30"
+                  codeState === "ok" ? "bg-verde text-grafite"
+                  : codeState === "err" ? "bg-vermelho text-creme"
+                  : "bg-laranja text-grafite disabled:opacity-30"
                 }`}
               >
                 {codeState === "saving" ? "criando…" : codeState === "ok" ? "✓ criado" : "criar código"}
@@ -460,17 +460,17 @@ export default function AdminPage() {
           {/* Lista de códigos ativos */}
           <div className="space-y-3">
             {Object.keys(codes).length === 0 ? (
-              <p className="text-[#555] text-sm font-mono text-center py-8">nenhum código ativo</p>
+              <p className="text-creme-soft/70 text-sm font-mono text-center py-8">nenhum código ativo</p>
             ) : (
               Object.entries(codes).map(([code, info]) => (
-                <div key={code} className="bg-[#1C1C1E] border border-[#2C2C2E] rounded-xl p-4 flex items-center justify-between">
+                <div key={code} className="bg-grafite-2 border border-grafite-3 rounded-xl p-4 flex items-center justify-between">
                   <div>
-                    <p className="text-[#F5F0E8] font-mono font-bold tracking-widest">{code}</p>
-                    <p className="text-[#555] text-xs mt-1">{info.label}</p>
+                    <p className="text-creme font-mono font-bold tracking-widest">{code}</p>
+                    <p className="text-creme-soft/70 text-xs mt-1">{info.label}</p>
                   </div>
                   <button
                     onClick={() => handleRemoveCode(code)}
-                    className="text-[#555] hover:text-[#E84040] font-mono text-xs transition-colors"
+                    className="text-creme-soft/70 hover:text-vermelho font-mono text-xs transition-colors"
                   >
                     remover
                   </button>
@@ -481,7 +481,7 @@ export default function AdminPage() {
         </>
       )}
 
-      <p className="text-[#333] text-xs font-mono text-center mt-12">
+      <p className="text-creme-soft/40 text-xs font-mono text-center mt-12">
         Vozes do Oziel · equipe CriaLab
       </p>
     </main>

@@ -17,14 +17,14 @@ export interface Dilema {
 }
 
 export const MODULO_COR: Record<string, string> = {
-  "participação": "#2DD4A0",
-  "participacao": "#2DD4A0",
-  "desinformação": "#E84040",
-  "desinformacao": "#E84040",
+  "participação": "#26C79A",
+  "participacao": "#26C79A",
+  "desinformação": "#E8402F",
+  "desinformacao": "#E8402F",
   "eleição": "#3B82F6",
   "eleicao": "#3B82F6",
-  "território": "#F59E0B",
-  "territorio": "#F59E0B",
+  "território": "#FFD21E",
+  "territorio": "#FFD21E",
 }
 
 export const dilemas: Dilema[] = [

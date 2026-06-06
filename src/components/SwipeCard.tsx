@@ -15,7 +15,7 @@ const THRESHOLD = 90
 
 export default function SwipeCard({ dilema, onSwipe, isTop }: Props) {
   const x = useMotionValue(0)
-  const moduloCor = MODULO_COR[dilema.modulo] ?? "#888"
+  const moduloCor = MODULO_COR[dilema.modulo] ?? "#B8B2A6"
   const rotate = useTransform(x, [-200, 200], [-18, 18])
   const cardOpacity = useTransform(x, [-200, -THRESHOLD, 0, THRESHOLD, 200], [0.6, 1, 1, 1, 0.6])
 
@@ -51,41 +51,41 @@ export default function SwipeCard({ dilema, onSwipe, isTop }: Props) {
       }}
     >
       {/* Card */}
-      <div className="relative h-full flex flex-col bg-[#1C1C1E] border border-[#2C2C2E] rounded-2xl shadow-2xl select-none overflow-hidden">
+      <div className="grain relative h-full flex flex-col bg-grafite-2 border-2 border-grafite-3 rounded-2xl zine-edge select-none overflow-hidden">
 
         {/* Barra superior estilo "print": módulo + cara de post compartilhado */}
-        <div className="flex justify-between items-center px-5 pt-4 pb-3 border-b border-[#2C2C2E]/60">
+        <div className="flex justify-between items-center px-5 pt-4 pb-3 border-b-2 border-grafite-3/60">
           <div className="flex items-center gap-2">
             <span
-              className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black text-black"
+              className="w-7 h-7 rounded-md flex items-center justify-center text-[12px] brand-lockup text-grafite"
               style={{ backgroundColor: moduloCor }}
             >
               {dilema.modulo.charAt(0).toUpperCase()}
             </span>
             <span
-              className="text-[10px] tracking-widest uppercase font-mono"
+              className="brand-stamp text-[10px]"
               style={{ color: moduloCor }}
             >
               {dilema.modulo}
             </span>
           </div>
-          <span className="text-[10px] tracking-widest uppercase text-[#555] font-mono">
+          <span className="brand-stamp text-[10px] text-creme-soft/60">
             encaminhada ⤳
           </span>
         </div>
 
         {/* Overlays Concordo / Discordo */}
         <motion.div
-          className="absolute top-16 left-5 z-20 border-4 border-[#2DD4A0] rounded-lg px-3 py-1 pointer-events-none -rotate-12"
+          className="absolute top-16 left-5 z-20 bg-verde rounded-lg px-3 py-1 pointer-events-none -rotate-12 zine-edge"
           style={{ opacity: agreeOpacity }}
         >
-          <span className="text-[#2DD4A0] font-black text-xl tracking-wider">CONCORDO</span>
+          <span className="verdict-stamp text-grafite text-xl">CONCORDO</span>
         </motion.div>
         <motion.div
-          className="absolute top-16 right-5 z-20 border-4 border-[#E84040] rounded-lg px-3 py-1 pointer-events-none rotate-12"
+          className="absolute top-16 right-5 z-20 bg-vermelho rounded-lg px-3 py-1 pointer-events-none rotate-12 zine-edge"
           style={{ opacity: disagreeOpacity }}
         >
-          <span className="text-[#E84040] font-black text-xl tracking-wider">DISCORDO</span>
+          <span className="verdict-stamp text-creme text-xl">DISCORDO</span>
         </motion.div>
 
         {/* Corpo: mídia do meme OU "print" de texto viral */}
@@ -109,33 +109,33 @@ export default function SwipeCard({ dilema, onSwipe, isTop }: Props) {
             />
           ) : (
             // Sem mídia: estiliza o texto como um "print" de corrente/post viral
-            <div className="w-full max-w-sm rounded-2xl rounded-tl-sm bg-[#0B141A] border border-[#222D34] px-5 py-5 shadow-lg">
+            <div className="w-full max-w-sm rounded-2xl rounded-tl-sm bg-grafite border-2 border-grafite-3 px-5 py-5 shadow-lg">
               <div className="flex items-center gap-2 mb-3">
-                <span className="w-6 h-6 rounded-full bg-[#2C3942] flex items-center justify-center text-xs">👤</span>
-                <span className="text-[#8696A0] text-xs font-mono">recebida no grupo</span>
+                <span className="w-6 h-6 rounded-full bg-grafite-3 flex items-center justify-center text-xs">👤</span>
+                <span className="text-creme-soft/70 text-xs font-mono">recebida no grupo</span>
               </div>
-              <p className="text-xl sm:text-2xl font-bold text-[#F5F0E8] leading-snug">
+              <p className="text-xl sm:text-2xl font-extrabold text-creme leading-snug">
                 {dilema.meme}
               </p>
               <div className="flex justify-end mt-3">
-                <span className="text-[#8696A0] text-[10px] font-mono">encaminhada muitas vezes ⤳</span>
+                <span className="text-creme-soft/50 text-[10px] font-mono">encaminhada muitas vezes ⤳</span>
               </div>
             </div>
           )}
 
           {/* Quando há mídia, mostra o texto do meme como legenda embaixo */}
           {temMidia && (
-            <p className="text-base font-semibold text-[#F5F0E8] leading-snug text-center mt-3 px-2">
+            <p className="text-base font-semibold text-creme leading-snug text-center mt-3 px-2">
               {dilema.meme}
             </p>
           )}
         </div>
 
         {/* Rodapé: dica de arrastar */}
-        <div className="flex justify-between text-xs text-[#555] font-mono px-5 py-3 border-t border-[#2C2C2E]/60">
-          <span className="text-[#E84040]/70">← discordo</span>
-          <span>arraste o card</span>
-          <span className="text-[#2DD4A0]/70">concordo →</span>
+        <div className="flex justify-between text-xs font-mono px-5 py-3 border-t-2 border-grafite-3/60">
+          <span className="text-vermelho">← discordo</span>
+          <span className="text-creme-soft/60">arraste o card</span>
+          <span className="text-verde">concordo →</span>
         </div>
       </div>
     </motion.div>
