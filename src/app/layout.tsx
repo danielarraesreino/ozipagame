@@ -17,9 +17,30 @@ const spaceMono = Space_Mono({
   display: "swap",
 })
 
+const SITE_URL = "https://jogoozipa.vercel.app"
+const TITLE = "Vozes do Oziel — Cidadania Conectada"
+const DESCRIPTION =
+  "Memes, dilemas e as consequências que eles escondem. Um jogo de 3 minutos sobre participação popular, feito por e para a juventude do Jardim Oziel, Campinas."
+
 export const metadata: Metadata = {
-  title: "Vozes do Oziel — Cidadania Conectada",
-  description: "Serious game sobre participação popular para jovens do Jardim Oziel, Campinas.",
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  applicationName: "Vozes do Oziel",
+  keywords: ["Jardim Oziel", "Campinas", "cidadania", "participação popular", "desinformação", "serious game", "juventude"],
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    url: SITE_URL,
+    siteName: "Vozes do Oziel",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 }
 
 export const viewport: Viewport = {
