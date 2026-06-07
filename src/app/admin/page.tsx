@@ -11,7 +11,7 @@ const allDilemas: Dilema[] = [...hardcoded, ...gerados]
 type VideoMap = Record<string, string>
 type SaveState = "idle" | "saving" | "ok" | "err"
 type UploadState = "idle" | "uploading" | "ok" | "err"
-type Aba = "videos" | "cards" | "trilha" | "codigos"
+type Aba = "videos" | "cards" | "trilha" | "conteudo" | "codigos"
 
 interface RoomCode { label: string; ativo: boolean }
 type CodesMap = Record<string, RoomCode>
@@ -40,6 +40,9 @@ export default function AdminPage() {
   const [trilhaUpload, setTrilhaUpload] = useState<UploadState>("idle")
   const trilhaUrlRef = useRef<HTMLInputElement | null>(null)
   const trilhaNomeRef = useRef<HTMLInputElement | null>(null)
+  const [spotniksUrl, setSpotniksUrl] = useState("")
+  const [spotniksState, setSpotniksState] = useState<SaveState>("idle")
+  const spotniksRef = useRef<HTMLInputElement | null>(null)
 
   // Verifica se já tem sessão e carrega URLs salvas
   useEffect(() => {
@@ -72,6 +75,11 @@ export default function AdminPage() {
           setTrilhas([{ nome: "trilha", url: data.trilha }])
         }
       })
+      .catch(() => {})
+
+    fetch("/site_config.json")
+      .then((r) => (r.ok ? r.json() : {}))
+      .then((data: { spotniks_url?: string }) => setSpotniksUrl(data.spotniks_url || ""))
       .catch(() => {})
 
     // Testa cookie de admin
@@ -193,6 +201,23 @@ export default function AdminPage() {
     await salvarTrilhas(trilhas.filter((t) => t.url !== url))
   }
 
+  // ── Conteúdo (vídeo Spotniks etc) ──────────────────────────────────────────
+  async function handleSaveSpotniks() {
+    const url = spotniksRef.current?.value?.trim() ?? ""
+    setSpotniksState("saving")
+    const res = await fetch("/api/admin/config", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ spotniks_url: url }),
+    })
+    setSpotniksState(res.ok ? "ok" : "err")
+    if (res.ok) {
+      setSpotniksUrl(url)
+      setLastSaved("conteudo")
+    }
+    setTimeout(() => setSpotniksState("idle"), 2000)
+  }
+
   if (checking) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-grafite">
@@ -305,7 +330,7 @@ export default function AdminPage() {
 
       {/* Abas */}
       <div className="flex gap-2 mb-6">
-        {(["videos", "cards", "trilha", "codigos"] as Aba[]).map((a) => (
+        {(["videos", "cards", "trilha", "conteudo", "codigos"] as Aba[]).map((a) => (
           <button
             key={a}
             onClick={() => setAba(a)}
@@ -315,7 +340,7 @@ export default function AdminPage() {
                 : "bg-grafite-2 border border-grafite-3 text-creme-soft hover:text-creme"
             }`}
           >
-            {a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : "🔑 Códigos"}
+            {a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : a === "conteudo" ? "📺 Conteúdo" : "🔑 Códigos"}
           </button>
         ))}
       </div>
@@ -576,6 +601,55 @@ export default function AdminPage() {
                 </button>
               </div>
             </div>
+          </div>
+        </>
+      )}
+
+      {/* ── Aba Conteúdo (vídeo Spotniks) ───────────────────────────────── */}
+      {aba === "conteudo" && (
+        <>
+          <p className="text-creme-soft text-sm mb-6 leading-relaxed">
+            Vídeo de <strong>inspiração</strong> (Spotniks) que aparece na tela de entrada
+            no botão &ldquo;assista o que inspirou&rdquo;. Cole o link do YouTube.
+          </p>
+
+          <div className="bg-grafite-2 border border-grafite-3 rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[10px] font-mono text-laranja uppercase tracking-widest">vídeo Spotniks</span>
+              {spotniksUrl
+                ? <span className="text-[10px] font-mono text-verde">📺 definido</span>
+                : <span className="text-[10px] font-mono text-creme-soft/50">nenhum</span>}
+            </div>
+
+            <div className="flex gap-2">
+              <input
+                ref={spotniksRef}
+                type="url"
+                defaultValue={spotniksUrl}
+                placeholder="https://youtu.be/… ou youtube.com/watch?v=…"
+                className="flex-1 bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme-soft/30 focus:outline-none focus:border-laranja transition-colors text-sm font-mono"
+              />
+              <button
+                onClick={handleSaveSpotniks}
+                disabled={spotniksState === "saving"}
+                className={`px-4 py-2 rounded-xl font-bold text-sm transition-all active:scale-95 ${
+                  spotniksState === "ok" ? "bg-verde text-grafite"
+                  : spotniksState === "err" ? "bg-vermelho text-creme"
+                  : "bg-laranja text-grafite disabled:opacity-50"
+                }`}
+              >
+                {spotniksState === "saving" ? "…" : spotniksState === "ok" ? "✓" : spotniksState === "err" ? "!" : "salvar"}
+              </button>
+            </div>
+
+            {spotniksUrl && (
+              <button
+                onClick={() => { if (spotniksRef.current) spotniksRef.current.value = ""; handleSaveSpotniks() }}
+                className="mt-3 w-full py-2 rounded-xl text-xs font-mono text-creme-soft/70 hover:text-vermelho transition-colors"
+              >
+                remover vídeo
+              </button>
+            )}
           </div>
         </>
       )}

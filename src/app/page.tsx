@@ -1,8 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { savePlayer, unlockModulo, isPosOficinaUnlocked } from "@/lib/store"
+import { getEmbedUrl } from "@/lib/video"
 import Logo from "@/components/Logo"
 
 const bairros = [
@@ -20,7 +21,16 @@ export default function Home() {
   const [codigo, setCodigo] = useState("")
   const [codigoStatus, setCodigoStatus] = useState<"idle" | "ok" | "err">("idle")
   const [mostrarCodigo, setMostrarCodigo] = useState(false)
+  const [spotniksUrl, setSpotniksUrl] = useState("")
+  const [showVideo, setShowVideo] = useState(false)
   const jaDesbloqueado = isPosOficinaUnlocked()
+
+  useEffect(() => {
+    fetch("/site_config.json", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : {}))
+      .then((cfg: { spotniks_url?: string }) => setSpotniksUrl(cfg.spotniks_url || ""))
+      .catch(() => {})
+  }, [])
 
   async function validarCodigo(c: string) {
     const val = c.trim().toUpperCase()
@@ -71,9 +81,19 @@ export default function Home() {
             Cidadania Conectada
           </p>
 
-          <p className="text-creme-soft text-base leading-relaxed mb-9 max-w-[34ch]">
+          <p className="text-creme-soft text-base leading-relaxed mb-5 max-w-[34ch]">
             Memes, dilemas e as consequências que eles escondem. 3 minutos. Sem certo ou errado.
           </p>
+
+          {spotniksUrl && (
+            <button
+              type="button"
+              onClick={() => setShowVideo(true)}
+              className="brand-label inline-flex items-center gap-2 text-[10px] text-laranja border-2 border-laranja/40 rounded-full px-4 py-2 mb-9 hover:bg-laranja/10 active:scale-95 transition-all"
+            >
+              ▶ assista o que inspirou
+            </button>
+          )}
 
           <div className="space-y-4">
             <div>
@@ -176,6 +196,37 @@ export default function Home() {
           </p>
         </div>
       </div>
+
+      {/* Modal do vídeo do Spotniks (a inspiração) */}
+      {showVideo && spotniksUrl && (
+        <div
+          className="fixed inset-0 z-50 bg-grafite/95 backdrop-blur flex flex-col items-center justify-center p-4"
+          onClick={() => setShowVideo(false)}
+        >
+          <div className="w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-3">
+              <p className="brand-label text-[10px] text-laranja">o que inspirou o jogo</p>
+              <button
+                onClick={() => setShowVideo(false)}
+                className="text-creme-soft hover:text-creme text-xl leading-none px-2"
+                aria-label="fechar"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="relative w-full aspect-video bg-black rounded-2xl overflow-hidden zine-edge">
+              <iframe
+                src={getEmbedUrl(spotniksUrl)}
+                className="absolute inset-0 w-full h-full"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+                style={{ border: "none" }}
+                title="Vídeo do Spotniks"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

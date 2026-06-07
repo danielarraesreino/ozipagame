@@ -2,36 +2,13 @@
 
 import { motion } from "framer-motion"
 import type { Dilema } from "@/lib/dilemas"
+import { isArquivoVideo, getEmbedUrl } from "@/lib/video"
 
 interface Props {
   dilema: Dilema
   onNext: () => void
   current: number
   total: number
-}
-
-// Vídeo de arquivo (mp4/webm/mov), local ou direto — toca com <video>, não iframe.
-function isArquivoVideo(url: string): boolean {
-  return /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(url) || url.startsWith("/videos/")
-}
-
-function getEmbedUrl(url: string): string {
-  // TikTok: https://www.tiktok.com/@user/video/123456
-  const tiktokMatch = url.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/)
-  if (tiktokMatch) return `https://www.tiktok.com/embed/v2/${tiktokMatch[1]}`
-
-  // YouTube Shorts: https://youtube.com/shorts/ABC ou youtu.be/ABC
-  const ytShorts = url.match(/youtube\.com\/shorts\/([^?&]+)/)
-  if (ytShorts) return `https://www.youtube.com/embed/${ytShorts[1]}?autoplay=1`
-
-  const ytShort = url.match(/youtu\.be\/([^?&]+)/)
-  if (ytShort) return `https://www.youtube.com/embed/${ytShort[1]}?autoplay=1`
-
-  const ytWatch = url.match(/youtube\.com\/watch\?v=([^&]+)/)
-  if (ytWatch) return `https://www.youtube.com/embed/${ytWatch[1]}?autoplay=1`
-
-  // Já é um embed URL
-  return url
 }
 
 export default function VideoScreen({ dilema, onNext, current, total }: Props) {
