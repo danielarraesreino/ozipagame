@@ -192,7 +192,9 @@ export default function Home() {
           <p className="text-center text-creme-soft/60 text-xs mt-2 font-mono">
             <a href="/dados" className="underline text-laranja">dados abertos</a>
             {" · "}
-            <a href="/sobre.html" className="underline">sobre o projeto</a>
+            <a href="/enviar-meme" className="underline">manda teu meme</a>
+            {" · "}
+            <a href="/sobre.html" className="underline">sobre</a>
           </p>
         </div>
       </div>

@@ -11,7 +11,17 @@ const allDilemas: Dilema[] = [...hardcoded, ...gerados]
 type VideoMap = Record<string, string>
 type SaveState = "idle" | "saving" | "ok" | "err"
 type UploadState = "idle" | "uploading" | "ok" | "err"
-type Aba = "videos" | "cards" | "trilha" | "conteudo" | "forms" | "codigos"
+type Aba = "videos" | "cards" | "trilha" | "conteudo" | "forms" | "memes" | "codigos"
+
+interface MemeRow {
+  id: number
+  autor_apelido?: string
+  bairro?: string
+  descricao?: string
+  imagem_url?: string
+  status: "pendente" | "aprovado" | "recusado"
+  criado_em?: string
+}
 
 interface FormRow {
   id: number
@@ -58,6 +68,9 @@ export default function AdminPage() {
   const spotniksRef = useRef<HTMLInputElement | null>(null)
   const [forms, setForms] = useState<FormRow[]>([])
   const [formsState, setFormsState] = useState<"idle" | "loading" | "err">("idle")
+  const [memes, setMemes] = useState<MemeRow[]>([])
+  const [memesState, setMemesState] = useState<"idle" | "loading" | "err">("idle")
+  const [memeBusy, setMemeBusy] = useState<number | null>(null)
 
   // Verifica se já tem sessão e carrega URLs salvas
   useEffect(() => {
@@ -230,6 +243,31 @@ export default function AdminPage() {
     }
   }
 
+  // ── Memes (moderação) ───────────────────────────────────────────────────────
+  async function carregarMemes() {
+    setMemesState("loading")
+    try {
+      const res = await fetch("/api/admin/memes")
+      if (!res.ok) throw new Error()
+      const d = await res.json()
+      setMemes(d.memes || [])
+      setMemesState("idle")
+    } catch {
+      setMemesState("err")
+    }
+  }
+
+  async function moderarMeme(id: number, status: "aprovado" | "recusado" | "pendente") {
+    setMemeBusy(id)
+    const res = await fetch("/api/admin/memes", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status }),
+    })
+    if (res.ok) setMemes((m) => m.map((x) => (x.id === id ? { ...x, status } : x)))
+    setMemeBusy(null)
+  }
+
   // ── Conteúdo (vídeo Spotniks etc) ──────────────────────────────────────────
   async function handleSaveSpotniks() {
     const url = spotniksRef.current?.value?.trim() ?? ""
@@ -359,17 +397,17 @@ export default function AdminPage() {
 
       {/* Abas */}
       <div className="flex gap-2 mb-6">
-        {(["videos", "cards", "trilha", "conteudo", "forms", "codigos"] as Aba[]).map((a) => (
+        {(["videos", "cards", "trilha", "conteudo", "forms", "memes", "codigos"] as Aba[]).map((a) => (
           <button
             key={a}
-            onClick={() => { setAba(a); if (a === "forms") carregarForms() }}
+            onClick={() => { setAba(a); if (a === "forms") carregarForms(); if (a === "memes") carregarMemes() }}
             className={`px-3 py-2 rounded-xl text-sm font-mono transition-colors ${
               aba === a
                 ? "bg-laranja text-grafite"
                 : "bg-grafite-2 border border-grafite-3 text-creme-soft hover:text-creme"
             }`}
           >
-            {a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : a === "conteudo" ? "📺 Conteúdo" : a === "forms" ? "📋 Pesquisa" : "🔑 Códigos"}
+            {a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : a === "conteudo" ? "📺 Conteúdo" : a === "forms" ? "📋 Pesquisa" : a === "memes" ? "🖼️ Memes" : "🔑 Códigos"}
           </button>
         ))}
       </div>
@@ -730,6 +768,63 @@ export default function AdminPage() {
                   )}
                 </div>
               ))}
+            </div>
+          )}
+        </>
+      )}
+
+      {/* ── Aba Memes (moderação) ───────────────────────────────────────── */}
+      {aba === "memes" && (
+        <>
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-creme-soft text-sm leading-relaxed pr-3">
+              Memes enviados pela comunidade. <strong>Avalie</strong> antes de qualquer uso —
+              nada aparece em público sem aprovação.
+            </p>
+            <button onClick={carregarMemes} className="shrink-0 text-xs font-mono text-creme-soft/70 hover:text-creme transition-colors">↻</button>
+          </div>
+
+          {memesState === "loading" ? (
+            <p className="text-creme-soft/60 text-sm font-mono text-center py-8">carregando…</p>
+          ) : memesState === "err" ? (
+            <p className="text-vermelho/80 text-sm font-mono text-center py-8">erro — Supabase configurado? rode o schema.sql</p>
+          ) : memes.length === 0 ? (
+            <p className="text-creme-soft/60 text-sm font-mono text-center py-8">nenhum meme enviado ainda</p>
+          ) : (
+            <div className="space-y-4">
+              <p className="text-creme-soft/70 text-xs font-mono">
+                {memes.filter((m) => m.status === "pendente").length} pendente(s) · {memes.length} no total
+              </p>
+              {memes.map((m) => {
+                const busy = memeBusy === m.id
+                const cor = m.status === "aprovado" ? "border-verde/50" : m.status === "recusado" ? "border-vermelho/40 opacity-60" : "border-grafite-3"
+                return (
+                  <div key={m.id} className={`bg-grafite-2 border-2 rounded-2xl p-4 ${cor}`}>
+                    <div className="flex items-center gap-2 mb-2 flex-wrap text-[11px] font-mono">
+                      <span className={`uppercase tracking-widest ${m.status === "aprovado" ? "text-verde" : m.status === "recusado" ? "text-vermelho" : "text-laranja"}`}>{m.status}</span>
+                      {m.autor_apelido && <span className="text-creme-soft">por {m.autor_apelido}</span>}
+                      {m.bairro && <span className="text-creme-soft/60">· {m.bairro}</span>}
+                    </div>
+                    {m.imagem_url && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={m.imagem_url} alt="meme" className="w-full rounded-xl border border-grafite-3 mb-2" />
+                    )}
+                    {m.descricao && <p className="text-creme text-sm mb-3">{m.descricao}</p>}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => moderarMeme(m.id, "aprovado")}
+                        disabled={busy || m.status === "aprovado"}
+                        className="flex-1 py-2 rounded-xl text-sm font-bold bg-verde/15 border border-verde/40 text-verde active:scale-95 transition-all disabled:opacity-40"
+                      >✓ aprovar</button>
+                      <button
+                        onClick={() => moderarMeme(m.id, "recusado")}
+                        disabled={busy || m.status === "recusado"}
+                        className="flex-1 py-2 rounded-xl text-sm font-bold bg-vermelho/10 border border-vermelho/40 text-vermelho active:scale-95 transition-all disabled:opacity-40"
+                      >✕ recusar</button>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           )}
         </>
