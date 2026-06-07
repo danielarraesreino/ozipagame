@@ -212,9 +212,11 @@ export default function Home() {
           <p className="text-center text-creme-soft/60 text-xs mt-4 font-mono">
             sem cadastro · sem login · 100% anônimo
           </p>
-          <p className="text-center text-creme-soft/60 text-xs mt-2 font-mono">
-            <a href="/dados" className="underline text-laranja">dados abertos</a>
+          <p className="text-center text-creme-soft/60 text-xs mt-2 font-mono leading-relaxed">
+            <a href="/pesquisa" className="underline text-laranja">responder pesquisa</a>
             {" · "}
+            <a href="/dados" className="underline text-laranja">dados abertos</a>
+            <br />
             <a href="/enviar-meme" className="underline">manda teu meme</a>
             {" · "}
             <a href="/sobre.html" className="underline">sobre</a>

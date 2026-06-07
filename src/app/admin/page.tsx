@@ -27,10 +27,15 @@ interface FormRow {
   id: number
   bairro?: string
   faixa_idade?: string
-  sentimento?: string
+  estuda?: string
+  sentimentos?: string[]
+  afeta_vida?: number
+  avontade_opinar?: number
+  confia_eleitos?: number
+  afasta?: string[]
   ja_participou?: string
-  opiniao_importa?: number
-  onde_discute?: string
+  onde_discute?: string[]
+  sabia_participar?: string
   texto_participar?: string
   texto_duvida?: string
   criado_em?: string
@@ -753,12 +758,21 @@ export default function AdminPage() {
                   <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] font-mono text-creme-soft/80 mb-2">
                     {f.bairro && <span>📍 {f.bairro}</span>}
                     {f.faixa_idade && <span>· {f.faixa_idade}</span>}
-                    {typeof f.opiniao_importa === "number" && <span>· importa: {f.opiniao_importa}/5</span>}
+                    {f.estuda && <span>· {f.estuda}</span>}
                   </div>
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {f.sentimento && <span className="text-[11px] bg-grafite border border-grafite-3 rounded-full px-2 py-0.5 text-laranja">{f.sentimento}</span>}
+                  <div className="flex flex-wrap gap-1.5 mb-2">
+                    {(f.sentimentos ?? []).map((x) => <span key={x} className="text-[11px] bg-grafite border border-grafite-3 rounded-full px-2 py-0.5 text-laranja">{x}</span>)}
+                  </div>
+                  <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] font-mono text-creme-soft/70 mb-2">
+                    {typeof f.afeta_vida === "number" && <span>afeta vida: {f.afeta_vida}/5</span>}
+                    {typeof f.avontade_opinar === "number" && <span>· à vontade: {f.avontade_opinar}/5</span>}
+                    {typeof f.confia_eleitos === "number" && <span>· confia: {f.confia_eleitos}/5</span>}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mb-2">
                     {f.ja_participou && <span className="text-[11px] bg-grafite border border-grafite-3 rounded-full px-2 py-0.5 text-creme-soft">participou: {f.ja_participou}</span>}
-                    {f.onde_discute && <span className="text-[11px] bg-grafite border border-grafite-3 rounded-full px-2 py-0.5 text-creme-soft">{f.onde_discute}</span>}
+                    {f.sabia_participar && <span className="text-[11px] bg-grafite border border-grafite-3 rounded-full px-2 py-0.5 text-creme-soft">{f.sabia_participar}</span>}
+                    {(f.afasta ?? []).map((x) => <span key={x} className="text-[11px] bg-grafite border border-grafite-3 rounded-full px-2 py-0.5 text-vermelho/80">afasta: {x}</span>)}
+                    {(f.onde_discute ?? []).map((x) => <span key={x} className="text-[11px] bg-grafite border border-grafite-3 rounded-full px-2 py-0.5 text-creme-soft/70">{x}</span>)}
                   </div>
                   {f.texto_participar && (
                     <p className="text-creme text-sm mt-2"><span className="text-creme-soft/50">participar+:</span> {f.texto_participar}</p>

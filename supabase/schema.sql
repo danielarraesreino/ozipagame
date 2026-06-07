@@ -24,19 +24,25 @@ create table if not exists respostas (
   criado_em           timestamptz default now()
 );
 
--- ── Formulário qualitativo (fim do jogo) ────────────────────────────────────
--- Múltipla escolha: agregável no dashboard. Texto livre: SÓ admin, nunca público.
+-- ── Pesquisa qualitativa (curta no fim do jogo + página /pesquisa) ──────────
+-- Múltipla escolha/escala: agregável no dashboard. Texto livre: SÓ admin.
+-- Campos de marcar-várias guardados como jsonb (array de strings).
 create table if not exists formularios (
-  id               bigint generated always as identity primary key,
-  bairro           text,
-  faixa_idade      text,
-  sentimento       text,
-  ja_participou    text,
-  opiniao_importa  int,
-  onde_discute     text,
-  texto_participar text,   -- admin-only
-  texto_duvida     text,   -- admin-only
-  criado_em        timestamptz default now()
+  id                bigint generated always as identity primary key,
+  bairro            text,
+  faixa_idade       text,
+  estuda            text,
+  sentimentos       jsonb,   -- array (marca várias)
+  afeta_vida        int,     -- escala 1–5
+  avontade_opinar   int,     -- escala 1–5
+  confia_eleitos    int,     -- escala 1–5
+  afasta            jsonb,   -- array (marca várias)
+  ja_participou     text,
+  onde_discute      jsonb,   -- array (marca várias)
+  sabia_participar  text,
+  texto_participar  text,    -- admin-only
+  texto_duvida      text,    -- admin-only
+  criado_em         timestamptz default now()
 );
 
 -- ── Memes enviados (co-autoria) → fila de moderação ─────────────────────────

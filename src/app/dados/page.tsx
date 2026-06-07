@@ -20,13 +20,19 @@ interface Dados {
   pesquisa: {
     total: number
     faixa_idade: Record<string, number>
-    sentimento: Record<string, number>
+    estuda: Record<string, number>
+    sentimentos: Record<string, number>
+    afeta_vida: Escala
+    avontade_opinar: Escala
+    confia_eleitos: Escala
+    afasta: Record<string, number>
     ja_participou: Record<string, number>
     onde_discute: Record<string, number>
-    opiniao_importa_media: number | null
-    opiniao_importa_dist: Record<string, number>
+    sabia_participar: Record<string, number>
   }
 }
+
+interface Escala { media: number | null; dist: Record<string, number> }
 
 function Barras({ data, cor = "var(--color-laranja)" }: { data: Record<string, number>; cor?: string }) {
   const entries = Object.entries(data).sort((a, b) => b[1] - a[1])
@@ -46,6 +52,18 @@ function Barras({ data, cor = "var(--color-laranja)" }: { data: Record<string, n
         </div>
       ))}
     </div>
+  )
+}
+
+function EscalaView({ e }: { e: Escala }) {
+  if (e.media == null) return <p className="text-creme-soft/40 text-xs font-mono">sem dados ainda</p>
+  return (
+    <>
+      <p className="brand-lockup text-creme text-3xl mb-3">
+        {e.media}<span className="text-creme-soft/50 text-lg">/5</span>
+      </p>
+      <Barras data={e.dist} />
+    </>
   )
 }
 
@@ -184,25 +202,33 @@ export default function DadosPage() {
             {d.pesquisa.total > 0 && (
               <>
                 <Secao titulo="quando o assunto é política, eles sentem…">
-                  <Barras data={d.pesquisa.sentimento} />
+                  <Barras data={d.pesquisa.sentimentos} />
+                </Secao>
+                <Secao titulo='"política afeta minha vida no dia a dia"'>
+                  <EscalaView e={d.pesquisa.afeta_vida} />
+                </Secao>
+                <Secao titulo='"me sinto à vontade pra opinar sobre política"'>
+                  <EscalaView e={d.pesquisa.avontade_opinar} />
+                </Secao>
+                <Secao titulo='"dá pra confiar em quem é eleito"'>
+                  <EscalaView e={d.pesquisa.confia_eleitos} />
+                </Secao>
+                <Secao titulo="o que mais afasta de participar">
+                  <Barras data={d.pesquisa.afasta} cor="var(--color-vermelho)" />
                 </Secao>
                 <Secao titulo="já participaram de algo no bairro?">
                   <Barras data={d.pesquisa.ja_participou} cor="var(--color-verde)" />
                 </Secao>
+                <Secao titulo="sabiam que dá pra participar de decisão do bairro?">
+                  <Barras data={d.pesquisa.sabia_participar} cor="var(--color-verde)" />
+                </Secao>
                 <Secao titulo="onde discutem política">
                   <Barras data={d.pesquisa.onde_discute} />
                 </Secao>
-                <Secao titulo="idade de quem respondeu">
-                  <Barras data={d.pesquisa.faixa_idade} cor="var(--color-amarelo)" />
-                </Secao>
-                {d.pesquisa.opiniao_importa_media != null && (
-                  <Secao titulo='"minha opinião sobre política importa"'>
-                    <p className="brand-lockup text-creme text-3xl mb-3">
-                      {d.pesquisa.opiniao_importa_media}<span className="text-creme-soft/50 text-lg">/5</span>
-                    </p>
-                    <Barras data={d.pesquisa.opiniao_importa_dist} />
-                  </Secao>
-                )}
+                <div className="grid grid-cols-2 gap-3">
+                  <Secao titulo="idade"><Barras data={d.pesquisa.faixa_idade} cor="var(--color-amarelo)" /></Secao>
+                  <Secao titulo="estuda?"><Barras data={d.pesquisa.estuda} cor="var(--color-amarelo)" /></Secao>
+                </div>
               </>
             )}
 
