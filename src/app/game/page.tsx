@@ -201,6 +201,11 @@ function EndScreen({
             >
               jogar de novo
             </button>
+            <p className="text-center text-creme-soft/60 text-xs pt-1 font-mono">
+              <a href="/enviar-meme" className="underline text-laranja">enviar um meme</a>
+              {" · "}
+              <a href="/dados" className="underline">dados abertos do bairro</a>
+            </p>
           </div>
         </motion.div>
       </div>

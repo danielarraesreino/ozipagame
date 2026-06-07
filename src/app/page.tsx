@@ -190,7 +190,7 @@ export default function Home() {
             sem cadastro · sem login · 100% anônimo
           </p>
           <p className="text-center text-creme-soft/60 text-xs mt-2 font-mono">
-            ou <a href="/jogo.html" className="underline text-laranja">jogar em HTML standalone</a>
+            <a href="/dados" className="underline text-laranja">dados abertos</a>
             {" · "}
             <a href="/sobre.html" className="underline">sobre o projeto</a>
           </p>
