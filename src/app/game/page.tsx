@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { dilemas as hardcoded } from "@/lib/dilemas"
 import { dilemas as gerados } from "@/lib/dilemas_gerados"
@@ -75,6 +75,19 @@ function EndScreen({
   }
 
   const topStatus = Object.entries(statusCount).sort((a, b) => b[1] - a[1])
+
+  // Registra a partida anônima (sem apelido) uma única vez ao chegar no fim.
+  const tracked = useRef(false)
+  useEffect(() => {
+    if (tracked.current || results.length === 0) return
+    tracked.current = true
+    fetch("/api/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ bairro: player.bairro, qtd_discordou: discordou, results }),
+    }).catch(() => {})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const whatsappText = encodeURIComponent(
     `Joguei Vozes do Oziel 🎮\n` +

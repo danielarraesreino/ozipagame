@@ -187,7 +187,7 @@ export default function Home() {
             Entrar no jogo →
           </button>
           <p className="text-center text-creme-soft/60 text-xs mt-4 font-mono">
-            sem cadastro · sem senha · sem rastreio
+            sem cadastro · sem login · 100% anônimo
           </p>
           <p className="text-center text-creme-soft/60 text-xs mt-2 font-mono">
             ou <a href="/jogo.html" className="underline text-laranja">jogar em HTML standalone</a>
