@@ -11,7 +11,20 @@ const allDilemas: Dilema[] = [...hardcoded, ...gerados]
 type VideoMap = Record<string, string>
 type SaveState = "idle" | "saving" | "ok" | "err"
 type UploadState = "idle" | "uploading" | "ok" | "err"
-type Aba = "videos" | "cards" | "trilha" | "conteudo" | "codigos"
+type Aba = "videos" | "cards" | "trilha" | "conteudo" | "forms" | "codigos"
+
+interface FormRow {
+  id: number
+  bairro?: string
+  faixa_idade?: string
+  sentimento?: string
+  ja_participou?: string
+  opiniao_importa?: number
+  onde_discute?: string
+  texto_participar?: string
+  texto_duvida?: string
+  criado_em?: string
+}
 
 interface RoomCode { label: string; ativo: boolean }
 type CodesMap = Record<string, RoomCode>
@@ -43,6 +56,8 @@ export default function AdminPage() {
   const [spotniksUrl, setSpotniksUrl] = useState("")
   const [spotniksState, setSpotniksState] = useState<SaveState>("idle")
   const spotniksRef = useRef<HTMLInputElement | null>(null)
+  const [forms, setForms] = useState<FormRow[]>([])
+  const [formsState, setFormsState] = useState<"idle" | "loading" | "err">("idle")
 
   // Verifica se já tem sessão e carrega URLs salvas
   useEffect(() => {
@@ -201,6 +216,20 @@ export default function AdminPage() {
     await salvarTrilhas(trilhas.filter((t) => t.url !== url))
   }
 
+  // ── Formulários (leitura) ───────────────────────────────────────────────────
+  async function carregarForms() {
+    setFormsState("loading")
+    try {
+      const res = await fetch("/api/admin/formularios")
+      if (!res.ok) throw new Error()
+      const d = await res.json()
+      setForms(d.formularios || [])
+      setFormsState("idle")
+    } catch {
+      setFormsState("err")
+    }
+  }
+
   // ── Conteúdo (vídeo Spotniks etc) ──────────────────────────────────────────
   async function handleSaveSpotniks() {
     const url = spotniksRef.current?.value?.trim() ?? ""
@@ -330,17 +359,17 @@ export default function AdminPage() {
 
       {/* Abas */}
       <div className="flex gap-2 mb-6">
-        {(["videos", "cards", "trilha", "conteudo", "codigos"] as Aba[]).map((a) => (
+        {(["videos", "cards", "trilha", "conteudo", "forms", "codigos"] as Aba[]).map((a) => (
           <button
             key={a}
-            onClick={() => setAba(a)}
+            onClick={() => { setAba(a); if (a === "forms") carregarForms() }}
             className={`px-3 py-2 rounded-xl text-sm font-mono transition-colors ${
               aba === a
                 ? "bg-laranja text-grafite"
                 : "bg-grafite-2 border border-grafite-3 text-creme-soft hover:text-creme"
             }`}
           >
-            {a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : a === "conteudo" ? "📺 Conteúdo" : "🔑 Códigos"}
+            {a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : a === "conteudo" ? "📺 Conteúdo" : a === "forms" ? "📋 Pesquisa" : "🔑 Códigos"}
           </button>
         ))}
       </div>
@@ -651,6 +680,58 @@ export default function AdminPage() {
               </button>
             )}
           </div>
+        </>
+      )}
+
+      {/* ── Aba Pesquisa (formulários) ──────────────────────────────────── */}
+      {aba === "forms" && (
+        <>
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-creme-soft text-sm leading-relaxed pr-3">
+              Respostas da pesquisa qualitativa (anônimas). O texto livre é
+              <strong> só pra equipe</strong> — nunca vai pro dashboard público.
+            </p>
+            <button
+              onClick={carregarForms}
+              className="shrink-0 text-xs font-mono text-creme-soft/70 hover:text-creme transition-colors"
+            >
+              ↻
+            </button>
+          </div>
+
+          {formsState === "loading" ? (
+            <p className="text-creme-soft/60 text-sm font-mono text-center py-8">carregando…</p>
+          ) : formsState === "err" ? (
+            <p className="text-vermelho/80 text-sm font-mono text-center py-8">
+              erro — Supabase configurado? rode o schema.sql
+            </p>
+          ) : forms.length === 0 ? (
+            <p className="text-creme-soft/60 text-sm font-mono text-center py-8">nenhuma resposta ainda</p>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-creme-soft/70 text-xs font-mono mb-2">{forms.length} resposta(s)</p>
+              {forms.map((f) => (
+                <div key={f.id} className="bg-grafite-2 border border-grafite-3 rounded-2xl p-4">
+                  <div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] font-mono text-creme-soft/80 mb-2">
+                    {f.bairro && <span>📍 {f.bairro}</span>}
+                    {f.faixa_idade && <span>· {f.faixa_idade}</span>}
+                    {typeof f.opiniao_importa === "number" && <span>· importa: {f.opiniao_importa}/5</span>}
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {f.sentimento && <span className="text-[11px] bg-grafite border border-grafite-3 rounded-full px-2 py-0.5 text-laranja">{f.sentimento}</span>}
+                    {f.ja_participou && <span className="text-[11px] bg-grafite border border-grafite-3 rounded-full px-2 py-0.5 text-creme-soft">participou: {f.ja_participou}</span>}
+                    {f.onde_discute && <span className="text-[11px] bg-grafite border border-grafite-3 rounded-full px-2 py-0.5 text-creme-soft">{f.onde_discute}</span>}
+                  </div>
+                  {f.texto_participar && (
+                    <p className="text-creme text-sm mt-2"><span className="text-creme-soft/50">participar+:</span> {f.texto_participar}</p>
+                  )}
+                  {f.texto_duvida && (
+                    <p className="text-creme text-sm mt-1"><span className="text-creme-soft/50">dúvida:</span> {f.texto_duvida}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </>
       )}
 

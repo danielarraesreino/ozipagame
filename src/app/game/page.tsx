@@ -13,6 +13,7 @@ import { fetchImportados, fetchAtivos } from "@/lib/cards"
 import { AnimatePresence, motion } from "framer-motion"
 import Logo from "@/components/Logo"
 import AudioBg from "@/components/AudioBg"
+import FormularioFinal from "@/components/FormularioFinal"
 
 type Phase = "swipe" | "consequence" | "video" | "end"
 
@@ -177,6 +178,11 @@ function EndScreen({
                   </span>
                 </div>
               )}
+            </div>
+
+            {/* Pesquisa qualitativa anônima */}
+            <div className="mt-6">
+              <FormularioFinal bairro={player.bairro} />
             </div>
           </div>
 
