@@ -107,3 +107,14 @@ html, body, #__next {
 /* Esconde a scrollbar mantendo o scroll (telas de revelação) */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Glow pulsante laranja — destaque do botão de vídeo (Spotniks) */
+@keyframes ozipa-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(234, 91, 30, 0.6); }
+  70%  { box-shadow: 0 0 0 18px rgba(234, 91, 30, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(234, 91, 30, 0); }
+}
+.pulse-glow { animation: ozipa-pulse 1.8s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .pulse-glow { animation: none; }
+}

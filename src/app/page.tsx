@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { savePlayer, unlockModulo, isPosOficinaUnlocked } from "@/lib/store"
-import { getEmbedUrl } from "@/lib/video"
+import { getEmbedUrl, getYouTubeId } from "@/lib/video"
 import Logo from "@/components/Logo"
 
 const bairros = [
@@ -85,15 +85,38 @@ export default function Home() {
             Memes, dilemas e as consequências que eles escondem. 3 minutos. Sem certo ou errado.
           </p>
 
-          {spotniksUrl && (
-            <button
-              type="button"
-              onClick={() => setShowVideo(true)}
-              className="brand-label inline-flex items-center gap-2 text-[10px] text-laranja border-2 border-laranja/40 rounded-full px-4 py-2 mb-9 hover:bg-laranja/10 active:scale-95 transition-all"
-            >
-              ▶ assista o que inspirou
-            </button>
-          )}
+          {spotniksUrl && (() => {
+            const ytId = getYouTubeId(spotniksUrl)
+            return (
+              <button
+                type="button"
+                onClick={() => setShowVideo(true)}
+                className="group relative w-full mb-9 rounded-xl overflow-hidden border-2 border-laranja zine-edge active:scale-[0.98] transition-transform"
+              >
+                {ytId ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={`https://img.youtube.com/vi/${ytId}/hqdefault.jpg`}
+                    alt="vídeo que inspirou o jogo"
+                    className="w-full aspect-video object-cover opacity-75 group-hover:opacity-90 transition-opacity"
+                  />
+                ) : (
+                  <div className="w-full aspect-video bg-grafite-2" />
+                )}
+                {/* overlay escuro + play pulsante */}
+                <div className="absolute inset-0 flex items-center justify-center bg-grafite/35">
+                  <span className="pulse-glow w-16 h-16 rounded-full bg-laranja flex items-center justify-center">
+                    <span className="text-grafite text-2xl ml-1 leading-none">▶</span>
+                  </span>
+                </div>
+                {/* faixa de legenda */}
+                <div className="absolute bottom-0 inset-x-0 bg-grafite/85 backdrop-blur-sm px-3 py-2 flex items-center gap-2">
+                  <span className="brand-label text-[10px] text-laranja">assista o que inspirou o jogo</span>
+                  <span className="brand-stamp text-[9px] text-creme-soft/60 ml-auto">▶ 2 min</span>
+                </div>
+              </button>
+            )
+          })()}
 
           <div className="space-y-4">
             <div>

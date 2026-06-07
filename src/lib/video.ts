@@ -5,6 +5,16 @@ export function isArquivoVideo(url: string): boolean {
   return /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(url) || url.startsWith("/videos/")
 }
 
+// Extrai o ID de um vídeo do YouTube (pra thumbnail etc). Null se não for YT.
+export function getYouTubeId(url: string): string | null {
+  const m =
+    url.match(/youtube\.com\/shorts\/([^?&]+)/) ||
+    url.match(/youtu\.be\/([^?&]+)/) ||
+    url.match(/youtube\.com\/watch\?v=([^&]+)/) ||
+    url.match(/youtube\.com\/embed\/([^?&]+)/)
+  return m ? m[1] : null
+}
+
 // Converte uma URL de TikTok / YouTube em URL de embed (iframe).
 export function getEmbedUrl(url: string): string {
   const tiktokMatch = url.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/)
