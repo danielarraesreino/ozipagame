@@ -60,7 +60,7 @@ export default function EnviarMemePage() {
           <div className="flex-1 flex flex-col justify-center">
             <div className="bg-verde/10 border-2 border-verde/40 rounded-2xl p-6 text-center">
               <p className="brand-lockup text-verde text-3xl mb-2">recebido! 🔥</p>
-              <p className="text-creme-soft text-sm leading-relaxed">
+              <p className="text-creme text-sm leading-relaxed">
                 Teu meme entrou na fila — a equipe vai avaliar. Se rolar, vira conteúdo do jogo
                 com teu crédito. Valeu por construir junto.
               </p>
@@ -71,14 +71,14 @@ export default function EnviarMemePage() {
           </div>
         ) : (
           <>
-            <p className="text-creme-soft text-sm leading-relaxed mb-7 max-w-[40ch]">
+            <p className="text-creme text-base leading-relaxed mb-7 max-w-[40ch]">
               Viu um meme político rolando no grupo? Manda pra cá. A equipe avalia e ele pode
               virar um card do jogo — <strong>com teu crédito</strong>. Co-autoria da quebrada.
             </p>
 
             <div className="space-y-4 flex-1">
               <div>
-                <label className="brand-label block text-[10px] text-creme-soft mb-2">o meme (descreve ou cola o texto)</label>
+                <label className="brand-label block text-xs text-creme mb-2">o meme (descreve ou cola o texto)</label>
                 <textarea
                   value={descricao}
                   onChange={(e) => setDescricao(e.target.value)}
@@ -90,7 +90,7 @@ export default function EnviarMemePage() {
               </div>
 
               <div>
-                <label className="brand-label block text-[10px] text-creme-soft mb-2">print / imagem do meme (opcional)</label>
+                <label className="brand-label block text-xs text-creme mb-2">print / imagem do meme (opcional)</label>
                 {imagemUrl ? (
                   <div className="relative">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -117,7 +117,7 @@ export default function EnviarMemePage() {
 
               <div className="flex gap-3">
                 <div className="flex-1">
-                  <label className="brand-label block text-[10px] text-creme-soft mb-2">teu apelido (crédito)</label>
+                  <label className="brand-label block text-xs text-creme mb-2">teu apelido (crédito)</label>
                   <input
                     type="text"
                     value={apelido}
@@ -128,7 +128,7 @@ export default function EnviarMemePage() {
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="brand-label block text-[10px] text-creme-soft mb-2">bairro</label>
+                  <label className="brand-label block text-xs text-creme mb-2">bairro</label>
                   <select
                     value={bairro}
                     onChange={(e) => setBairro(e.target.value)}
@@ -149,7 +149,7 @@ export default function EnviarMemePage() {
               >
                 {enviando ? "enviando…" : "enviar meme →"}
               </button>
-              <p className="text-center text-creme-soft/50 text-xs mt-3 font-mono">
+              <p className="text-center text-creme/60 text-sm mt-3 font-mono">
                 passa por avaliação antes de aparecer · <Link href="/" className="underline">voltar</Link>
               </p>
             </div>

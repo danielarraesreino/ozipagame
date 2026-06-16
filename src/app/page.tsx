@@ -81,7 +81,7 @@ export default function Home() {
             Cidadania Conectada
           </p>
 
-          <p className="text-creme-soft text-base leading-relaxed mb-5 max-w-[34ch]">
+          <p className="text-creme text-base leading-relaxed mb-5 max-w-[34ch]">
             Memes, dilemas e as consequências que eles escondem. 3 minutos. Sem certo ou errado.
           </p>
 
@@ -120,7 +120,7 @@ export default function Home() {
 
           <div className="space-y-4">
             <div>
-              <label className="brand-label block text-[10px] text-creme-soft mb-2">
+              <label className="brand-label block text-xs text-creme mb-2">
                 Como te chamam?
               </label>
               <input
@@ -134,7 +134,7 @@ export default function Home() {
             </div>
 
             <div>
-              <label className="brand-label block text-[10px] text-creme-soft mb-2">
+              <label className="brand-label block text-xs text-creme mb-2">
                 De onde você é?
               </label>
               <select
@@ -209,10 +209,10 @@ export default function Home() {
           >
             Entrar no jogo →
           </button>
-          <p className="text-center text-creme-soft/60 text-xs mt-4 font-mono">
+          <p className="text-center text-creme/70 text-sm mt-4 font-mono">
             sem cadastro · sem login · 100% anônimo
           </p>
-          <p className="text-center text-creme-soft/60 text-xs mt-2 font-mono leading-relaxed">
+          <p className="text-center text-creme/70 text-sm mt-2 font-mono leading-relaxed">
             <a href="/pesquisa" className="underline text-laranja">responder pesquisa</a>
             {" · "}
             <a href="/dados" className="underline text-laranja">dados abertos</a>

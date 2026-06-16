@@ -37,7 +37,7 @@ interface Escala { media: number | null; dist: Record<string, number> }
 function Barras({ data, cor = "var(--color-laranja)" }: { data: Record<string, number>; cor?: string }) {
   const entries = Object.entries(data).sort((a, b) => b[1] - a[1])
   const max = Math.max(1, ...entries.map(([, n]) => n))
-  if (!entries.length) return <p className="text-creme-soft/40 text-xs font-mono">sem dados ainda</p>
+  if (!entries.length) return <p className="text-creme/50 text-sm font-mono">sem dados ainda</p>
   return (
     <div className="space-y-2">
       {entries.map(([k, n]) => (
@@ -56,7 +56,7 @@ function Barras({ data, cor = "var(--color-laranja)" }: { data: Record<string, n
 }
 
 function EscalaView({ e }: { e: Escala }) {
-  if (e.media == null) return <p className="text-creme-soft/40 text-xs font-mono">sem dados ainda</p>
+  if (e.media == null) return <p className="text-creme/50 text-sm font-mono">sem dados ainda</p>
   return (
     <>
       <p className="brand-lockup text-creme text-3xl mb-3">
@@ -70,7 +70,7 @@ function EscalaView({ e }: { e: Escala }) {
 function Secao({ titulo, children }: { titulo: string; children: React.ReactNode }) {
   return (
     <section className="grain relative bg-grafite-2 border-2 border-grafite-3 rounded-2xl p-5">
-      <p className="brand-label text-[10px] text-laranja mb-4">{titulo}</p>
+      <p className="brand-label text-xs text-laranja mb-4">{titulo}</p>
       {children}
     </section>
   )
@@ -110,7 +110,7 @@ export default function DadosPage() {
           <Logo size={40} variant="cor" />
           <h1 className="brand-lockup text-creme text-3xl">Dados abertos</h1>
         </div>
-        <p className="text-creme-soft text-sm leading-relaxed mb-4 max-w-[48ch]">
+        <p className="text-creme text-base leading-relaxed mb-4 max-w-[48ch]">
           O que a juventude do Jardim Oziel respondeu no jogo — <strong>100% anônimo</strong> e
           agregado. Nenhuma resposta individual, nenhum nome. Conhecimento da quebrada, aberto pra quebrada.
         </p>
@@ -153,11 +153,11 @@ export default function DadosPage() {
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-grafite-2 border-2 border-grafite-3 rounded-2xl p-4 zine-edge">
                 <p className="brand-lockup text-laranja text-4xl leading-none">{d.jogo.total_partidas}</p>
-                <p className="text-creme-soft text-xs mt-1">partidas jogadas</p>
+                <p className="text-creme text-sm mt-1">partidas jogadas</p>
               </div>
               <div className="bg-grafite-2 border-2 border-grafite-3 rounded-2xl p-4 zine-edge">
                 <p className="brand-lockup text-laranja text-4xl leading-none">{d.pesquisa.total}</p>
-                <p className="text-creme-soft text-xs mt-1">vozes na pesquisa</p>
+                <p className="text-creme text-sm mt-1">vozes na pesquisa</p>
               </div>
             </div>
 
@@ -167,7 +167,7 @@ export default function DadosPage() {
 
             <Secao titulo="concordo × discordo — por dilema">
               {d.jogo.por_dilema.length === 0 ? (
-                <p className="text-creme-soft/40 text-xs font-mono">sem respostas ainda</p>
+                <p className="text-creme/50 text-sm font-mono">sem respostas ainda</p>
               ) : (
                 <div className="space-y-4">
                   {d.jogo.por_dilema.map((row) => {
@@ -184,7 +184,7 @@ export default function DadosPage() {
                             {100 - pc >= 18 && <span className="text-grafite text-[10px] font-bold">{100 - pc}%</span>}
                           </div>
                         </div>
-                        <div className="flex justify-between text-[10px] font-mono text-creme-soft/60 mt-1">
+                        <div className="flex justify-between text-[10px] font-mono text-creme/70 mt-1">
                           <span className="text-verde">concordou {row.concordo}</span>
                           <span className="text-vermelho">discordou {row.discordo}</span>
                         </div>
@@ -232,7 +232,7 @@ export default function DadosPage() {
               </>
             )}
 
-            <p className="text-creme-soft/40 text-[11px] font-mono text-center pt-2 pb-6 leading-relaxed">
+            <p className="text-creme/50 text-xs font-mono text-center pt-2 pb-6 leading-relaxed">
               Licença Creative Commons CC BY-SA 4.0 · use, remixe e cite.<br />
               Vozes do Oziel · Grupo Diálogos · CriaLab · atualizado {new Date(d.gerado_em).toLocaleDateString("pt-BR")}
             </p>

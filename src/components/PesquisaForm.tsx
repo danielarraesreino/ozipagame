@@ -7,11 +7,9 @@ import { useState } from "react"
 // dashboard agregado; texto livre fica só no admin.
 interface Props {
   modo: "curta" | "completa"
-  bairro?: string
   onDone?: () => void
 }
 
-const BAIRROS = ["Jardim Oziel", "Jardim Florence", "Campo Grande", "DIC", "Outro bairro"]
 const FAIXAS = ["12–13", "14–15", "16–17", "18+"]
 const ESTUDA = ["escola pública", "escola particular", "curso técnico", "não estudo agora"]
 const SENTIMENTOS = ["distante de mim", "não é pra mim", "raiva / nojo", "desânimo", "curiosidade", "vontade de mudar algo", "medo de falar errado"]
@@ -25,8 +23,8 @@ function Pills({ options, value, onChange }: { options: string[]; value: string;
     <div className="flex flex-wrap gap-2">
       {options.map((o) => (
         <button key={o} type="button" onClick={() => onChange(o)}
-          className={`px-3 py-2 rounded-full text-sm border-2 transition-all active:scale-95 ${
-            value === o ? "bg-laranja text-grafite border-laranja font-bold" : "bg-grafite-2 border-grafite-3 text-creme-soft hover:border-creme-soft/50"
+          className={`px-3 py-2 rounded-full text-base border-2 transition-all active:scale-95 ${
+            value === o ? "bg-laranja text-grafite border-laranja font-bold" : "bg-grafite border-grafite-3 text-creme hover:border-creme/50"
           }`}>{o}</button>
       ))}
     </div>
@@ -40,8 +38,8 @@ function PillsMulti({ options, values, onToggle }: { options: string[]; values: 
         const on = values.includes(o)
         return (
           <button key={o} type="button" onClick={() => onToggle(o)}
-            className={`px-3 py-2 rounded-full text-sm border-2 transition-all active:scale-95 ${
-              on ? "bg-laranja text-grafite border-laranja font-bold" : "bg-grafite-2 border-grafite-3 text-creme-soft hover:border-creme-soft/50"
+            className={`px-3 py-2 rounded-full text-base border-2 transition-all active:scale-95 ${
+              on ? "bg-laranja text-grafite border-laranja font-bold" : "bg-grafite border-grafite-3 text-creme hover:border-creme/50"
             }`}>{on ? "✓ " : ""}{o}</button>
         )
       })}
@@ -60,7 +58,7 @@ function Escala({ value, onChange, esq, dir }: { value: number; onChange: (n: nu
             }`}>{n}</button>
         ))}
       </div>
-      <div className="flex justify-between text-[10px] font-mono text-creme-soft/50 mt-1">
+      <div className="flex justify-between text-[10px] font-mono text-creme/60 mt-1">
         <span>{esq}</span><span>{dir}</span>
       </div>
     </div>
@@ -70,15 +68,14 @@ function Escala({ value, onChange, esq, dir }: { value: number; onChange: (n: nu
 function Campo({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="brand-label text-[10px] text-creme-soft mb-2">{label}</p>
+      <p className="brand-label text-xs text-creme mb-2">{label}</p>
       {children}
     </div>
   )
 }
 
-export default function PesquisaForm({ modo, bairro: bairroProp, onDone }: Props) {
+export default function PesquisaForm({ modo, onDone }: Props) {
   const completa = modo === "completa"
-  const [bairro, setBairro] = useState(bairroProp || "")
   const [faixa, setFaixa] = useState("")
   const [estuda, setEstuda] = useState("")
   const [sentimentos, setSentimentos] = useState<string[]>([])
@@ -104,7 +101,7 @@ export default function PesquisaForm({ modo, bairro: bairroProp, onDone }: Props
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          bairro: bairroProp || bairro,
+          bairro: "Oziel",
           faixa_idade: faixa,
           estuda: completa ? estuda : undefined,
           sentimentos,
@@ -138,12 +135,6 @@ export default function PesquisaForm({ modo, bairro: bairroProp, onDone }: Props
 
   return (
     <div className="space-y-5">
-      {!bairroProp && (
-        <Campo label="de onde você é?">
-          <Pills options={BAIRROS} value={bairro} onChange={setBairro} />
-        </Campo>
-      )}
-
       <Campo label="sua idade">
         <Pills options={FAIXAS} value={faixa} onChange={setFaixa} />
       </Campo>
@@ -194,14 +185,14 @@ export default function PesquisaForm({ modo, bairro: bairroProp, onDone }: Props
       <Campo label="o que te faria querer participar mais do bairro? (opcional)">
         <textarea value={textoParticipar} onChange={(e) => setTextoParticipar(e.target.value)} maxLength={500} rows={2}
           placeholder="escreve do teu jeito…"
-          className="w-full bg-grafite border-2 border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme-soft/30 focus:outline-none focus:border-laranja transition-colors text-sm resize-none" />
+          className="w-full bg-grafite border-2 border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme/30 focus:outline-none focus:border-laranja transition-colors text-sm resize-none" />
       </Campo>
 
       {completa && (
         <Campo label="uma dúvida sua sobre política/eleição (opcional)">
           <textarea value={textoDuvida} onChange={(e) => setTextoDuvida(e.target.value)} maxLength={500} rows={2}
             placeholder="pode perguntar…"
-            className="w-full bg-grafite border-2 border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme-soft/30 focus:outline-none focus:border-laranja transition-colors text-sm resize-none" />
+            className="w-full bg-grafite border-2 border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme/30 focus:outline-none focus:border-laranja transition-colors text-sm resize-none" />
         </Campo>
       )}
 

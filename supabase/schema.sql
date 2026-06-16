@@ -45,6 +45,19 @@ create table if not exists formularios (
   criado_em         timestamptz default now()
 );
 
+-- ── Inscrições no evento (20 jul) ──────────────────────────────────────────
+create table if not exists inscricoes (
+  id                  bigint generated always as identity primary key,
+  nome                text,
+  idade               text,
+  turma               text,
+  confirmou_presenca  boolean,
+  criado_em           timestamptz default now()
+);
+
+alter table inscricoes enable row level security;
+create index if not exists idx_inscricoes_turma on inscricoes(turma);
+
 -- ── Memes enviados (co-autoria) → fila de moderação ─────────────────────────
 create table if not exists memes (
   id           bigint generated always as identity primary key,

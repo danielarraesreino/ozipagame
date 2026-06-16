@@ -1,34 +1,104 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import Logo from "@/components/Logo"
+import InscricaoForm from "@/components/InscricaoForm"
 import PesquisaForm from "@/components/PesquisaForm"
 
+type Etapa = "inscricao" | "pesquisa" | "confirmado"
+
 export default function PesquisaPage() {
+  const [etapa, setEtapa] = useState<Etapa>("inscricao")
+  const [turmaEscolhida, setTurmaEscolhida] = useState("")
+
   return (
     <main className="bg-halftone bg-halftone-veil min-h-full">
       <div className="relative z-10 min-h-full px-6 py-10 max-w-md mx-auto">
-        <div className="flex items-center gap-3 mb-3">
-          <Logo size={40} variant="cor" />
-          <h1 className="brand-lockup text-creme text-3xl leading-none">
-            Pesquisa<br /><span className="text-laranja">da quebrada</span>
-          </h1>
-        </div>
-        <p className="text-creme-soft text-sm leading-relaxed mb-2 max-w-[44ch]">
-          Uma pesquisa rápida e <strong>100% anônima</strong> sobre como a juventude do
-          Jardim Oziel se relaciona com política. Não tem resposta certa — tem a tua.
-        </p>
-        <p className="brand-stamp text-[10px] text-creme-soft/50 mb-8">
-          sem cadastro · os números viram dados abertos · texto fica só com a equipe
-        </p>
 
-        <PesquisaForm modo="completa" />
+        {etapa === "inscricao" && (
+          <>
+            <div className="flex items-center gap-3 mb-3">
+              <Logo size={40} variant="cor" />
+              <h1 className="brand-lockup text-creme text-3xl leading-none">
+                Inscrição<br /><span className="text-laranja">no evento</span>
+              </h1>
+            </div>
 
-        <p className="text-center text-creme-soft/50 text-xs mt-6 font-mono">
-          <Link href="/dados" className="underline text-laranja">ver dados abertos</Link>
-          {" · "}
-          <Link href="/" className="underline">voltar</Link>
-        </p>
+            <div className="bg-grafite-2 border border-grafite-3 rounded-2xl px-4 py-3 mb-6 space-y-1">
+              <p className="brand-label text-[10px] text-laranja mb-1">data e local</p>
+              <p className="text-creme text-base font-bold">Dia 20 de Julho — sábado</p>
+              <p className="text-creme text-sm">E.E Parque Oziel</p>
+              <div className="flex gap-4 mt-1 text-sm text-creme/70 font-mono">
+                <span>manhã: 9h</span>
+                <span>tarde: 14h30</span>
+              </div>
+            </div>
+
+            <InscricaoForm onDone={(t) => { setTurmaEscolhida(t); setEtapa("pesquisa") }} />
+
+            <p className="text-center text-creme/50 text-sm mt-6 font-mono">
+              <Link href="/" className="underline">voltar</Link>
+            </p>
+          </>
+        )}
+
+        {etapa === "pesquisa" && (
+          <>
+            <div className="flex items-center gap-3 mb-3">
+              <Logo size={40} variant="cor" />
+              <h1 className="brand-lockup text-creme text-3xl leading-none">
+                Pesquisa<br /><span className="text-laranja">da quebrada</span>
+              </h1>
+            </div>
+            <p className="text-creme text-base leading-relaxed mb-2 max-w-[44ch]">
+              Uma pesquisa rápida e <strong>100% anônima</strong> sobre como a juventude do
+              Oziel se relaciona com política. Não tem resposta certa — tem a tua.
+            </p>
+            <p className="brand-stamp text-[10px] text-creme/50 mb-8">
+              sem cadastro · os números viram dados abertos · texto fica só com a equipe
+            </p>
+
+            <PesquisaForm modo="completa" onDone={() => setEtapa("confirmado")} />
+
+            <p className="text-center text-creme/50 text-sm mt-6 font-mono">
+              <Link href="/dados" className="underline text-laranja">ver dados abertos</Link>
+              {" · "}
+              <Link href="/" className="underline">JOGAR AGORA</Link>
+            </p>
+          </>
+        )}
+
+        {etapa === "confirmado" && (
+          <div className="flex flex-col items-center justify-center min-h-[70vh] text-center gap-6">
+            <p className="brand-lockup text-verde text-4xl">inscrito(a)! 🎉</p>
+
+            <div className="w-full bg-grafite-2 border-2 border-laranja rounded-2xl px-6 py-6 space-y-3 text-left">
+              <p className="brand-label text-[10px] text-laranja">sua inscrição confirmada</p>
+              <p className="text-creme text-xl font-bold">Dia 20 de Julho — Sábado</p>
+              <p className="text-creme text-base">{turmaEscolhida}</p>
+              <div className="border-t border-grafite-3 pt-3 mt-1">
+                <p className="text-creme/70 text-sm font-mono">E.E Parque Oziel</p>
+              </div>
+            </div>
+
+            <p className="text-creme/70 text-sm leading-relaxed max-w-[36ch]">
+              Sua voz foi registrada — obrigado por participar da pesquisa. Te vemos lá!
+            </p>
+
+            <Link
+              href="/"
+              className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl text-center block active:scale-95 transition-all"
+            >
+              JOGAR AGORA →
+            </Link>
+
+            <p className="text-center text-creme/40 text-xs font-mono">
+              <Link href="/dados" className="underline text-laranja/70">ver dados abertos</Link>
+            </p>
+          </div>
+        )}
+
       </div>
     </main>
   )
