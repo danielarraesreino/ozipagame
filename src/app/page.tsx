@@ -6,18 +6,9 @@ import { savePlayer, unlockModulo, isPosOficinaUnlocked } from "@/lib/store"
 import { getEmbedUrl, getYouTubeId } from "@/lib/video"
 import Logo from "@/components/Logo"
 
-const bairros = [
-  "Jardim Oziel",
-  "Jardim Florence",
-  "Campo Grande",
-  "DIC",
-  "Outro bairro",
-]
-
 export default function Home() {
   const router = useRouter()
   const [apelido, setApelido] = useState("")
-  const [bairro, setBairro] = useState("")
   const [codigo, setCodigo] = useState("")
   const [codigoStatus, setCodigoStatus] = useState<"idle" | "ok" | "err">("idle")
   const [mostrarCodigo, setMostrarCodigo] = useState(false)
@@ -50,8 +41,8 @@ export default function Home() {
   }
 
   function handleStart() {
-    if (!apelido.trim() || !bairro) return
-    savePlayer({ apelido: apelido.trim(), bairro })
+    if (!apelido.trim()) return
+    savePlayer({ apelido: apelido.trim(), bairro: "Oziel" })
     router.push("/game")
   }
 
@@ -133,22 +124,6 @@ export default function Home() {
               />
             </div>
 
-            <div>
-              <label className="brand-label block text-xs text-creme mb-2">
-                De onde você é?
-              </label>
-              <select
-                value={bairro}
-                onChange={(e) => setBairro(e.target.value)}
-                className="w-full bg-grafite-2 border-2 border-grafite-3 rounded-xl px-4 py-3 text-creme focus:outline-none focus:border-laranja transition-colors text-base appearance-none"
-              >
-                <option value="" disabled>escolha seu bairro</option>
-                {bairros.map((b) => (
-                  <option key={b} value={b}>{b}</option>
-                ))}
-              </select>
-            </div>
-
             {/* Código de encontro */}
             <div>
               {jaDesbloqueado ? (
@@ -204,7 +179,7 @@ export default function Home() {
         <div className="mt-10">
           <button
             onClick={handleStart}
-            disabled={!apelido.trim() || !bairro}
+            disabled={!apelido.trim()}
             className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-none active:scale-95 active:shadow-none transition-all"
           >
             Entrar no jogo →
