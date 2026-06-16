@@ -37,9 +37,12 @@ export default function PesquisaPage() {
 
             <InscricaoForm onDone={(t) => { setTurmaEscolhida(t); setEtapa("pesquisa") }} />
 
-            <p className="text-center text-creme/50 text-sm mt-6 font-mono">
-              <Link href="/" className="underline">voltar</Link>
-            </p>
+            <Link
+              href="/"
+              className="mt-6 w-full py-3 border-2 border-grafite-3 text-creme/60 brand-lockup text-base rounded-xl text-center block hover:border-creme/30 hover:text-creme transition-all active:scale-95"
+            >
+              ← voltar ao início
+            </Link>
           </>
         )}
 
@@ -61,11 +64,20 @@ export default function PesquisaPage() {
 
             <PesquisaForm modo="completa" onDone={() => setEtapa("confirmado")} />
 
-            <p className="text-center text-creme/50 text-sm mt-6 font-mono">
-              <Link href="/dados" className="underline text-laranja">ver dados abertos</Link>
-              {" · "}
-              <Link href="/" className="underline">JOGAR AGORA</Link>
-            </p>
+            <div className="mt-6 space-y-3">
+              <Link
+                href="/"
+                className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl text-center block active:scale-95 active:shadow-none transition-all"
+              >
+                JOGAR AGORA →
+              </Link>
+              <Link
+                href="/dados"
+                className="w-full py-3 border-2 border-grafite-3 text-creme/60 brand-lockup text-base rounded-xl text-center block hover:border-laranja hover:text-laranja transition-all active:scale-95"
+              >
+                ver dados abertos
+              </Link>
+            </div>
           </>
         )}
 
