@@ -34,7 +34,7 @@ export default function InscricaoForm({ onDone }: Props) {
   const [enviando, setEnviando] = useState(false)
   const [erro, setErro] = useState("")
 
-  const valido = nome.trim() && idade.trim() && turma
+  const valido = nome.trim() && idade.trim() && turma && topou
 
   async function enviar() {
     if (!valido) {
@@ -136,6 +136,19 @@ export default function InscricaoForm({ onDone }: Props) {
           />
         )}
       </Campo>
+
+      <button
+        type="button"
+        onClick={() => setTopou((v) => !v)}
+        className={`w-full text-left px-4 py-3 rounded-xl border-2 text-base transition-all active:scale-[0.98] flex items-start gap-3 ${
+          topou
+            ? "bg-verde/15 text-creme border-verde font-bold"
+            : "bg-grafite border-grafite-3 text-creme hover:border-creme/50"
+        }`}
+      >
+        <span className="mt-px text-lg leading-none">{topou ? "☑" : "☐"}</span>
+        <span>tô dentro! apareço no dia 20 e respondo a pesquisa lá 🤙 <span className="text-laranja">*</span></span>
+      </button>
 
       {erro && <p className="text-vermelho text-sm font-mono">{erro}</p>}
 
