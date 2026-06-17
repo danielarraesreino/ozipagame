@@ -573,8 +573,8 @@ export default function AdminPage() {
                           className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme text-sm focus:outline-none focus:border-laranja" />
                         <select value={editTurma} onChange={(e) => setEditTurma(e.target.value)}
                           className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme text-sm focus:outline-none focus:border-laranja">
-                          <option value="Sábado manhã — das 9:00 às 12:00">Manhã — 9h às 12h</option>
-                          <option value="Sábado tarde — das 14:30 às 15:30">Tarde — 14h30 às 15h30</option>
+                          <option value="Sábado manhã — das 9:00 às 11:00">Manhã — 9h às 11h</option>
+                          <option value="Sábado tarde — das 14:30 às 16:30">Tarde — 14h30 às 16h30</option>
                         </select>
                         <input value={editContato} onChange={(e) => setEditContato(e.target.value)}
                           placeholder="contato (opcional)"

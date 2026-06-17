@@ -7,8 +7,8 @@ interface Props {
 }
 
 const TURMAS = [
-  "Sábado manhã — das 9:00 às 12:00",
-  "Sábado tarde — das 14:30 às 15:30",
+  "Sábado manhã — das 9:00 às 11:00",
+  "Sábado tarde — das 14:30 às 16:30",
 ]
 
 const CONTATOS = ["WhatsApp", "SMS", "Email", "não precisa"]
