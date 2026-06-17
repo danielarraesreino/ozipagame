@@ -44,7 +44,7 @@ export default function InscricaoForm({ onDone }: Props) {
     setErro("")
     setEnviando(true)
     try {
-      await fetch("/api/inscricao", {
+      await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

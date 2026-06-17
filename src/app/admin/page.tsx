@@ -284,7 +284,7 @@ export default function AdminPage() {
   async function carregarInscricoes() {
     setInscricoesState("loading")
     try {
-      const res = await fetch("/api/admin/inscricoes")
+      const res = await fetch("/api/admin/registros")
       if (!res.ok) throw new Error()
       const d = await res.json()
       setInscricoes(d.inscricoes || [])
@@ -296,7 +296,7 @@ export default function AdminPage() {
 
   async function confirmarInscricao(id: number, valor: boolean) {
     setInscricaoBusy(id)
-    const res = await fetch("/api/admin/inscricoes", {
+    const res = await fetch("/api/admin/registros", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, presenca_confirmada: valor }),
@@ -308,7 +308,7 @@ export default function AdminPage() {
   async function salvarEdicao(id: number) {
     setInscricaoBusy(id)
     const insc = inscricoes.find((x) => x.id === id)
-    const res = await fetch("/api/admin/inscricoes", {
+    const res = await fetch("/api/admin/registros", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, nome: editNome, turma: editTurma, contato_valor: editContato }),
@@ -324,7 +324,7 @@ export default function AdminPage() {
   async function excluirInscricao(id: number) {
     if (!confirm("Excluir essa inscrição?")) return
     setInscricaoBusy(id)
-    const res = await fetch("/api/admin/inscricoes", {
+    const res = await fetch("/api/admin/registros", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
