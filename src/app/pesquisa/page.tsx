@@ -66,8 +66,8 @@ export default function PesquisaPage() {
               <p className="text-creme text-base font-bold">Dia 20 de Julho — sábado</p>
               <p className="text-creme text-sm">E.E Parque Oziel</p>
               <div className="flex gap-4 mt-1 text-sm text-creme/70 font-mono">
-                <span>manhã: 9h</span>
-                <span>tarde: 14h30</span>
+                <span>manhã: 9h–11h</span>
+                <span>tarde: 14h30–16h30</span>
               </div>
             </div>
 
