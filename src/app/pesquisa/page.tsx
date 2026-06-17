@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Logo from "@/components/Logo"
 import InscricaoForm from "@/components/InscricaoForm"
+import PrankJogo from "@/components/PrankJogo"
 
 export default function PesquisaPage() {
   const [confirmado, setConfirmado] = useState(false)
@@ -67,12 +68,10 @@ export default function PesquisaPage() {
               Te vemos lá!
             </p>
 
-            <Link
-              href="/"
-              className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl text-center block active:scale-95 transition-all"
-            >
-              JOGAR AGORA →
-            </Link>
+            <PrankJogo
+              label="JOGAR AGORA →"
+              className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl text-center active:scale-95 active:shadow-none transition-all"
+            />
           </div>
         )}
 

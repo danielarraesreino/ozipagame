@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { savePlayer, unlockModulo, isPosOficinaUnlocked } from "@/lib/store"
 import { getEmbedUrl, getYouTubeId } from "@/lib/video"
 import Logo from "@/components/Logo"
+import PrankJogo from "@/components/PrankJogo"
 
 export default function Home() {
   const router = useRouter()
@@ -14,7 +15,6 @@ export default function Home() {
   const [mostrarCodigo, setMostrarCodigo] = useState(false)
   const [spotniksUrl, setSpotniksUrl] = useState("")
   const [showVideo, setShowVideo] = useState(false)
-  const [prank, setPrank] = useState<"idle" | "got" | "reveal">("idle")
   const jaDesbloqueado = isPosOficinaUnlocked()
 
   useEffect(() => {
@@ -44,8 +44,6 @@ export default function Home() {
   function handleStart() {
     if (!apelido.trim()) return
     savePlayer({ apelido: apelido.trim(), bairro: "Oziel" })
-    setPrank("got")
-    setTimeout(() => setPrank("reveal"), 2200)
   }
 
   return (
@@ -179,13 +177,19 @@ export default function Home() {
         </div>
 
         <div className="mt-10">
-          <button
-            onClick={handleStart}
-            disabled={!apelido.trim()}
-            className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-none active:scale-95 active:shadow-none transition-all"
-          >
-            Entrar no jogo →
-          </button>
+          {apelido.trim() ? (
+            <PrankJogo
+              label="Entrar no jogo →"
+              className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl active:scale-95 active:shadow-none transition-all"
+            />
+          ) : (
+            <button
+              disabled
+              className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl opacity-30 cursor-not-allowed shadow-none"
+            >
+              Entrar no jogo →
+            </button>
+          )}
           <p className="text-center text-creme/70 text-sm mt-4 font-mono">
             sem cadastro · sem login · 100% anônimo
           </p>
@@ -200,45 +204,6 @@ export default function Home() {
           </p>
         </div>
       </div>
-
-      {/* ── Prank: jogo bloqueado até dia 20 ───────────────────────────── */}
-      {prank !== "idle" && (
-        <div className="fixed inset-0 z-50 bg-grafite flex flex-col items-center justify-center p-6 text-center">
-          {prank === "got" ? (
-            <div className="space-y-4 animate-bounce">
-              <p className="text-[5rem] leading-none">💀</p>
-              <p className="brand-lockup text-laranja text-[clamp(3rem,18vw,5rem)] leading-none">
-                VOCÊ<br />CAIU!!
-              </p>
-              <p className="text-creme-soft font-mono text-sm tracking-widest uppercase">
-                não foi dessa vez...
-              </p>
-            </div>
-          ) : (
-            <div className="max-w-sm space-y-6">
-              <p className="text-[3rem] leading-none">🎮</p>
-              <div className="zine-edge bg-grafite-2 border-2 border-laranja rounded-2xl px-6 py-6 space-y-3 text-left">
-                <p className="brand-label text-[10px] text-laranja uppercase tracking-widest">primeiro aprendizado</p>
-                <p className="brand-lockup text-creme text-2xl leading-snug">
-                  Nem tudo é o que parece.
-                </p>
-                <p className="text-creme-soft text-sm leading-relaxed">
-                  O jogo estará disponível no{" "}
-                  <strong className="text-laranja">dia 20 de julho</strong>,
-                  no início da primeira turma.{" "}
-                  Traz seu celular carregado. 📱
-                </p>
-              </div>
-              <button
-                onClick={() => setPrank("idle")}
-                className="w-full py-3 border-2 border-grafite-3 text-creme/60 brand-lockup text-base rounded-xl hover:border-creme/30 hover:text-creme transition-all active:scale-95"
-              >
-                ← voltar
-              </button>
-            </div>
-          )}
-        </div>
-      )}
 
       {/* Modal do vídeo do Spotniks (a inspiração) */}
       {showVideo && spotniksUrl && (
