@@ -1,6 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
+
+const MEMES = ["/memetepeguei.mp4", "/memetepeguei2.mp4", "/meme3.mp4"]
 
 interface Props {
   label?: string
@@ -8,27 +10,73 @@ interface Props {
 }
 
 export default function PrankJogo({ label = "JOGAR AGORA →", className = "" }: Props) {
-  const [fase, setFase] = useState<"idle" | "got" | "reveal">("idle")
+  const [fase, setFase] = useState<"idle" | "video" | "got" | "reveal">("idle")
+  const [meme] = useState(() => MEMES[Math.floor(Math.random() * MEMES.length)])
+  const [muted, setMuted] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   function disparar() {
+    setFase("video")
+    setTimeout(() => {
+      const v = videoRef.current
+      if (v) {
+        v.muted = false
+        v.play().catch(() => { v.muted = true; v.play().catch(() => {}) })
+      }
+    }, 50)
+  }
+
+  function aoTerminarVideo() {
     setFase("got")
     setTimeout(() => setFase("reveal"), 2200)
   }
 
   return (
     <>
-      <button
-        type="button"
-        onClick={disparar}
-        className={className}
-      >
+      <button type="button" onClick={disparar} className={className}>
         {label}
       </button>
 
       {fase !== "idle" && (
-        <div className="fixed inset-0 z-50 bg-grafite flex flex-col items-center justify-center p-6 text-center">
-          {fase === "got" ? (
-            <div className="space-y-4 animate-bounce">
+        <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center">
+
+          {/* ── Vídeo meme ── */}
+          {fase === "video" && (
+            <div className="relative w-full h-full flex items-center justify-center">
+              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+              <video
+                ref={videoRef}
+                src={meme}
+                playsInline
+                autoPlay
+                className="w-full h-full object-cover"
+                onEnded={aoTerminarVideo}
+              />
+              {/* botão som */}
+              <button
+                onClick={() => {
+                  if (videoRef.current) {
+                    videoRef.current.muted = !videoRef.current.muted
+                    setMuted(videoRef.current.muted)
+                  }
+                }}
+                className="absolute bottom-6 right-6 px-3 py-2 rounded-full bg-black/60 text-white text-xs font-mono border border-white/20 active:scale-95"
+              >
+                {muted ? "🔇 som off" : "🔊 som on"}
+              </button>
+              {/* pular */}
+              <button
+                onClick={aoTerminarVideo}
+                className="absolute bottom-6 left-6 px-3 py-2 rounded-full bg-black/60 text-white/60 text-xs font-mono border border-white/10 active:scale-95"
+              >
+                pular →
+              </button>
+            </div>
+          )}
+
+          {/* ── VOCÊ CAIU ── */}
+          {fase === "got" && (
+            <div className="space-y-4 animate-bounce text-center p-6">
               <p className="text-[5rem] leading-none">💀</p>
               <p className="brand-lockup text-laranja text-[clamp(3rem,18vw,5rem)] leading-none">
                 VOCÊ<br />CAIU!!
@@ -37,8 +85,11 @@ export default function PrankJogo({ label = "JOGAR AGORA →", className = "" }:
                 não foi dessa vez...
               </p>
             </div>
-          ) : (
-            <div className="max-w-sm space-y-6">
+          )}
+
+          {/* ── Revelação ── */}
+          {fase === "reveal" && (
+            <div className="max-w-sm w-full space-y-6 p-6 text-center">
               <p className="text-[3rem] leading-none">🎮</p>
               <div className="zine-edge bg-grafite-2 border-2 border-laranja rounded-2xl px-6 py-6 space-y-3 text-left">
                 <p className="brand-label text-[10px] text-laranja uppercase tracking-widest">primeiro aprendizado</p>
@@ -60,6 +111,7 @@ export default function PrankJogo({ label = "JOGAR AGORA →", className = "" }:
               </button>
             </div>
           )}
+
         </div>
       )}
     </>
