@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
-import { cookies } from "next/headers"
 import { supa } from "@/lib/supabase"
 
-async function authed() {
-  const c = await cookies()
-  return c.get("admin_token")?.value === process.env.ADMIN_SECRET
+function authed(req: NextRequest) {
+  return req.cookies.get("ozipa_admin")?.value === "1"
 }
 
-export async function GET() {
-  if (!(await authed())) return NextResponse.json({ error: "401" }, { status: 401 })
+export async function GET(req: NextRequest) {
+  if (!authed(req)) return NextResponse.json({ error: "401" }, { status: 401 })
   const db = supa()
   const { data, error } = await db
     .from("inscricoes")
@@ -19,7 +17,7 @@ export async function GET() {
 }
 
 export async function PUT(req: NextRequest) {
-  if (!(await authed())) return NextResponse.json({ error: "401" }, { status: 401 })
+  if (!authed(req)) return NextResponse.json({ error: "401" }, { status: 401 })
   const b = await req.json()
   const { id, ...fields } = b
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 })
@@ -33,7 +31,7 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  if (!(await authed())) return NextResponse.json({ error: "401" }, { status: 401 })
+  if (!authed(req)) return NextResponse.json({ error: "401" }, { status: 401 })
   const { id } = await req.json()
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 })
   const db = supa()
