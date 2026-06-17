@@ -52,6 +52,9 @@ create table if not exists inscricoes (
   idade               text,
   turma               text,
   confirmou_presenca  boolean,
+  contato_tipo        text,
+  contato_valor       text,
+  presenca_confirmada boolean default false,
   criado_em           timestamptz default now()
 );
 
