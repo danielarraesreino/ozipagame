@@ -5,7 +5,7 @@ import Link from "next/link"
 import { upload } from "@vercel/blob/client"
 import Logo from "@/components/Logo"
 
-const bairros = ["Jardim Oziel", "Jardim Florence", "Campo Grande", "DIC", "Outro bairro"]
+const bairros = ["Oziel", "Jardim Florence", "Campo Grande", "DIC", "Outro bairro"]
 
 export default function EnviarMemePage() {
   const [apelido, setApelido] = useState("")

@@ -6,15 +6,64 @@ import Logo from "@/components/Logo"
 import InscricaoForm from "@/components/InscricaoForm"
 import PesquisaForm from "@/components/PesquisaForm"
 
-type Etapa = "inscricao" | "pesquisa" | "confirmado"
+type Etapa = "encontro" | "inscricao" | "pesquisa" | "confirmado"
 
 export default function PesquisaPage() {
-  const [etapa, setEtapa] = useState<Etapa>("inscricao")
+  const [etapa, setEtapa] = useState<Etapa>("encontro")
   const [turmaEscolhida, setTurmaEscolhida] = useState("")
 
   return (
     <main className="bg-halftone bg-halftone-veil min-h-full">
       <div className="relative z-10 min-h-full px-6 py-10 max-w-md mx-auto">
+
+        {etapa === "encontro" && (
+          <>
+            <div className="flex items-center gap-3 mb-6">
+              <Logo size={40} variant="cor" />
+              <h1 className="brand-lockup text-creme text-3xl leading-none">
+                Encontro<br /><span className="text-laranja">do Oziel</span>
+              </h1>
+            </div>
+
+            <div className="bg-grafite-2 border border-grafite-3 rounded-2xl px-4 py-4 mb-6 space-y-2">
+              <p className="brand-label text-[10px] text-laranja">data e local</p>
+              <p className="text-creme text-base font-bold">Dia 20 de Julho — sábado</p>
+              <p className="text-creme text-sm">E.E Parque Oziel</p>
+              <div className="flex gap-4 mt-1 text-sm text-creme/70 font-mono">
+                <span>manhã: 9h</span>
+                <span>tarde: 14h30</span>
+              </div>
+            </div>
+
+            <p className="text-creme text-base leading-relaxed mb-8">
+              Você quer estar com a gente nesse encontro?
+            </p>
+
+            <div className="space-y-3">
+              <button
+                type="button"
+                onClick={() => setEtapa("inscricao")}
+                className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl text-center active:scale-95 active:shadow-none transition-all"
+              >
+                sim, quero ir! →
+              </button>
+              <button
+                type="button"
+                onClick={() => setEtapa("pesquisa")}
+                className="w-full py-3 border-2 border-grafite-3 text-creme/60 brand-lockup text-base rounded-xl text-center hover:border-creme/30 hover:text-creme transition-all active:scale-95"
+              >
+                não, mas quero responder a pesquisa
+              </button>
+            </div>
+
+            <Link
+              href="/"
+              className="mt-4 w-full py-3 border-2 border-grafite-3 text-creme/40 brand-lockup text-sm rounded-xl text-center block hover:border-creme/20 hover:text-creme/60 transition-all active:scale-95"
+            >
+              ← voltar ao início
+            </Link>
+          </>
+        )}
 
         {etapa === "inscricao" && (
           <>
