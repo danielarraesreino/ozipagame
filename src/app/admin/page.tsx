@@ -507,12 +507,52 @@ export default function AdminPage() {
               <p className="text-creme-soft text-sm leading-relaxed">
                 Inscrições no encontro de 20 de julho.
               </p>
-              <p className="text-creme-soft/60 text-xs font-mono mt-1">
-                {inscricoes.filter((i) => i.presenca_confirmada).length} confirmado(s) · {inscricoes.length} total
-              </p>
             </div>
             <button onClick={carregarInscricoes} className="shrink-0 text-xs font-mono text-creme-soft/70 hover:text-creme transition-colors">↻</button>
           </div>
+
+          {/* ── Stats panel ── */}
+          {inscricoes.length > 0 && (() => {
+            const total = inscricoes.length
+            const confirmados = inscricoes.filter((i) => i.presenca_confirmada).length
+            const manha = inscricoes.filter((i) => i.turma?.toLowerCase().includes("manhã")).length
+            const tarde = inscricoes.filter((i) => i.turma?.toLowerCase().includes("tarde")).length
+            const comContato = inscricoes.filter((i) => i.contato_valor?.trim()).length
+            return (
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="bg-grafite-2 border-2 border-laranja/40 rounded-2xl px-4 py-3 text-center">
+                  <p className="text-laranja text-3xl font-bold leading-none">{total}</p>
+                  <p className="text-creme-soft/70 text-xs font-mono mt-1">inscritos</p>
+                </div>
+                <div className="bg-grafite-2 border-2 border-verde/40 rounded-2xl px-4 py-3 text-center">
+                  <p className="text-verde text-3xl font-bold leading-none">{confirmados}</p>
+                  <p className="text-creme-soft/70 text-xs font-mono mt-1">confirmados</p>
+                </div>
+                <div className="bg-grafite-2 border border-grafite-3 rounded-2xl px-4 py-3">
+                  <p className="brand-label text-[9px] text-creme/40 uppercase tracking-widest mb-2">turmas</p>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-creme">🌅 manhã</span>
+                    <span className="text-laranja font-bold">{manha}</span>
+                  </div>
+                  <div className="flex justify-between text-sm mt-1">
+                    <span className="text-creme">🌇 tarde</span>
+                    <span className="text-laranja font-bold">{tarde}</span>
+                  </div>
+                </div>
+                <div className="bg-grafite-2 border border-grafite-3 rounded-2xl px-4 py-3">
+                  <p className="brand-label text-[9px] text-creme/40 uppercase tracking-widest mb-2">contato</p>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-creme">com</span>
+                    <span className="text-verde font-bold">{comContato}</span>
+                  </div>
+                  <div className="flex justify-between text-sm mt-1">
+                    <span className="text-creme">sem</span>
+                    <span className="text-creme-soft/50 font-bold">{total - comContato}</span>
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
 
           {inscricoesState === "loading" ? (
             <p className="text-creme-soft/60 text-sm font-mono text-center py-8">carregando…</p>
