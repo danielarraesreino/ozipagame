@@ -42,14 +42,14 @@ export default function PrankJogo({ label = "JOGAR AGORA →", className = "" }:
 
           {/* ── Vídeo meme ── */}
           {fase === "video" && (
-            <div className="relative w-full h-full flex items-center justify-center">
+            <div className="relative w-full h-full flex items-center justify-center p-6">
               {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
               <video
                 ref={videoRef}
                 src={meme}
                 playsInline
                 autoPlay
-                className="w-full h-full object-cover"
+                className="max-h-[70vh] max-w-full rounded-2xl object-contain"
                 onEnded={aoTerminarVideo}
               />
               {/* botão som */}
