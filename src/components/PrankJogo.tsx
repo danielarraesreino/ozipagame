@@ -7,15 +7,17 @@ const MEMES = ["/memetepeguei.mp4", "/memetepeguei2.mp4", "/meme3.mp4"]
 interface Props {
   label?: string
   className?: string
+  onBeforePlay?: () => void
 }
 
-export default function PrankJogo({ label = "JOGAR AGORA →", className = "" }: Props) {
+export default function PrankJogo({ label = "JOGAR AGORA →", className = "", onBeforePlay }: Props) {
   const [fase, setFase] = useState<"idle" | "video" | "got" | "reveal">("idle")
   const [meme] = useState(() => MEMES[Math.floor(Math.random() * MEMES.length)])
   const [muted, setMuted] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   function disparar() {
+    onBeforePlay?.()
     setFase("video")
     setTimeout(() => {
       const v = videoRef.current
