@@ -34,7 +34,7 @@ export default function InscricaoForm({ onDone }: Props) {
   const [enviando, setEnviando] = useState(false)
   const [erro, setErro] = useState("")
 
-  const valido = nome.trim() && idade.trim() && turma && topou
+  const valido = nome.trim() && idade.trim() && turma
 
   async function enviar() {
     if (!valido) {
@@ -136,30 +136,6 @@ export default function InscricaoForm({ onDone }: Props) {
           />
         )}
       </Campo>
-
-      <div className="bg-grafite-2 border border-grafite-3 rounded-2xl px-4 py-4 space-y-3">
-        <p className="brand-label text-[10px] text-laranja">comidinhas + sorteio</p>
-        <p className="text-creme text-sm leading-relaxed">
-          Depois da inscrição, tem uma pesquisa rápida sobre como a galera do Oziel
-          se relaciona com política — anônima, 3 minutinhos, e os dados ficam
-          abertos pro bairro todo ver.{" "}
-          <strong className="text-laranja">
-            É ela que garante tua comida e tua chance no sorteio.
-          </strong>
-        </p>
-        <button
-          type="button"
-          onClick={() => setTopou((v) => !v)}
-          className={`w-full text-left px-4 py-3 rounded-xl border-2 text-base transition-all active:scale-[0.98] flex items-start gap-3 ${
-            topou
-              ? "bg-verde/15 text-creme border-verde font-bold"
-              : "bg-grafite border-grafite-3 text-creme hover:border-creme/50"
-          }`}
-        >
-          <span className="mt-px text-lg leading-none">{topou ? "☑" : "☐"}</span>
-          <span>topei! vou responder a pesquisa a seguir *</span>
-        </button>
-      </div>
 
       {erro && <p className="text-vermelho text-sm font-mono">{erro}</p>}
 
