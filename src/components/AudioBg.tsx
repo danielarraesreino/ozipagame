@@ -5,16 +5,15 @@ import { isMuted, setMuted } from "@/lib/sfx"
 
 interface Faixa { nome: string; url: string }
 
-// Playlist de fundo do jogo. Lê /audio_config.json (mantido pelo admin), que
-// pode ter `trilhas: Faixa[]` (novo) ou `trilha: string` (legado). Toca em loop
-// na playlist; o jogador pode passar de faixa, escolher na lista ou silenciar.
-// Só começa depois do 1º toque (regra de autoplay). Botões pequenos.
-export default function AudioBg() {
+interface Props { startPaused?: boolean }
+
+export default function AudioBg({ startPaused = false }: Props) {
   const ref = useRef<HTMLAudioElement | null>(null)
   const [tracks, setTracks] = useState<Faixa[]>([])
   const [idx, setIdx] = useState(0)
   const [muted, setMutedState] = useState(false)
   const [open, setOpen] = useState(false)
+  const [playing, setPlaying] = useState(!startPaused)
 
   useEffect(() => {
     setMutedState(isMuted())
@@ -36,12 +35,12 @@ export default function AudioBg() {
       .catch(() => {})
   }, [])
 
-  // começa no 1º gesto (autoplay) e tenta sempre que a faixa muda
   useEffect(() => {
     if (!tracks.length) return
     const el = ref.current
     if (!el) return
     el.volume = 0.35
+    if (startPaused) return
     const tryPlay = () => { if (!isMuted()) el.play().catch(() => {}) }
     tryPlay()
     const onFirst = () => {
@@ -55,15 +54,15 @@ export default function AudioBg() {
       window.removeEventListener("pointerdown", onFirst)
       window.removeEventListener("touchstart", onFirst)
     }
-  }, [tracks, idx])
+  }, [tracks, idx, startPaused])
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
     el.muted = muted
-    if (muted) el.pause()
+    if (muted || !playing) el.pause()
     else if (tracks.length) el.play().catch(() => {})
-  }, [muted, tracks])
+  }, [muted, playing, tracks])
 
   if (!tracks.length) return null
 
@@ -72,13 +71,20 @@ export default function AudioBg() {
     setMuted(next)
     setMutedState(next)
   }
+  function togglePlay() {
+    const next = !playing
+    setPlaying(next)
+    if (next && muted) { setMuted(false); setMutedState(false) }
+  }
   function nextTrack() {
     setIdx((i) => (i + 1) % tracks.length)
+    if (!playing) setPlaying(true)
     if (muted) { setMuted(false); setMutedState(false) }
   }
   function pick(i: number) {
     setIdx(i)
     setOpen(false)
+    if (!playing) setPlaying(true)
     if (muted) { setMuted(false); setMutedState(false) }
   }
 
@@ -104,14 +110,23 @@ export default function AudioBg() {
       )}
 
       {/* controles compactos */}
-      <div className="flex items-center gap-1.5 bg-grafite-2/90 border-2 border-grafite-3 rounded-full backdrop-blur px-1.5 py-1">
+      <div className="flex items-center gap-1 bg-grafite-2/90 border-2 border-grafite-3 rounded-full backdrop-blur px-1.5 py-1">
+        {/* play/pause — sempre visível */}
+        <button
+          onClick={togglePlay}
+          aria-label={playing ? "pausar" : "tocar"}
+          className="w-7 h-7 rounded-full flex items-center justify-center text-sm active:scale-90 transition-transform text-creme hover:text-laranja"
+        >
+          {playing && !muted ? "⏸" : "▶"}
+        </button>
+
         {tracks.length > 1 && (
           <button
             onClick={() => setOpen((o) => !o)}
             aria-label="playlist"
-            className="max-w-[88px] truncate px-2 py-1 text-[10px] font-mono text-creme-soft hover:text-creme transition-colors"
+            className="max-w-[80px] truncate px-2 py-1 text-[10px] font-mono text-creme-soft hover:text-creme transition-colors"
           >
-            🎵 {atual?.nome}
+            {atual?.nome}
           </button>
         )}
         {tracks.length > 1 && (

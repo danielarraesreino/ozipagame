@@ -6,6 +6,8 @@ import { savePlayer, unlockModulo, isPosOficinaUnlocked } from "@/lib/store"
 import { getEmbedUrl, getYouTubeId } from "@/lib/video"
 import Logo from "@/components/Logo"
 import PrankJogo from "@/components/PrankJogo"
+import AudioBg from "@/components/AudioBg"
+import TutorialModal from "@/components/TutorialModal"
 
 export default function Home() {
   const router = useRouter()
@@ -15,6 +17,7 @@ export default function Home() {
   const [mostrarCodigo, setMostrarCodigo] = useState(false)
   const [spotniksUrl, setSpotniksUrl] = useState("")
   const [showVideo, setShowVideo] = useState(false)
+  const [showTutorial, setShowTutorial] = useState(false)
   const jaDesbloqueado = isPosOficinaUnlocked()
 
   useEffect(() => {
@@ -190,6 +193,12 @@ export default function Home() {
               Entrar no jogo →
             </button>
           )}
+          <button
+            onClick={() => setShowTutorial(true)}
+            className="mt-3 w-full py-2.5 border-2 border-grafite-3 text-creme/60 brand-lockup text-sm rounded-xl hover:border-laranja hover:text-laranja transition-all active:scale-95"
+          >
+            ❓ como funciona?
+          </button>
           <p className="text-center text-creme/70 text-sm mt-4 font-mono">
             sem cadastro · sem login · 100% anônimo
           </p>
@@ -204,6 +213,9 @@ export default function Home() {
           </p>
         </div>
       </div>
+
+      <AudioBg startPaused />
+      {showTutorial && <TutorialModal onClose={() => setShowTutorial(false)} />}
 
       {/* Modal do vídeo do Spotniks (a inspiração) */}
       {showVideo && spotniksUrl && (
