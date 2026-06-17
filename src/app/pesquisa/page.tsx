@@ -32,6 +32,15 @@ export default function PesquisaPage() {
               </div>
             </div>
 
+            <div className="flex items-center gap-3 mb-6 px-4 py-3 bg-laranja/10 border-2 border-laranja rounded-2xl">
+              <span className="text-2xl animate-bounce shrink-0">📱</span>
+              <p className="brand-lockup text-laranja text-base leading-snug">
+                TRAZ SEU CELULAR<br />
+                <span className="text-creme text-sm font-normal">carregado no dia 20 — vai precisar!</span>
+              </p>
+              <span className="pulse-glow shrink-0 w-3 h-3 rounded-full bg-laranja" />
+            </div>
+
             <InscricaoForm onDone={(t) => { setTurmaEscolhida(t); setConfirmado(true) }} />
 
             <Link
