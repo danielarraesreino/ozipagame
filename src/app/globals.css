@@ -22,13 +22,36 @@
   --font-mono: var(--font-space-mono), ui-monospace, monospace;
 }
 
-html, body, #__next {
+/* Remove flash azul em toque no iOS Safari */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
   height: 100%;
   background: var(--color-grafite);
   color: var(--color-creme);
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
   font-family: var(--font-sans);
+}
+
+/* iOS Safari < 16: -webkit-fill-available exclui URL bar e home indicator */
+html {
+  height: -webkit-fill-available;
+}
+
+/* iOS 16+, Chrome 108+, Samsung 19+: dvh adapta ao viewport visível */
+@supports (height: 100dvh) {
+  html, body {
+    height: 100dvh;
+  }
+}
+
+/* Inputs com fonte < 16px causam zoom automático no iOS Safari */
+input, textarea, select {
+  font-size: max(1rem, 16px);
 }
 
 /* Lockup da marca: display preta, condensada, caixa-alta, leading curto */
