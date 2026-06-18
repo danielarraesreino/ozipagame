@@ -7,7 +7,6 @@ import Logo from "@/components/Logo"
 import PrankJogo from "@/components/PrankJogo"
 import AudioBg from "@/components/AudioBg"
 import TutorialModal from "@/components/TutorialModal"
-import InscricaoForm from "@/components/InscricaoForm"
 import PesquisaForm from "@/components/PesquisaForm"
 
 type Tab = "inicio" | "pesquisa" | "jogo" | "equipe"
@@ -26,8 +25,6 @@ export default function Home() {
   const [animating, setAnimating] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const [inscrito, setInscrito] = useState(false)
-  const [turmaEscolhida, setTurmaEscolhida] = useState("")
   const [pesquisaDone, setPesquisaDone] = useState(false)
 
   const [apelido, setApelido] = useState("")
@@ -35,6 +32,8 @@ export default function Home() {
   const [codigoStatus, setCodigoStatus] = useState<"idle" | "ok" | "err">("idle")
   const [mostrarCodigo, setMostrarCodigo] = useState(false)
   const [spotniksUrl, setSpotniksUrl] = useState("")
+  const [senhaTesteiro, setSenhaTesteiro] = useState("")
+  const [testeiroOk, setTesteiroOk] = useState(false)
   const [showTutorial, setShowTutorial] = useState(false)
   const jaDesbloqueado = isPosOficinaUnlocked()
 
@@ -58,6 +57,10 @@ export default function Home() {
       setPrev(null)
       setAnimating(false)
     }, 220)
+  }
+
+  function verificarSenhaTesteiro(s: string) {
+    if (s.trim().toLowerCase() === "fogonosracistas") setTesteiroOk(true)
   }
 
   async function validarCodigo(c: string) {
@@ -157,24 +160,48 @@ export default function Home() {
                 <span className="pulse-glow shrink-0 w-3 h-3 rounded-full bg-laranja" />
               </div>
 
-              {!inscrito ? (
-                <InscricaoForm onDone={(t) => { setTurmaEscolhida(t); setInscrito(true) }} />
-              ) : (
-                <div className="space-y-4">
-                  <div className="bg-grafite-2 border-2 border-verde rounded-2xl px-5 py-5 space-y-2">
-                    <p className="brand-label text-[10px] text-verde">✓ inscrição confirmada</p>
-                    <p className="text-creme font-bold text-lg">Dia 20 de Julho</p>
-                    <p className="text-creme text-sm">{turmaEscolhida}</p>
-                    <p className="text-creme/60 text-xs font-mono">E.E Parque Oziel</p>
-                  </div>
-                  <button
-                    onClick={() => goTab("jogo")}
-                    className="zine-edge w-full py-3 bg-laranja text-grafite brand-lockup text-xl rounded-xl active:scale-95 active:shadow-none transition-all"
+              {/* ── Botão do jogo ── */}
+              <div className="space-y-2">
+                {testeiroOk ? (
+                  <a
+                    href="/game"
+                    className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl active:scale-95 active:shadow-none transition-all flex items-center justify-center"
                   >
-                    ir pro jogo →
+                    JOGAR AGORA →
+                  </a>
+                ) : (
+                  <PrankJogo
+                    label="JOGAR AGORA →"
+                    className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl active:scale-95 active:shadow-none transition-all"
+                  />
+                )}
+                <div className="flex gap-2">
+                  <input
+                    type="password"
+                    value={senhaTesteiro}
+                    onChange={(e) => { setSenhaTesteiro(e.target.value); setTesteiroOk(false) }}
+                    onKeyDown={(e) => e.key === "Enter" && verificarSenhaTesteiro(senhaTesteiro)}
+                    placeholder="senha dos testadores"
+                    className="flex-1 bg-grafite-2 border-2 border-grafite-3 rounded-xl px-4 py-2 text-creme placeholder-creme-soft/30 focus:outline-none focus:border-laranja transition-colors text-sm font-mono"
+                  />
+                  <button
+                    onClick={() => verificarSenhaTesteiro(senhaTesteiro)}
+                    className="px-4 py-2 bg-grafite-2 border-2 border-grafite-3 rounded-xl text-creme-soft font-mono text-sm hover:border-laranja transition-colors"
+                  >
+                    ok
                   </button>
                 </div>
-              )}
+                {testeiroOk && (
+                  <p className="text-verde text-xs font-mono text-center">✓ acesso de testador ativo</p>
+                )}
+              </div>
+
+              <a
+                href="/pesquisa"
+                className="block w-full py-3 text-center border-2 border-grafite-3 text-creme/70 brand-lockup text-base rounded-xl hover:border-laranja hover:text-laranja transition-all active:scale-95"
+              >
+                📋 quero me inscrever no encontro →
+              </a>
 
               <div className="flex justify-center gap-4 pt-2 text-xs font-mono text-creme/40">
                 <a href="/dados" className="underline hover:text-laranja transition-colors">dados abertos</a>

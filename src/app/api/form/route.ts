@@ -6,8 +6,14 @@ const num = (v: unknown) => (typeof v === "number" && v >= 1 && v <= 5 ? v : nul
 const arr = (v: unknown, max = 12) =>
   Array.isArray(v) ? v.filter((x) => typeof x === "string").slice(0, max).map((x) => String(x).slice(0, 80)) : null
 
-// POST — registra uma resposta da pesquisa qualitativa (anônima). Aceita tanto a
-// versão curta (fim do jogo) quanto a completa (/pesquisa); campos ausentes ficam nulos.
+/**
+ * POST /api/form
+ * Registra resposta da pesquisa qualitativa anônima.
+ * Aceita versão curta (fim do jogo) e completa (/pesquisa); campos ausentes ficam nulos.
+ * Body: { bairro, faixa_idade, estuda?, sentimentos[], afeta_vida, avontade_opinar?,
+ *         confia_eleitos?, afasta?[], ja_participou, onde_discute?[], sabia_participar?,
+ *         texto_participar?, texto_duvida? }
+ */
 export async function POST(req: NextRequest) {
   try {
     const b = await req.json()

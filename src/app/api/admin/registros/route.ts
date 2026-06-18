@@ -5,6 +5,12 @@ function authed(req: NextRequest) {
   return req.cookies.get("ozipa_admin")?.value === "1"
 }
 
+/**
+ * GET /api/admin/registros
+ * Lista todas as inscrições no encontro presencial.
+ * Requer cookie de sessão admin.
+ * Retorna: { inscricoes: Inscricao[] } ordenadas por criado_em desc
+ */
 export async function GET(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ error: "401" }, { status: 401 })
   const db = supa()
@@ -16,6 +22,13 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ inscricoes: data })
 }
 
+/**
+ * PUT /api/admin/registros
+ * Atualiza campos permitidos de uma inscrição.
+ * Requer cookie de sessão admin.
+ * Body: { id: number, nome?, idade?, turma?, contato_tipo?, contato_valor?, presenca_confirmada? }
+ * Retorna: { ok: true } | { error: string } (400 sem id, 401 sem sessão, 500 DB)
+ */
 export async function PUT(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ error: "401" }, { status: 401 })
   const b = await req.json()
@@ -30,6 +43,13 @@ export async function PUT(req: NextRequest) {
   return NextResponse.json({ ok: true })
 }
 
+/**
+ * DELETE /api/admin/registros
+ * Remove uma inscrição pelo id.
+ * Requer cookie de sessão admin.
+ * Body: { id: number }
+ * Retorna: { ok: true } | { error: string } (400 sem id, 401 sem sessão, 500 DB)
+ */
 export async function DELETE(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ error: "401" }, { status: 401 })
   const { id } = await req.json()

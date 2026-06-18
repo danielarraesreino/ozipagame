@@ -18,7 +18,14 @@ async function ghGet() {
   return res.json()
 }
 
-// PUT { dilema_id, ativo } — liga/desliga um card importado no jogo (runtime).
+/**
+ * PUT /api/admin/cards
+ * Liga ou desliga a exibição de um card no jogo em tempo de execução.
+ * Persiste `cards_ativos.json` via GitHub API (sem rebuild).
+ * Requer cookie de sessão admin.
+ * Body: { dilema_id: string, ativo: boolean }
+ * Retorna: { ok: true } | { ok: false } (400 sem dilema_id, 401 sem sessão)
+ */
 export async function PUT(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ ok: false }, { status: 401 })
 

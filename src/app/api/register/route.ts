@@ -4,6 +4,12 @@ import { supa } from "@/lib/supabase"
 const s = (v: unknown, max = 200) =>
   typeof v === "string" && v ? v.slice(0, max) : null
 
+/**
+ * POST /api/register
+ * Registra inscrição de participante no encontro presencial.
+ * Body: { nome, idade, turma, confirmou_presenca, contato_tipo?, contato_valor? }
+ * Retorna: { ok: true } | { ok: false } (HTTP 500)
+ */
 export async function POST(req: NextRequest) {
   try {
     const b = await req.json()

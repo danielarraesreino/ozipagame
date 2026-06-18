@@ -18,7 +18,16 @@ async function ghGet() {
   return res.json()
 }
 
-// PUT: criar ou atualizar código
+/**
+ * PUT /api/admin/codes
+ * Cria, atualiza ou remove um código de sala (desbloqueio pós-oficina).
+ * Persiste `room_codes.json` via GitHub API (sem rebuild).
+ * Requer cookie de sessão admin.
+ * Body: { codigo: string, label?: string, ativo?: boolean }
+ *   - Se `ativo === false`: remove o código.
+ *   - Caso contrário: cria/atualiza com `{ label, ativo: true }`.
+ * Retorna: { ok: true } | { ok: false } (400 sem codigo, 401 sem sessão)
+ */
 export async function PUT(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ ok: false }, { status: 401 })
 

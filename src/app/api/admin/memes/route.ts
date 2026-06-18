@@ -5,7 +5,12 @@ function authed(req: NextRequest) {
   return req.cookies.get("ozipa_admin")?.value === "1"
 }
 
-// GET — lista memes enviados (fila de moderação).
+/**
+ * GET /api/admin/memes
+ * Lista os memes enviados pela comunidade (fila de moderação).
+ * Requer cookie de sessão admin.
+ * Retorna: { ok: true, memes: Meme[] } ordenados por criado_em desc (max 500)
+ */
 export async function GET(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ ok: false }, { status: 401 })
   try {
@@ -22,7 +27,13 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// PUT { id, status } — modera (aprovar/recusar/voltar pra pendente).
+/**
+ * PUT /api/admin/memes
+ * Modera um meme: aprova, recusa ou retorna para fila pendente.
+ * Requer cookie de sessão admin.
+ * Body: { id: number, status: "pendente" | "aprovado" | "recusado" }
+ * Retorna: { ok: true } | { ok: false } (400 status inválido, 401 sem sessão)
+ */
 export async function PUT(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ ok: false }, { status: 401 })
   try {

@@ -20,7 +20,15 @@ async function ghGet() {
 
 interface Faixa { nome: string; url: string }
 
-// PUT { trilhas: Faixa[] } — substitui a playlist inteira da trilha de fundo.
+/**
+ * PUT /api/admin/audio
+ * Substitui a playlist inteira da trilha de fundo do jogo.
+ * Persiste `audio_config.json` via GitHub API (sem rebuild).
+ * Requer cookie de sessão admin.
+ * Body: { trilhas: Array<{ nome: string, url: string }> }
+ * Retorna: { ok: true } | { ok: false } (401 sem sessão)
+ * Nota: mantém retro-compatibilidade gravando `trilha` (1ª faixa) além de `trilhas`.
+ */
 export async function PUT(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ ok: false }, { status: 401 })
 

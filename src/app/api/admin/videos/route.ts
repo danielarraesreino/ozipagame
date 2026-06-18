@@ -18,6 +18,16 @@ async function ghGet() {
   return res.json()
 }
 
+/**
+ * PUT /api/admin/videos
+ * Associa ou remove uma URL de vídeo de pílula a um dilema.
+ * Persiste `video_urls.json` via GitHub API (sem rebuild).
+ * Requer cookie de sessão admin.
+ * Body: { dilema_id: string, url?: string }
+ *   - Se `url` presente: associa o vídeo ao dilema.
+ *   - Se `url` ausente/vazio: remove o vídeo do dilema.
+ * Retorna: { ok: true } | { ok: false } (400 sem dilema_id, 401 sem sessão)
+ */
 export async function PUT(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ ok: false }, { status: 401 })
 

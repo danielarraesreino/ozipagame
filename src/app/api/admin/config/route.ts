@@ -18,7 +18,14 @@ async function ghGet() {
   return res.json()
 }
 
-// PUT { spotniks_url } — atualiza configs gerais do site (vídeo de inspiração etc).
+/**
+ * PUT /api/admin/config
+ * Atualiza configurações gerais do site (ex: URL do vídeo Spotniks).
+ * Persiste `site_config.json` via GitHub API (sem rebuild).
+ * Requer cookie de sessão admin.
+ * Body: { spotniks_url?: string }
+ * Retorna: { ok: true } | { ok: false } (401 sem sessão)
+ */
 export async function PUT(req: NextRequest) {
   if (!authed(req)) return NextResponse.json({ ok: false }, { status: 401 })
 
