@@ -8,11 +8,16 @@ interface ResultadoCard {
   status?: string
 }
 
-// POST { bairro, qtd_discordou, results[] } — registra uma partida anônima
-// (sem apelido) + suas respostas. Disparado ao fim do jogo.
+/**
+ * POST /api/track
+ * Registra partida anônima e respostas ao fim do jogo.
+ * Body: { bairro: string, qtd_discordou: number, results: ResultadoCard[], apelido?: string }
+ * Insere em `partidas` + `respostas` no Supabase.
+ * Nota: apelido é gravado para análise interna; NUNCA exposto no endpoint público /api/dados.
+ */
 export async function POST(req: NextRequest) {
   try {
-    const { bairro, qtd_discordou, results } = await req.json()
+    const { bairro, qtd_discordou, results, apelido } = await req.json()
     if (!Array.isArray(results) || results.length === 0) {
       return NextResponse.json({ ok: false }, { status: 400 })
     }
@@ -24,6 +29,7 @@ export async function POST(req: NextRequest) {
         bairro: typeof bairro === "string" ? bairro.slice(0, 40) : null,
         total_cards: results.length,
         qtd_discordou: typeof qtd_discordou === "number" ? qtd_discordou : null,
+        apelido: typeof apelido === "string" ? apelido.slice(0, 40) : null,
       })
       .select("id")
       .single()

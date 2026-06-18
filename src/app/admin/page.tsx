@@ -11,7 +11,7 @@ const allDilemas: Dilema[] = [...hardcoded, ...gerados]
 type VideoMap = Record<string, string>
 type SaveState = "idle" | "saving" | "ok" | "err"
 type UploadState = "idle" | "uploading" | "ok" | "err"
-type Aba = "videos" | "cards" | "trilha" | "conteudo" | "forms" | "inscricoes" | "memes" | "codigos"
+type Aba = "videos" | "cards" | "trilha" | "conteudo" | "forms" | "inscricoes" | "memes" | "codigos" | "dilemas"
 
 interface InscricaoRow {
   id: number
@@ -33,6 +33,25 @@ interface MemeRow {
   imagem_url?: string
   status: "pendente" | "aprovado" | "recusado"
   criado_em?: string
+}
+
+interface DraftRow {
+  id: string
+  meme_id?: number
+  meme_url?: string
+  autor_apelido?: string
+  situacao_md?: string
+  escolha_a_texto?: string
+  escolha_a_efeitos?: Record<string, number>
+  escolha_b_texto?: string
+  escolha_b_efeitos?: Record<string, number>
+  contexto_oculto_md?: string
+  modulo?: string
+  fonte_url?: string
+  validado_por?: string
+  status: "rascunho" | "publicado"
+  criado_em?: string
+  publicado_em?: string
 }
 
 interface FormRow {
@@ -91,6 +110,13 @@ export default function AdminPage() {
   const [inscricoes, setInscricoes] = useState<InscricaoRow[]>([])
   const [inscricoesState, setInscricoesState] = useState<"idle" | "loading" | "err">("idle")
   const [inscricaoBusy, setInscricaoBusy] = useState<number | null>(null)
+  const [drafts, setDrafts] = useState<DraftRow[]>([])
+  const [draftsState, setDraftsState] = useState<"idle" | "loading" | "err">("idle")
+  const [editingDraft, setEditingDraft] = useState<string | null>(null)
+  const [draftForm, setDraftForm] = useState<Partial<DraftRow>>({})
+  const [draftSaveState, setDraftSaveState] = useState<SaveState>("idle")
+  const [draftPublishState, setDraftPublishState] = useState<Record<string, SaveState>>({})
+  const [virarDilemaBusy, setVirarDilemaBusy] = useState<number | null>(null)
   const [editando, setEditando] = useState<number | null>(null)
   const [editNome, setEditNome] = useState("")
   const [editTurma, setEditTurma] = useState("")
@@ -344,6 +370,92 @@ export default function AdminPage() {
     setMemeBusy(null)
   }
 
+  // ── Dilemas (rascunhos → publicação) ───────────────────────────────────────
+  async function carregarDrafts() {
+    setDraftsState("loading")
+    try {
+      const res = await fetch("/api/admin/dilemas-draft")
+      if (!res.ok) throw new Error()
+      const d = await res.json()
+      setDrafts(d.drafts || [])
+      setDraftsState("idle")
+    } catch {
+      setDraftsState("err")
+    }
+  }
+
+  async function virarDilema(meme: MemeRow) {
+    setVirarDilemaBusy(meme.id)
+    try {
+      const res = await fetch("/api/admin/dilemas-draft", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          meme_id: meme.id,
+          meme_url: meme.imagem_url ?? null,
+          autor_apelido: meme.autor_apelido ?? null,
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "erro")
+      // Recarrega a lista de drafts e muda para aba dilemas
+      await carregarDrafts()
+      setAba("dilemas")
+    } catch (e) {
+      alert("Erro ao criar rascunho: " + String(e))
+    }
+    setVirarDilemaBusy(null)
+  }
+
+  async function salvarDraft(id: string) {
+    setDraftSaveState("saving")
+    try {
+      const res = await fetch("/api/admin/dilemas-draft", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, ...draftForm }),
+      })
+      if (!res.ok) throw new Error()
+      setDrafts((prev) => prev.map((d) => d.id === id ? { ...d, ...draftForm } : d))
+      setDraftSaveState("ok")
+      setEditingDraft(null)
+    } catch {
+      setDraftSaveState("err")
+    }
+    setTimeout(() => setDraftSaveState("idle"), 2000)
+  }
+
+  function draftValido(draft: Partial<DraftRow>) {
+    return !!(
+      draft.escolha_a_texto?.trim() &&
+      draft.escolha_b_texto?.trim() &&
+      draft.contexto_oculto_md?.trim()
+    )
+  }
+
+  async function publicarDraft(id: string) {
+    setDraftPublishState((s) => ({ ...s, [id]: "saving" }))
+    try {
+      const res = await fetch("/api/admin/dilemas-draft/publicar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ draft_id: id }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        const msg = data.detalhes ? data.detalhes.join(", ") : (data.error || "erro ao publicar")
+        throw new Error(msg)
+      }
+      setDrafts((prev) => prev.map((d) => d.id === id ? { ...d, status: "publicado" } : d))
+      setDraftPublishState((s) => ({ ...s, [id]: "ok" }))
+      setLastSaved("dilema_" + id)
+    } catch (e) {
+      alert("Erro ao publicar: " + String(e))
+      setDraftPublishState((s) => ({ ...s, [id]: "err" }))
+    }
+    setTimeout(() => setDraftPublishState((s) => ({ ...s, [id]: "idle" })), 3000)
+  }
+
   // ── Conteúdo (vídeo Spotniks etc) ──────────────────────────────────────────
   async function handleSaveSpotniks() {
     const url = spotniksRef.current?.value?.trim() ?? ""
@@ -463,17 +575,27 @@ export default function AdminPage() {
           </p>
           <h1 className="text-2xl font-black text-creme">Painel da equipe</h1>
         </div>
-        <button
-          onClick={handleLogout}
-          className="text-xs text-creme-soft/70 font-mono hover:text-creme transition-colors"
-        >
-          sair →
-        </button>
+        <div className="flex items-center gap-4">
+          <a
+            href="/game"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-laranja font-mono hover:text-laranja/80 transition-colors"
+          >
+            🎮 abrir jogo →
+          </a>
+          <button
+            onClick={handleLogout}
+            className="text-xs text-creme-soft/70 font-mono hover:text-creme transition-colors"
+          >
+            sair →
+          </button>
+        </div>
       </div>
 
       {/* Abas */}
       <div className="flex gap-2 mb-6">
-        {(["inscricoes", "forms", "memes", "videos", "cards", "trilha", "conteudo", "codigos"] as Aba[]).map((a) => (
+        {(["inscricoes", "forms", "memes", "dilemas", "videos", "cards", "trilha", "conteudo", "codigos"] as Aba[]).map((a) => (
           <button
             key={a}
             onClick={() => {
@@ -481,6 +603,7 @@ export default function AdminPage() {
               if (a === "forms") carregarForms()
               if (a === "memes") carregarMemes()
               if (a === "inscricoes") carregarInscricoes()
+              if (a === "dilemas") carregarDrafts()
             }}
             className={`px-3 py-2 rounded-xl text-sm font-mono transition-colors ${
               aba === a
@@ -488,7 +611,7 @@ export default function AdminPage() {
                 : "bg-grafite-2 border border-grafite-3 text-creme-soft hover:text-creme"
             }`}
           >
-            {a === "inscricoes" ? "📝 Inscrições" : a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : a === "conteudo" ? "📺 Conteúdo" : a === "forms" ? "📋 Pesquisa" : a === "memes" ? "🖼️ Memes" : "🔑 Códigos"}
+            {a === "inscricoes" ? "📝 Inscrições" : a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : a === "conteudo" ? "📺 Conteúdo" : a === "forms" ? "📋 Pesquisa" : a === "memes" ? "🖼️ Memes" : a === "dilemas" ? "💡 Dilemas" : "🔑 Códigos"}
           </button>
         ))}
       </div>
@@ -1036,7 +1159,7 @@ export default function AdminPage() {
                       <img src={m.imagem_url} alt="meme" className="w-full rounded-xl border border-grafite-3 mb-2" />
                     )}
                     {m.descricao && <p className="text-creme text-sm mb-3">{m.descricao}</p>}
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-wrap">
                       <button
                         onClick={() => moderarMeme(m.id, "aprovado")}
                         disabled={busy || m.status === "aprovado"}
@@ -1048,6 +1171,234 @@ export default function AdminPage() {
                         className="flex-1 py-2 rounded-xl text-sm font-bold bg-vermelho/10 border border-vermelho/40 text-vermelho active:scale-95 transition-all disabled:opacity-40"
                       >✕ recusar</button>
                     </div>
+                    {m.status === "aprovado" && (
+                      <button
+                        onClick={() => virarDilema(m)}
+                        disabled={virarDilemaBusy === m.id}
+                        className="mt-2 w-full py-2 rounded-xl text-sm font-bold bg-laranja/15 border border-laranja/50 text-laranja active:scale-95 transition-all disabled:opacity-40"
+                      >
+                        {virarDilemaBusy === m.id ? "criando rascunho…" : "💡 Virar dilema"}
+                      </button>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </>
+      )}
+
+      {/* ── Aba Dilemas (rascunhos → publicação) ────────────────────────── */}
+      {aba === "dilemas" && (
+        <>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <p className="text-creme-soft text-sm leading-relaxed pr-3">
+                Rascunhos de dilema criados a partir de memes aprovados.
+                <strong> Complete e publique</strong> manualmente — nada aparece no jogo sem publicação explícita.
+              </p>
+            </div>
+            <button onClick={carregarDrafts} className="shrink-0 text-xs font-mono text-creme-soft/70 hover:text-creme transition-colors">↻</button>
+          </div>
+
+          {draftsState === "loading" ? (
+            <p className="text-creme-soft/60 text-sm font-mono text-center py-8">carregando…</p>
+          ) : draftsState === "err" ? (
+            <p className="text-vermelho/80 text-sm font-mono text-center py-8">erro ao carregar</p>
+          ) : drafts.length === 0 ? (
+            <p className="text-creme-soft/60 text-sm font-mono text-center py-8">
+              nenhum rascunho ainda — aprove um meme e clique em &ldquo;Virar dilema&rdquo;
+            </p>
+          ) : (
+            <div className="space-y-6">
+              {drafts.map((draft) => {
+                const isEditing = editingDraft === draft.id
+                const publishState = draftPublishState[draft.id] ?? "idle"
+                const publicado = draft.status === "publicado"
+                const formData = isEditing ? draftForm : draft
+                const podePublicar = draftValido(isEditing ? draftForm : draft)
+
+                return (
+                  <div key={draft.id} className={`bg-grafite-2 border-2 rounded-2xl p-4 ${publicado ? "border-verde/40 opacity-80" : "border-grafite-3"}`}>
+                    {/* Cabeçalho */}
+                    <div className="flex items-center gap-2 mb-3 flex-wrap text-[11px] font-mono">
+                      <span className={`uppercase tracking-widest ${publicado ? "text-verde" : "text-laranja"}`}>
+                        {publicado ? "✓ publicado" : "rascunho"}
+                      </span>
+                      {draft.autor_apelido && <span className="text-creme-soft">@{draft.autor_apelido}</span>}
+                      {draft.modulo && <span className="text-creme-soft/60">· {draft.modulo}</span>}
+                    </div>
+
+                    {/* Imagem do meme */}
+                    {draft.meme_url && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={draft.meme_url} alt="meme" className="w-full rounded-xl border border-grafite-3 mb-3 max-h-48 object-contain bg-black" />
+                    )}
+
+                    {publicado ? (
+                      <p className="text-creme-soft/60 text-xs font-mono">
+                        publicado em {draft.publicado_em ? new Date(draft.publicado_em).toLocaleDateString("pt-BR") : "—"}
+                      </p>
+                    ) : isEditing ? (
+                      /* ── Formulário de edição ── */
+                      <div className="space-y-4">
+                        <div>
+                          <p className="brand-label text-[10px] text-creme/50 uppercase tracking-widest mb-1">situação / texto do meme *</p>
+                          <textarea
+                            value={draftForm.situacao_md ?? ""}
+                            onChange={(e) => setDraftForm((f) => ({ ...f, situacao_md: e.target.value }))}
+                            rows={2}
+                            placeholder="Descreva a situação apresentada no meme…"
+                            className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme/30 focus:outline-none focus:border-laranja transition-colors text-sm resize-none"
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <p className="brand-label text-[10px] text-creme/50 uppercase tracking-widest mb-1">Escolha A *</p>
+                            <textarea
+                              value={draftForm.escolha_a_texto ?? ""}
+                              onChange={(e) => setDraftForm((f) => ({ ...f, escolha_a_texto: e.target.value }))}
+                              rows={2}
+                              placeholder="Texto da escolha A…"
+                              className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme/30 focus:outline-none focus:border-laranja transition-colors text-sm resize-none"
+                            />
+                          </div>
+                          <div>
+                            <p className="brand-label text-[10px] text-creme/50 uppercase tracking-widest mb-1">Escolha B *</p>
+                            <textarea
+                              value={draftForm.escolha_b_texto ?? ""}
+                              onChange={(e) => setDraftForm((f) => ({ ...f, escolha_b_texto: e.target.value }))}
+                              rows={2}
+                              placeholder="Texto da escolha B…"
+                              className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme/30 focus:outline-none focus:border-laranja transition-colors text-sm resize-none"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <p className="brand-label text-[10px] text-creme/50 uppercase tracking-widest mb-1">contexto oculto (o que o meme apaga) *</p>
+                          <textarea
+                            value={draftForm.contexto_oculto_md ?? ""}
+                            onChange={(e) => setDraftForm((f) => ({ ...f, contexto_oculto_md: e.target.value }))}
+                            rows={3}
+                            placeholder="O que o bairro não sabe mas precisa saber…"
+                            className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme/30 focus:outline-none focus:border-laranja transition-colors text-sm resize-none"
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <p className="brand-label text-[10px] text-creme/50 uppercase tracking-widest mb-1">módulo</p>
+                            <select
+                              value={draftForm.modulo ?? ""}
+                              onChange={(e) => setDraftForm((f) => ({ ...f, modulo: e.target.value }))}
+                              className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme focus:outline-none focus:border-laranja transition-colors text-sm"
+                            >
+                              <option value="">selecione…</option>
+                              <option value="participação">participação</option>
+                              <option value="desinformação">desinformação</option>
+                              <option value="eleição">eleição</option>
+                              <option value="território">território</option>
+                            </select>
+                          </div>
+                          <div>
+                            <p className="brand-label text-[10px] text-creme/50 uppercase tracking-widest mb-1">validado por</p>
+                            <input
+                              type="text"
+                              value={draftForm.validado_por ?? ""}
+                              onChange={(e) => setDraftForm((f) => ({ ...f, validado_por: e.target.value }))}
+                              placeholder="nome do revisor"
+                              className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme/30 focus:outline-none focus:border-laranja transition-colors text-sm"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <p className="brand-label text-[10px] text-creme/50 uppercase tracking-widest mb-1">fonte / URL</p>
+                          <input
+                            type="text"
+                            value={draftForm.fonte_url ?? ""}
+                            onChange={(e) => setDraftForm((f) => ({ ...f, fonte_url: e.target.value }))}
+                            placeholder="https://…"
+                            className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme placeholder-creme/30 focus:outline-none focus:border-laranja transition-colors text-sm font-mono"
+                          />
+                        </div>
+
+                        {!podePublicar && (
+                          <p className="text-vermelho/80 text-xs font-mono">
+                            ✕ preencha escolha A, escolha B e contexto oculto para publicar
+                          </p>
+                        )}
+
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => salvarDraft(draft.id)}
+                            disabled={draftSaveState === "saving"}
+                            className={`flex-1 py-2 rounded-xl text-sm font-bold transition-all active:scale-95 ${
+                              draftSaveState === "ok" ? "bg-verde text-grafite"
+                              : draftSaveState === "err" ? "bg-vermelho text-creme"
+                              : "bg-grafite-3 text-creme disabled:opacity-50"
+                            }`}
+                          >
+                            {draftSaveState === "saving" ? "…" : draftSaveState === "ok" ? "✓ salvo" : "salvar rascunho"}
+                          </button>
+                          <button
+                            onClick={() => { setEditingDraft(null); setDraftForm({}) }}
+                            className="px-4 py-2 rounded-xl text-sm font-mono text-creme-soft/70 border border-grafite-3 hover:text-creme transition-colors"
+                          >
+                            cancelar
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      /* ── Visualização ── */
+                      <div className="space-y-3">
+                        {draft.situacao_md && (
+                          <p className="text-creme text-sm italic">&ldquo;{draft.situacao_md}&rdquo;</p>
+                        )}
+                        <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                          <div className={`px-2 py-1.5 rounded-lg border ${draft.escolha_a_texto ? "border-verde/40 text-creme" : "border-vermelho/40 text-vermelho/70"}`}>
+                            A: {draft.escolha_a_texto || "não preenchida"}
+                          </div>
+                          <div className={`px-2 py-1.5 rounded-lg border ${draft.escolha_b_texto ? "border-verde/40 text-creme" : "border-vermelho/40 text-vermelho/70"}`}>
+                            B: {draft.escolha_b_texto || "não preenchida"}
+                          </div>
+                        </div>
+                        {draft.contexto_oculto_md ? (
+                          <p className="text-creme-soft text-xs line-clamp-2">{draft.contexto_oculto_md}</p>
+                        ) : (
+                          <p className="text-vermelho/70 text-xs font-mono">✕ contexto oculto não preenchido</p>
+                        )}
+
+                        <div className="flex gap-2 flex-wrap mt-2">
+                          <button
+                            onClick={() => { setEditingDraft(draft.id); setDraftForm({ ...draft }) }}
+                            className="flex-1 py-2 rounded-xl text-sm font-mono text-creme-soft/70 border border-grafite-3 hover:text-creme transition-colors"
+                          >
+                            editar
+                          </button>
+                          <button
+                            onClick={() => publicarDraft(draft.id)}
+                            disabled={!podePublicar || publishState === "saving"}
+                            className={`flex-1 py-2 rounded-xl text-sm font-bold transition-all active:scale-95 disabled:opacity-40 ${
+                              publishState === "ok" ? "bg-verde text-grafite border border-verde"
+                              : publishState === "err" ? "bg-vermelho/10 border border-vermelho/40 text-vermelho"
+                              : podePublicar
+                                ? "bg-laranja/15 border border-laranja/50 text-laranja"
+                                : "bg-grafite border border-grafite-3 text-creme-soft/40"
+                            }`}
+                          >
+                            {publishState === "saving" ? "publicando…" : publishState === "ok" ? "✓ publicado" : "🚀 Publicar"}
+                          </button>
+                        </div>
+                        {formData && !podePublicar && (
+                          <p className="text-creme-soft/50 text-[10px] font-mono">
+                            preencha escolha A, B e contexto oculto para habilitar publicação
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )
               })}

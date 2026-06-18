@@ -85,7 +85,7 @@ function EndScreen({
     fetch("/api/track", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ bairro: player.bairro, qtd_discordou: discordou, results }),
+      body: JSON.stringify({ bairro: player.bairro, qtd_discordou: discordou, results, apelido: player.apelido }),
     }).catch(() => {})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

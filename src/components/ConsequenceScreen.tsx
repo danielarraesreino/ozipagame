@@ -93,6 +93,13 @@ export default function ConsequenceScreen({ dilema, choice, onNext, current, tot
         </div>
       )}
 
+      {/* Crédito de autoria — só para dilemas da comunidade */}
+      {dilema.autor_apelido && (
+        <p className="text-creme-soft/60 text-xs font-mono mb-4 text-center">
+          dilema da galera: <span className="text-laranja">@{dilema.autor_apelido}</span>
+        </p>
+      )}
+
       {/* Next button */}
       <button
         onClick={onNext}

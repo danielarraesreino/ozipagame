@@ -14,6 +14,8 @@ export interface Dilema {
   fase?: 1 | 2          // 1 = sempre disponível · 2 = pós-oficina (desbloqueado por código)
   espelho_de?: string   // id do dilema da fase 1 que este repete (para o sistema de mirror)
   importado?: boolean   // veio do pipeline ozielmemes via /dilemas_importados.json
+  autor_apelido?: string // crédito de autoria para dilema gerado pela comunidade
+  origem?: "comunidade" | "curado"  // "comunidade" = promovido de meme enviado
 }
 
 export const MODULO_COR: Record<string, string> = {
