@@ -8,8 +8,8 @@ import PrankJogo from "@/components/PrankJogo"
 
 const MENU_LINKS = [
   { href: "/",            icon: "🏠", label: "Início"   },
-  { href: "/#pesquisa",   icon: "📋", label: "Pesquisa" },
-  { href: "/#jogo",       icon: "🎮", label: "Jogo"     },
+  { href: "/pesquisa",    icon: "📋", label: "Inscrição" },
+  { href: "/game",        icon: "🎮", label: "Jogo"     },
   { href: "/equipe",      icon: "👥", label: "Equipe"   },
   { href: "/admin",       icon: "🔒", label: "Admin"    },
 ]
