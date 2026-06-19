@@ -33,7 +33,7 @@ export const dilemas: Dilema[] = [
     modulo: "participação",
     meme: '"Vereador é tudo ladrão, nem adianta votar"',
     contexto_oculto:
-      "A creche do Jardim Oziel vai fechar por falta de verba. A câmara votou ontem. Nenhum morador do bairro foi à audiência pública marcada há três semanas. O vereador que poderia ter salvado a verba perdeu por dois votos.",
+      "A creche do Parque Oziel vai fechar por falta de verba. A câmara votou ontem. Nenhum morador do bairro foi à audiência pública marcada há três semanas. O vereador que poderia ter salvado a verba perdeu por dois votos.",
     pilula_sabedoria:
       "Dois votos. Era isso que faltava. Quando o bairro não aparece, alguém aparece no lugar.",
     fonte: "Câmara Municipal de Campinas",
@@ -100,7 +100,7 @@ export const dilemas: Dilema[] = [
     modulo: "participação",
     meme: '"Bom, depois da conversa de hoje, ainda acho que nem adianta ir?"',
     contexto_oculto:
-      "A creche do Jardim Oziel fechou por dois votos. O encontro de hoje mostrou que presença física em audiência pública tem peso de lei — e que 200 assinaturas não substituem três pessoas na sala.",
+      "A creche do Parque Oziel fechou por dois votos. O encontro de hoje mostrou que presença física em audiência pública tem peso de lei — e que 200 assinaturas não substituem três pessoas na sala.",
     pilula_sabedoria:
       "A mudança não precisa de todo mundo. Precisa de você — que agora já sabe disso.",
     fonte: "Câmara Municipal de Campinas",

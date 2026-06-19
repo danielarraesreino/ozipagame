@@ -5,7 +5,7 @@
 
 ## O que é
 
-Serious game mobile-first para adolescentes de 12 a 17 anos do Jardim Oziel, Campinas-SP.
+Serious game mobile-first para adolescentes de 12 a 17 anos do Parque Oziel, Campinas-SP.
 Formato Tinder: o jogador arrasta memes políticos para a direita (concordo) ou esquerda (discordo).
 Cada escolha revela o contexto real que o meme esconde — e por que aquilo importa pro bairro.
 
@@ -59,7 +59,7 @@ Tela Final
 
 ### `src/app/page.tsx` — Entrada
 - Campo de apelido (texto livre, max 24 chars)
-- Seleção de bairro: Jardim Oziel, Jardim Florence, Campo Grande, DIC, Outro bairro
+- Seleção de bairro: Parque Oziel, Jardim Florence, Campo Grande, DIC, Outro bairro
 - Botão "entrar no jogo →" (desabilitado sem preencher)
 - Links: jogar em HTML standalone · sobre o projeto
 - Sem cadastro, sem senha, sem rastreio — LGPD-friendly para menores
@@ -212,4 +212,4 @@ Tela Final
 ---
 
 *Vozes do Oziel — Grupo Diálogos · CriaLab · FEAC*
-*Jardim Oziel, Campinas-SP — Semana Cívica 2026*
+*Parque Oziel, Campinas-SP — Semana Cívica 2026*
