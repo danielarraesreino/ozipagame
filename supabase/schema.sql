@@ -57,11 +57,27 @@ create table if not exists memes (
   revisado_em  timestamptz
 );
 
+-- ── Inscrições no encontro (20 de julho) ────────────────────────────────────
+-- Dado identificável de participante do evento. RLS trava: leitura/edição só
+-- via service role no admin. presenca_confirmada = check-in feito pelo admin.
+create table if not exists inscricoes (
+  id                  bigint generated always as identity primary key,
+  nome                text,
+  idade               text,
+  turma               text,
+  confirmou_presenca  boolean,   -- topou no formulário público
+  contato_tipo        text,
+  contato_valor       text,
+  presenca_confirmada boolean default false,  -- check-in pelo admin
+  criado_em           timestamptz default now()
+);
+
 -- ── RLS: trava tudo (acesso só via service role) ────────────────────────────
 alter table partidas    enable row level security;
 alter table respostas   enable row level security;
 alter table formularios enable row level security;
 alter table memes       enable row level security;
+alter table inscricoes  enable row level security;
 
 -- ── Índices ─────────────────────────────────────────────────────────────────
 create index if not exists idx_respostas_dilema on respostas(dilema_id);

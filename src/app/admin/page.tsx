@@ -11,7 +11,19 @@ const allDilemas: Dilema[] = [...hardcoded, ...gerados]
 type VideoMap = Record<string, string>
 type SaveState = "idle" | "saving" | "ok" | "err"
 type UploadState = "idle" | "uploading" | "ok" | "err"
-type Aba = "videos" | "cards" | "trilha" | "conteudo" | "forms" | "memes" | "codigos"
+type Aba = "inscricoes" | "videos" | "cards" | "trilha" | "conteudo" | "forms" | "memes" | "codigos"
+
+interface InscricaoRow {
+  id: number
+  nome?: string
+  idade?: string
+  turma?: string
+  confirmou_presenca?: boolean
+  contato_tipo?: string
+  contato_valor?: string
+  presenca_confirmada?: boolean
+  criado_em?: string
+}
 
 interface MemeRow {
   id: number
@@ -76,6 +88,13 @@ export default function AdminPage() {
   const [memes, setMemes] = useState<MemeRow[]>([])
   const [memesState, setMemesState] = useState<"idle" | "loading" | "err">("idle")
   const [memeBusy, setMemeBusy] = useState<number | null>(null)
+  const [inscricoes, setInscricoes] = useState<InscricaoRow[]>([])
+  const [inscricoesState, setInscricoesState] = useState<"idle" | "loading" | "err">("idle")
+  const [inscricaoBusy, setInscricaoBusy] = useState<number | null>(null)
+  const [editando, setEditando] = useState<number | null>(null)
+  const [editNome, setEditNome] = useState("")
+  const [editTurma, setEditTurma] = useState("")
+  const [editContato, setEditContato] = useState("")
 
   // Verifica se já tem sessão e carrega URLs salvas
   useEffect(() => {
@@ -232,6 +251,56 @@ export default function AdminPage() {
 
   async function handleRemoveTrilha(url: string) {
     await salvarTrilhas(trilhas.filter((t) => t.url !== url))
+  }
+
+  async function carregarInscricoes() {
+    setInscricoesState("loading")
+    try {
+      const res = await fetch("/api/admin/registros")
+      if (!res.ok) throw new Error()
+      const d = await res.json()
+      setInscricoes(d.inscricoes || [])
+      setInscricoesState("idle")
+    } catch {
+      setInscricoesState("err")
+    }
+  }
+
+  async function confirmarInscricao(id: number, valor: boolean) {
+    setInscricaoBusy(id)
+    const res = await fetch("/api/admin/registros", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, presenca_confirmada: valor }),
+    })
+    if (res.ok) setInscricoes((l) => l.map((x) => x.id === id ? { ...x, presenca_confirmada: valor } : x))
+    setInscricaoBusy(null)
+  }
+
+  async function salvarEdicao(id: number) {
+    setInscricaoBusy(id)
+    const res = await fetch("/api/admin/registros", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, nome: editNome, turma: editTurma, contato_valor: editContato }),
+    })
+    if (res.ok) {
+      setInscricoes((l) => l.map((x) => x.id === id ? { ...x, nome: editNome, turma: editTurma, contato_valor: editContato } : x))
+      setEditando(null)
+    }
+    setInscricaoBusy(null)
+  }
+
+  async function excluirInscricao(id: number) {
+    if (!confirm("Excluir essa inscrição?")) return
+    setInscricaoBusy(id)
+    const res = await fetch("/api/admin/registros", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    })
+    if (res.ok) setInscricoes((l) => l.filter((x) => x.id !== id))
+    setInscricaoBusy(null)
   }
 
   // ── Formulários (leitura) ───────────────────────────────────────────────────
@@ -401,18 +470,18 @@ export default function AdminPage() {
       </div>
 
       {/* Abas */}
-      <div className="flex gap-2 mb-6">
-        {(["videos", "cards", "trilha", "conteudo", "forms", "memes", "codigos"] as Aba[]).map((a) => (
+      <div className="flex flex-wrap gap-2 mb-6">
+        {(["inscricoes", "videos", "cards", "trilha", "conteudo", "forms", "memes", "codigos"] as Aba[]).map((a) => (
           <button
             key={a}
-            onClick={() => { setAba(a); if (a === "forms") carregarForms(); if (a === "memes") carregarMemes() }}
+            onClick={() => { setAba(a); if (a === "forms") carregarForms(); if (a === "memes") carregarMemes(); if (a === "inscricoes") carregarInscricoes() }}
             className={`px-3 py-2 rounded-xl text-sm font-mono transition-colors ${
               aba === a
                 ? "bg-laranja text-grafite"
                 : "bg-grafite-2 border border-grafite-3 text-creme-soft hover:text-creme"
             }`}
           >
-            {a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : a === "conteudo" ? "📺 Conteúdo" : a === "forms" ? "📋 Pesquisa" : a === "memes" ? "🖼️ Memes" : "🔑 Códigos"}
+            {a === "inscricoes" ? "📝 Inscrições" : a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : a === "conteudo" ? "📺 Conteúdo" : a === "forms" ? "📋 Pesquisa" : a === "memes" ? "🖼️ Memes" : "🔑 Códigos"}
           </button>
         ))}
       </div>
@@ -421,6 +490,139 @@ export default function AdminPage() {
         <div className="mb-6 bg-verde/10 border border-verde/30 rounded-xl px-4 py-3 text-verde text-sm font-mono">
           ✓ Salvo — publicando no jogo em ~30s
         </div>
+      )}
+
+      {/* ── Aba Inscrições ──────────────────────────────────────────────── */}
+      {aba === "inscricoes" && (
+        <>
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-creme-soft text-sm leading-relaxed">
+              Inscrições no encontro de 20 de julho.
+            </p>
+            <button onClick={carregarInscricoes} className="shrink-0 text-xs font-mono text-creme-soft/70 hover:text-creme transition-colors">↻</button>
+          </div>
+
+          {inscricoes.length > 0 && (() => {
+            const total = inscricoes.length
+            const confirmados = inscricoes.filter((i) => i.presenca_confirmada).length
+            const manha = inscricoes.filter((i) => i.turma?.toLowerCase().includes("manhã")).length
+            const tarde = inscricoes.filter((i) => i.turma?.toLowerCase().includes("tarde")).length
+            const comContato = inscricoes.filter((i) => i.contato_valor?.trim()).length
+            return (
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="bg-grafite-2 border-2 border-laranja/40 rounded-2xl px-4 py-3 text-center">
+                  <p className="text-laranja text-3xl font-bold leading-none">{total}</p>
+                  <p className="text-creme-soft/70 text-xs font-mono mt-1">inscritos</p>
+                </div>
+                <div className="bg-grafite-2 border-2 border-verde/40 rounded-2xl px-4 py-3 text-center">
+                  <p className="text-verde text-3xl font-bold leading-none">{confirmados}</p>
+                  <p className="text-creme-soft/70 text-xs font-mono mt-1">confirmados</p>
+                </div>
+                <div className="bg-grafite-2 border border-grafite-3 rounded-2xl px-4 py-3">
+                  <p className="brand-label text-[9px] text-creme/40 uppercase tracking-widest mb-2">turmas</p>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-creme">🌅 manhã</span>
+                    <span className="text-laranja font-bold">{manha}</span>
+                  </div>
+                  <div className="flex justify-between text-sm mt-1">
+                    <span className="text-creme">🌇 tarde</span>
+                    <span className="text-laranja font-bold">{tarde}</span>
+                  </div>
+                </div>
+                <div className="bg-grafite-2 border border-grafite-3 rounded-2xl px-4 py-3">
+                  <p className="brand-label text-[9px] text-creme/40 uppercase tracking-widest mb-2">contato</p>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-creme">com</span>
+                    <span className="text-verde font-bold">{comContato}</span>
+                  </div>
+                  <div className="flex justify-between text-sm mt-1">
+                    <span className="text-creme">sem</span>
+                    <span className="text-creme-soft/50 font-bold">{total - comContato}</span>
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
+
+          {inscricoesState === "loading" ? (
+            <p className="text-creme-soft/60 text-sm font-mono text-center py-8">carregando…</p>
+          ) : inscricoesState === "err" ? (
+            <p className="text-vermelho/80 text-sm font-mono text-center py-8">erro ao carregar</p>
+          ) : inscricoes.length === 0 ? (
+            <p className="text-creme-soft/60 text-sm font-mono text-center py-8">nenhuma inscrição ainda</p>
+          ) : (
+            <div className="space-y-3">
+              {inscricoes.map((insc) => {
+                const busy = inscricaoBusy === insc.id
+                const editandoEste = editando === insc.id
+                return (
+                  <div key={insc.id} className={`bg-grafite-2 border-2 rounded-2xl p-4 ${insc.presenca_confirmada ? "border-verde/50" : "border-grafite-3"}`}>
+                    {editandoEste ? (
+                      <div className="space-y-2">
+                        <input value={editNome} onChange={(e) => setEditNome(e.target.value)}
+                          className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme text-sm focus:outline-none focus:border-laranja" />
+                        <select value={editTurma} onChange={(e) => setEditTurma(e.target.value)}
+                          className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme text-sm focus:outline-none focus:border-laranja">
+                          <option value="Sábado manhã — das 9:00 às 11:00">Manhã — 9h às 11h</option>
+                          <option value="Sábado tarde — das 14:30 às 16:30">Tarde — 14h30 às 16h30</option>
+                        </select>
+                        <input value={editContato} onChange={(e) => setEditContato(e.target.value)}
+                          placeholder="contato (opcional)"
+                          className="w-full bg-grafite border border-grafite-3 rounded-xl px-3 py-2 text-creme text-sm focus:outline-none focus:border-laranja" />
+                        <div className="flex gap-2">
+                          <button onClick={() => salvarEdicao(insc.id)} disabled={busy}
+                            className="flex-1 py-2 rounded-xl text-sm font-bold bg-laranja text-grafite active:scale-95 transition-all disabled:opacity-40">
+                            {busy ? "…" : "salvar"}
+                          </button>
+                          <button onClick={() => setEditando(null)}
+                            className="px-4 py-2 rounded-xl text-sm font-mono text-creme-soft/70 border border-grafite-3 hover:text-creme transition-colors">
+                            cancelar
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex items-start justify-between gap-2 mb-2">
+                          <div>
+                            <p className="text-creme font-bold text-base">{insc.nome}</p>
+                            <p className="text-creme-soft/70 text-xs font-mono">{insc.idade} anos</p>
+                          </div>
+                          {insc.presenca_confirmada && (
+                            <span className="text-[10px] font-mono text-verde uppercase tracking-widest shrink-0">✓ confirmado</span>
+                          )}
+                        </div>
+                        <p className="text-creme-soft text-sm mb-1">{insc.turma}</p>
+                        {insc.contato_tipo && insc.contato_tipo !== "não precisa" && (
+                          <p className="text-creme-soft/60 text-xs font-mono mb-3">
+                            {insc.contato_tipo}: {insc.contato_valor}
+                          </p>
+                        )}
+                        <div className="flex gap-2 flex-wrap mt-3">
+                          <button onClick={() => confirmarInscricao(insc.id, !insc.presenca_confirmada)} disabled={busy}
+                            className={`flex-1 py-2 rounded-xl text-sm font-bold transition-all active:scale-95 disabled:opacity-40 ${
+                              insc.presenca_confirmada
+                                ? "bg-grafite border border-grafite-3 text-creme-soft/70"
+                                : "bg-verde/15 border border-verde/40 text-verde"
+                            }`}>
+                            {busy ? "…" : insc.presenca_confirmada ? "desmarcar" : "✓ confirmar"}
+                          </button>
+                          <button onClick={() => { setEditando(insc.id); setEditNome(insc.nome ?? ""); setEditTurma(insc.turma ?? ""); setEditContato(insc.contato_valor ?? "") }}
+                            className="px-4 py-2 rounded-xl text-sm font-mono text-creme-soft/70 border border-grafite-3 hover:text-creme transition-colors">
+                            editar
+                          </button>
+                          <button onClick={() => excluirInscricao(insc.id)} disabled={busy}
+                            className="px-4 py-2 rounded-xl text-sm font-mono text-vermelho/70 border border-vermelho/30 hover:text-vermelho transition-colors disabled:opacity-40">
+                            excluir
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </>
       )}
 
       {/* ── Aba Vídeos ──────────────────────────────────────────────────── */}
