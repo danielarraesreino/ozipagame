@@ -5,14 +5,7 @@ import { useRouter } from "next/navigation"
 import { savePlayer, unlockModulo, isPosOficinaUnlocked } from "@/lib/store"
 import { getEmbedUrl, getYouTubeId } from "@/lib/video"
 import Logo from "@/components/Logo"
-
-const bairros = [
-  "Parque Oziel",
-  "Jardim Florence",
-  "Campo Grande",
-  "DIC",
-  "Outro bairro",
-]
+import { BAIRROS } from "@/lib/bairros"
 
 export default function Home() {
   const router = useRouter()
@@ -143,7 +136,7 @@ export default function Home() {
                 className="w-full bg-grafite-2 border-2 border-grafite-3 rounded-xl px-4 py-3 text-creme focus:outline-none focus:border-laranja transition-colors text-base appearance-none"
               >
                 <option value="" disabled>escolha seu bairro</option>
-                {bairros.map((b) => (
+                {BAIRROS.map((b) => (
                   <option key={b} value={b}>{b}</option>
                 ))}
               </select>
@@ -218,6 +211,8 @@ export default function Home() {
             <a href="/dados" className="underline text-laranja">dados abertos</a>
             <br />
             <a href="/enviar-meme" className="underline">manda teu meme</a>
+            {" · "}
+            <a href="/equipe" className="underline">equipe</a>
             {" · "}
             <a href="/sobre.html" className="underline">sobre</a>
           </p>

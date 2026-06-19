@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { BAIRROS } from "@/lib/bairros"
 
 // Pesquisa qualitativa anônima. modo "curta" (fim do jogo) mostra um subconjunto;
 // "completa" (página /pesquisa) mostra tudo. Múltipla escolha/escala alimenta o
@@ -11,7 +12,6 @@ interface Props {
   onDone?: () => void
 }
 
-const BAIRROS = ["Parque Oziel", "Jardim Florence", "Campo Grande", "DIC", "Outro bairro"]
 const FAIXAS = ["12–13", "14–15", "16–17", "18+"]
 const ESTUDA = ["escola pública", "escola particular", "curso técnico", "não estudo agora"]
 const SENTIMENTOS = ["distante de mim", "não é pra mim", "raiva / nojo", "desânimo", "curiosidade", "vontade de mudar algo", "medo de falar errado"]
