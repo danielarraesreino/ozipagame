@@ -111,7 +111,7 @@ export default function DadosPage() {
           <h1 className="brand-lockup text-creme text-3xl">Dados abertos</h1>
         </div>
         <p className="text-creme-soft text-sm leading-relaxed mb-4 max-w-[48ch]">
-          O que a juventude do Jardim Oziel respondeu no jogo — <strong>100% anônimo</strong> e
+          O que a juventude do Parque Oziel respondeu no jogo — <strong>100% anônimo</strong> e
           agregado. Nenhuma resposta individual, nenhum nome. Conhecimento da quebrada, aberto pra quebrada.
         </p>
         <div className="flex flex-wrap items-center gap-2 mb-8">

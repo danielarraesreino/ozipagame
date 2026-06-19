@@ -11,7 +11,7 @@ interface Props {
   onDone?: () => void
 }
 
-const BAIRROS = ["Jardim Oziel", "Jardim Florence", "Campo Grande", "DIC", "Outro bairro"]
+const BAIRROS = ["Parque Oziel", "Jardim Florence", "Campo Grande", "DIC", "Outro bairro"]
 const FAIXAS = ["12–13", "14–15", "16–17", "18+"]
 const ESTUDA = ["escola pública", "escola particular", "curso técnico", "não estudo agora"]
 const SENTIMENTOS = ["distante de mim", "não é pra mim", "raiva / nojo", "desânimo", "curiosidade", "vontade de mudar algo", "medo de falar errado"]

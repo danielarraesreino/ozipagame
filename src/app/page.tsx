@@ -7,7 +7,7 @@ import { getEmbedUrl, getYouTubeId } from "@/lib/video"
 import Logo from "@/components/Logo"
 
 const bairros = [
-  "Jardim Oziel",
+  "Parque Oziel",
   "Jardim Florence",
   "Campo Grande",
   "DIC",
