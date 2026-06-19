@@ -501,7 +501,7 @@ export default function AdminPage() {
         <>
           <div className="flex items-center justify-between mb-4">
             <p className="text-creme-soft text-sm leading-relaxed">
-              Inscrições no encontro de 20 de julho.
+              Inscrições no encontro de 20 de junho.
             </p>
             <button onClick={carregarInscricoes} className="shrink-0 text-xs font-mono text-creme-soft/70 hover:text-creme transition-colors">↻</button>
           </div>

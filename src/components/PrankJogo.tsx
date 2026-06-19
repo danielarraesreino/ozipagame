@@ -95,7 +95,7 @@ export default function PrankJogo({ label = "JOGAR AGORA →", className = "", o
                 </p>
                 <p className="text-creme-soft text-sm leading-relaxed">
                   O jogo estará disponível no{" "}
-                  <strong className="text-laranja">dia 20 de julho</strong>,
+                  <strong className="text-laranja">dia 20 de junho</strong>,
                   no início da primeira turma.{" "}
                   Traz seu celular carregado. 📱
                 </p>
