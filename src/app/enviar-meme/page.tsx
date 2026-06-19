@@ -5,7 +5,20 @@ import Link from "next/link"
 import { upload } from "@vercel/blob/client"
 import Logo from "@/components/Logo"
 
-const bairros = ["Jardim Oziel", "Jardim Florence", "Campo Grande", "DIC", "Outro bairro"]
+const bairros = [
+  "Parque Oziel",
+  "Jardim Monte Cristo",
+  "Gleba B",
+  "Jardim Campo Belo",
+  "Jardim São Marcos",
+  "Jardim Florence",
+  "Jardim Capivari",
+  "Campo Grande",
+  "DIC",
+  "Jardim do Lago",
+  "San Martin",
+  "Outro bairro",
+]
 
 export default function EnviarMemePage() {
   const [apelido, setApelido] = useState("")
@@ -134,7 +147,7 @@ export default function EnviarMemePage() {
                     onChange={(e) => setBairro(e.target.value)}
                     className="w-full bg-grafite-2 border-2 border-grafite-3 rounded-xl px-3 py-3 text-creme focus:outline-none focus:border-laranja transition-colors text-base appearance-none"
                   >
-                    <option value="">—</option>
+                    <option value="" disabled>selecione teu bairro</option>
                     {bairros.map((b) => <option key={b} value={b}>{b}</option>)}
                   </select>
                 </div>
