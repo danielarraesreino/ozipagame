@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Logo from "@/components/Logo"
+import MenuHamburger from "@/components/MenuHamburger"
 import { dilemas as hardcoded } from "@/lib/dilemas"
 import { dilemas as gerados } from "@/lib/dilemas_gerados"
 import type { Dilema } from "@/lib/dilemas"
@@ -29,6 +30,17 @@ interface Dados {
     ja_participou: Record<string, number>
     onde_discute: Record<string, number>
     sabia_participar: Record<string, number>
+  }
+  avaliacao: {
+    total: number
+    genero: Record<string, number>
+    faixa_idade: Record<string, number>
+    raca: Record<string, number>
+    dificulta: Record<string, number>
+    confianca_falar: Record<string, number>
+    o_que_e_politica: Record<string, number>
+    vontade_participar: Record<string, number>
+    diminui_medo: Record<string, number>
   }
 }
 
@@ -106,9 +118,12 @@ export default function DadosPage() {
     <main className="bg-halftone bg-halftone-veil min-h-full">
       <div className="relative z-10 min-h-full px-5 py-10 max-w-2xl mx-auto">
         {/* Header */}
-        <div className="flex items-center gap-3 mb-2">
-          <Logo size={40} variant="cor" />
-          <h1 className="brand-lockup text-creme text-3xl">Dados abertos</h1>
+        <div className="flex items-start justify-between mb-2">
+          <div className="flex items-center gap-3">
+            <Logo size={40} variant="cor" />
+            <h1 className="brand-lockup text-creme text-3xl">Dados abertos</h1>
+          </div>
+          <MenuHamburger />
         </div>
         <p className="text-creme-soft text-sm leading-relaxed mb-4 max-w-[48ch]">
           O que a juventude do Parque Oziel respondeu no jogo — <strong>100% anônimo</strong> e
@@ -175,7 +190,7 @@ export default function DadosPage() {
                     const pc = Math.round((row.concordo / tot) * 100)
                     return (
                       <div key={row.dilema_id}>
-                        <p className="text-creme text-sm mb-1 line-clamp-2">"{meme(row.dilema_id)}"</p>
+                        <p className="text-creme text-sm mb-1 line-clamp-2">{`"${meme(row.dilema_id)}"`}</p>
                         <div className="flex h-5 rounded-full overflow-hidden border border-grafite-3">
                           <div className="bg-verde flex items-center justify-start pl-2" style={{ width: `${pc}%` }}>
                             {pc >= 18 && <span className="text-grafite text-[10px] font-bold">{pc}%</span>}
@@ -228,6 +243,34 @@ export default function DadosPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <Secao titulo="idade"><Barras data={d.pesquisa.faixa_idade} cor="var(--color-amarelo)" /></Secao>
                   <Secao titulo="estuda?"><Barras data={d.pesquisa.estuda} cor="var(--color-amarelo)" /></Secao>
+                </div>
+              </>
+            )}
+
+            {d.avaliacao && d.avaliacao.total > 0 && (
+              <>
+                <div className="bg-grafite-2 border-2 border-laranja/40 rounded-2xl p-4 zine-edge">
+                  <p className="brand-lockup text-laranja text-4xl leading-none">{d.avaliacao.total}</p>
+                  <p className="text-creme-soft text-xs mt-1">avaliações do encontro (pós)</p>
+                </div>
+                <Secao titulo="depois do encontro: confiança pra falar de política">
+                  <Barras data={d.avaliacao.confianca_falar} cor="var(--color-verde)" />
+                </Secao>
+                <Secao titulo="ficou com vontade de participar?">
+                  <Barras data={d.avaliacao.vontade_participar} cor="var(--color-verde)" />
+                </Secao>
+                <Secao titulo="o encontro diminui o medo de conversar sobre política?">
+                  <Barras data={d.avaliacao.diminui_medo} cor="var(--color-verde)" />
+                </Secao>
+                <Secao titulo="pra eles, o que é política">
+                  <Barras data={d.avaliacao.o_que_e_politica} />
+                </Secao>
+                <Secao titulo="o que dificulta participar">
+                  <Barras data={d.avaliacao.dificulta} cor="var(--color-vermelho)" />
+                </Secao>
+                <div className="grid grid-cols-2 gap-3">
+                  <Secao titulo="gênero"><Barras data={d.avaliacao.genero} cor="var(--color-amarelo)" /></Secao>
+                  <Secao titulo="cor / raça"><Barras data={d.avaliacao.raca} cor="var(--color-amarelo)" /></Secao>
                 </div>
               </>
             )}

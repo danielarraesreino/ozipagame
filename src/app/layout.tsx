@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { Archivo, Space_Mono } from "next/font/google"
 import "./globals.css"
+import PWARegister from "@/components/PWARegister"
 
 // Display + corpo: Archivo (variável, vai até 900 — usada no peso black do lockup)
 const archivo = Archivo({
@@ -27,6 +28,11 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   applicationName: "Vozes do Oziel",
+  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Oziel" },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/icons/apple-touch-icon.png",
+  },
   keywords: ["Parque Oziel", "Campinas", "cidadania", "participação popular", "desinformação", "serious game", "juventude"],
   openGraph: {
     type: "website",
@@ -54,7 +60,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`h-full ${archivo.variable} ${spaceMono.variable}`}>
-      <body className="h-full bg-grafite text-creme antialiased">{children}</body>
+      <body className="h-full bg-grafite text-creme antialiased">
+        <PWARegister />
+        {children}
+      </body>
     </html>
   )
 }

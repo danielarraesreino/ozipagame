@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { useRouter } from "next/navigation"
 import { dilemas as hardcoded } from "@/lib/dilemas"
 import { dilemas as gerados } from "@/lib/dilemas_gerados"
 import { loadPlayer, loadRespostas, saveRespostas, isPosOficinaUnlocked } from "@/lib/store"
@@ -12,8 +11,10 @@ import VideoScreen from "@/components/VideoScreen"
 import { fetchImportados, fetchAtivos } from "@/lib/cards"
 import { AnimatePresence, motion } from "framer-motion"
 import Logo from "@/components/Logo"
+import MenuHamburger from "@/components/MenuHamburger"
 import AudioBg from "@/components/AudioBg"
 import FormularioFinal from "@/components/FormularioFinal"
+import EntradaJogo from "@/components/EntradaJogo"
 
 type Phase = "swipe" | "consequence" | "video" | "end"
 
@@ -107,11 +108,14 @@ function EndScreen({
           animate={{ opacity: 1, y: 0 }}
         >
           <div>
-            <div className="flex items-center gap-2 mb-6">
-              <Logo size={32} variant="cor" />
-              <p className="brand-stamp text-[10px] text-laranja">
-                você chegou até aqui
-              </p>
+            <div className="flex items-start justify-between mb-6">
+              <div className="flex items-center gap-2">
+                <Logo size={32} variant="cor" />
+                <p className="brand-stamp text-[10px] text-laranja">
+                  você chegou até aqui
+                </p>
+              </div>
+              <MenuHamburger />
             </div>
             <h2 className="brand-lockup text-creme text-[clamp(2.5rem,12vw,3.5rem)] mb-3">
               {player.bairro}
@@ -216,7 +220,6 @@ function EndScreen({
 // ── Game ──────────────────────────────────────────────────────────────────────
 
 export default function GamePage() {
-  const router = useRouter()
   const [player, setPlayer] = useState<{ apelido: string; bairro: string } | null>(null)
   const [dilemas, setDilemas] = useState(() => buildDilemas())
   const [index, setIndex] = useState(0)
@@ -229,9 +232,8 @@ export default function GamePage() {
 
   useEffect(() => {
     const p = loadPlayer()
-    if (!p) router.replace("/")
-    else setPlayer(p)
-  }, [router])
+    if (p) setPlayer(p)
+  }, [])
 
   // Monta a lista final no runtime (sem rebuild): cards fixos + importados,
   // filtrando por fase (pós-oficina trava sem código) e por ocultar/mostrar do
@@ -299,7 +301,7 @@ export default function GamePage() {
     }
   }
 
-  if (!player) return null
+  if (!player) return <EntradaJogo onReady={setPlayer} />
 
   // Trilha de fundo montada uma única vez — toca contínua por todas as fases,
   // incluindo a tela final ("no jogo todo").
@@ -334,9 +336,12 @@ export default function GamePage() {
         <span className="text-sm text-creme-soft">
           oi, <strong className="text-creme">{player.apelido}</strong>
         </span>
-        <span className="brand-stamp text-[11px] text-creme-soft/70">
-          {index + 1}/{dilemas.length}
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="brand-stamp text-[11px] text-creme-soft/70">
+            {index + 1}/{dilemas.length}
+          </span>
+          <MenuHamburger />
+        </div>
       </div>
 
       <div className="w-full h-1.5 bg-grafite-2 rounded-full mb-6 overflow-hidden">

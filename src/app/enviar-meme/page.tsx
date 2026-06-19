@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { upload } from "@vercel/blob/client"
 import Logo from "@/components/Logo"
+import MenuHamburger from "@/components/MenuHamburger"
 import { BAIRROS } from "@/lib/bairros"
 
 export default function EnviarMemePage() {
@@ -48,11 +49,14 @@ export default function EnviarMemePage() {
   return (
     <main className="bg-halftone bg-halftone-veil min-h-full">
       <div className="relative z-10 min-h-full px-6 py-10 max-w-md mx-auto flex flex-col">
-        <div className="flex items-center gap-3 mb-2">
-          <Logo size={40} variant="cor" />
-          <h1 className="brand-lockup text-creme text-3xl leading-none">
-            Manda teu<br /><span className="text-laranja">meme</span>
-          </h1>
+        <div className="flex items-start justify-between mb-2">
+          <div className="flex items-center gap-3">
+            <Logo size={40} variant="cor" />
+            <h1 className="brand-lockup text-creme text-3xl leading-none">
+              Manda teu<br /><span className="text-laranja">meme</span>
+            </h1>
+          </div>
+          <MenuHamburger />
         </div>
 
         {enviado ? (

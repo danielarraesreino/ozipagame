@@ -40,17 +40,22 @@ function escala(rows: Row[], campo: string): { media: number | null; dist: Recor
 export async function GET() {
   try {
     const db = supa()
-    const [partidasRes, respostasRes, formsRes] = await Promise.all([
+    const [partidasRes, respostasRes, formsRes, avaliacoesRes] = await Promise.all([
       db.from("partidas").select("bairro").limit(100000),
       db.from("respostas").select("dilema_id,modulo,escolha,verificacao_status").limit(200000),
       db.from("formularios").select(
         "bairro,faixa_idade,estuda,sentimentos,afeta_vida,avontade_opinar,confia_eleitos,afasta,ja_participou,onde_discute,sabia_participar",
+      ).limit(100000),
+      // Avaliação pós-encontro: SÓ múltipla escolha (texto livre fica de fora do público)
+      db.from("avaliacoes").select(
+        "genero,faixa_idade,raca,dificulta,confianca_falar,o_que_e_politica,vontade_participar,diminui_medo",
       ).limit(100000),
     ])
 
     const partidas = partidasRes.data ?? []
     const respostas = respostasRes.data ?? []
     const forms = formsRes.data ?? []
+    const avals = avaliacoesRes.data ?? []
 
     const porDilema: Record<string, { dilema_id: string; modulo: string | null; concordo: number; discordo: number }> = {}
     for (const r of respostas) {
@@ -84,6 +89,17 @@ export async function GET() {
         ja_participou: tally(forms, "ja_participou"),
         onde_discute: tallyArr(forms, "onde_discute"),
         sabia_participar: tally(forms, "sabia_participar"),
+      },
+      avaliacao: {
+        total: avals.length,
+        genero: tally(avals, "genero"),
+        faixa_idade: tally(avals, "faixa_idade"),
+        raca: tally(avals, "raca"),
+        dificulta: tallyArr(avals, "dificulta"),
+        confianca_falar: tally(avals, "confianca_falar"),
+        o_que_e_politica: tallyArr(avals, "o_que_e_politica"),
+        vontade_participar: tally(avals, "vontade_participar"),
+        diminui_medo: tally(avals, "diminui_medo"),
       },
     })
   } catch {
