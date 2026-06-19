@@ -10,7 +10,7 @@ const MENU_LINKS = [
   { href: "/",            icon: "🏠", label: "Início"   },
   { href: "/#pesquisa",   icon: "📋", label: "Pesquisa" },
   { href: "/#jogo",       icon: "🎮", label: "Jogo"     },
-  { href: "/#equipe",     icon: "👥", label: "Equipe"   },
+  { href: "/equipe",      icon: "👥", label: "Equipe"   },
   { href: "/admin",       icon: "🔒", label: "Admin"    },
 ]
 
