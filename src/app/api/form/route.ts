@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   try {
     const b = await req.json()
     const db = supa()
-    const { error } = await db.from("formularios").insert({
+    const base = {
       bairro: s(b.bairro, 40),
       faixa_idade: s(b.faixa_idade, 20),
       estuda: s(b.estuda, 40),
@@ -26,7 +26,11 @@ export async function POST(req: NextRequest) {
       sabia_participar: s(b.sabia_participar, 60),
       texto_participar: s(b.texto_participar, 500),
       texto_duvida: s(b.texto_duvida, 500),
-    })
+    }
+    // tenta com momento; se a coluna ainda não existir (SQL não rodado), reinsere
+    // sem ela pra NÃO perder a resposta. Insert falho não grava nada → sem duplicar.
+    let { error } = await db.from("formularios").insert({ momento: s(b.momento, 20), ...base })
+    if (error) ({ error } = await db.from("formularios").insert(base))
     if (error) throw error
     return NextResponse.json({ ok: true })
   } catch {

@@ -26,9 +26,9 @@ export default function FormularioFinal({ bairro }: Props) {
         <p className="brand-lockup text-creme text-2xl leading-none mb-1">tua voz conta</p>
         <p className="text-creme-soft/70 text-xs font-mono">anônimo · ajuda a entender a juventude do bairro</p>
       </div>
-      <PesquisaForm modo="curta" bairro={bairro} />
+      <PesquisaForm modo="curta" bairro={bairro} momento="fim_jogo" />
       <p className="text-center text-creme-soft/50 text-[11px] font-mono mt-4">
-        quer responder a pesquisa completa? <a href="/pesquisa" className="underline text-laranja">abre aqui</a>
+        quer responder a pesquisa completa? <a href="/inicio" className="underline text-laranja">abre aqui</a>
       </p>
     </div>
   )

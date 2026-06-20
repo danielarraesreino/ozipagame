@@ -9,6 +9,7 @@ import { BAIRROS } from "@/lib/bairros"
 interface Props {
   modo: "curta" | "completa"
   bairro?: string
+  momento?: string   // "inicio" (baseline /inicio) | "fim_jogo" (tela final) — tag no dashboard
   onDone?: () => void
 }
 
@@ -76,7 +77,7 @@ function Campo({ label, children }: { label: string; children: React.ReactNode }
   )
 }
 
-export default function PesquisaForm({ modo, bairro: bairroProp, onDone }: Props) {
+export default function PesquisaForm({ modo, bairro: bairroProp, momento, onDone }: Props) {
   const completa = modo === "completa"
   const [bairro, setBairro] = useState(bairroProp || "")
   const [faixa, setFaixa] = useState("")
@@ -93,17 +94,20 @@ export default function PesquisaForm({ modo, bairro: bairroProp, onDone }: Props
   const [textoDuvida, setTextoDuvida] = useState("")
   const [enviando, setEnviando] = useState(false)
   const [enviado, setEnviado] = useState(false)
+  const [erro, setErro] = useState("")
 
   const toggle = (set: React.Dispatch<React.SetStateAction<string[]>>) => (v: string) =>
     set((arr) => (arr.includes(v) ? arr.filter((x) => x !== v) : [...arr, v]))
 
   async function enviar() {
+    setErro("")
     setEnviando(true)
     try {
-      await fetch("/api/form", {
+      const res = await fetch("/api/form", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          momento: momento || (modo === "completa" ? "completa" : "curta"),
           bairro: bairroProp || bairro,
           faixa_idade: faixa,
           estuda: completa ? estuda : undefined,
@@ -119,10 +123,11 @@ export default function PesquisaForm({ modo, bairro: bairroProp, onDone }: Props
           texto_duvida: completa ? textoDuvida.slice(0, 500) : undefined,
         }),
       })
+      if (!res.ok) throw new Error("falha no envio")
       setEnviado(true)
       onDone?.()
     } catch {
-      setEnviado(true)
+      setErro("não rolou enviar — confere a conexão e tenta de novo 🔁")
     }
     setEnviando(false)
   }
@@ -205,9 +210,11 @@ export default function PesquisaForm({ modo, bairro: bairroProp, onDone }: Props
         </Campo>
       )}
 
+      {erro && <p className="text-vermelho text-sm font-mono">{erro}</p>}
+
       <button onClick={enviar} disabled={enviando}
         className="zine-edge w-full py-3 bg-laranja text-grafite brand-lockup text-xl rounded-xl active:scale-95 active:shadow-none transition-all disabled:opacity-50">
-        {enviando ? "enviando…" : "enviar minha voz →"}
+        {enviando ? "enviando…" : erro ? "tentar de novo 🔁" : "enviar minha voz →"}
       </button>
     </div>
   )

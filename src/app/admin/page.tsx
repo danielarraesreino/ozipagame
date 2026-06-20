@@ -5,6 +5,7 @@ import { upload } from "@vercel/blob/client"
 import { dilemas as hardcoded } from "@/lib/dilemas"
 import { dilemas as gerados } from "@/lib/dilemas_gerados"
 import type { Dilema } from "@/lib/dilemas"
+import MenuHamburger from "@/components/MenuHamburger"
 
 const allDilemas: Dilema[] = [...hardcoded, ...gerados]
 
@@ -461,12 +462,15 @@ export default function AdminPage() {
           </p>
           <h1 className="text-2xl font-black text-creme">Painel da equipe</h1>
         </div>
-        <button
-          onClick={handleLogout}
-          className="text-xs text-creme-soft/70 font-mono hover:text-creme transition-colors"
-        >
-          sair →
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleLogout}
+            className="text-xs text-creme-soft/70 font-mono hover:text-creme transition-colors"
+          >
+            sair →
+          </button>
+          <MenuHamburger />
+        </div>
       </div>
 
       {/* Abas */}
@@ -497,7 +501,7 @@ export default function AdminPage() {
         <>
           <div className="flex items-center justify-between mb-4">
             <p className="text-creme-soft text-sm leading-relaxed">
-              Inscrições no encontro de 20 de julho.
+              Inscrições no encontro de 20 de junho.
             </p>
             <button onClick={carregarInscricoes} className="shrink-0 text-xs font-mono text-creme-soft/70 hover:text-creme transition-colors">↻</button>
           </div>
