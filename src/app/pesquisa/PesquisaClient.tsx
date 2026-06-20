@@ -30,7 +30,7 @@ export default function PesquisaClient() {
             <div className="bg-grafite-2 border border-grafite-3 rounded-2xl px-4 py-3 mb-6 space-y-1">
               <p className="brand-label text-[10px] text-laranja mb-1">data e local</p>
               <p className="text-creme text-base font-bold">Dia 20 de Junho — sábado</p>
-              <p className="text-creme text-sm">E.E Parque Oziel</p>
+              <p className="text-creme text-sm">E.M Parque Oziel</p>
               <div className="flex gap-4 mt-1 text-sm text-creme/70 font-mono">
                 <span>manhã: 9h–11h</span>
                 <span>tarde: 14h30–16h30</span>
@@ -64,7 +64,7 @@ export default function PesquisaClient() {
               <p className="text-creme text-xl font-bold">Dia 20 de Junho — Sábado</p>
               <p className="text-creme text-base">{turmaEscolhida}</p>
               <div className="border-t border-grafite-3 pt-3 mt-1">
-                <p className="text-creme/70 text-sm font-mono">E.E Parque Oziel</p>
+                <p className="text-creme/70 text-sm font-mono">E.M Parque Oziel</p>
               </div>
             </div>
 
