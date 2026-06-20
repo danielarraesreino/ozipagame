@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const equipe = [
   {
     nome: "Flávio",
-    papel: "Facilitadora",
+    papel: "Facilitador",
     desc: "Garante que o grupo siga a metodologia CriaLab e cumpra os prazos de cada etapa.",
   },
   {

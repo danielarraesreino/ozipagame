@@ -17,6 +17,7 @@ export default function EntradaJogo({ onReady }: Props) {
   const [codigo, setCodigo] = useState("")
   const [codigoStatus, setCodigoStatus] = useState<"idle" | "ok" | "err">("idle")
   const [mostrarCodigo, setMostrarCodigo] = useState(false)
+  const [erro, setErro] = useState("")
   const jaDesbloqueado = isPosOficinaUnlocked()
 
   async function validarCodigo(c: string) {
@@ -37,7 +38,11 @@ export default function EntradaJogo({ onReady }: Props) {
   }
 
   function handleStart() {
-    if (!apelido.trim() || !bairro) return
+    if (!apelido.trim() || !bairro) {
+      setErro(!apelido.trim() ? "escreve teu apelido 👆" : "escolhe teu bairro 👆")
+      return
+    }
+    setErro("")
     const p = { apelido: apelido.trim(), bairro }
     savePlayer(p)
     onReady(p)
@@ -145,10 +150,10 @@ export default function EntradaJogo({ onReady }: Props) {
         </div>
 
         <div className="mt-10">
+          {erro && <p className="text-vermelho text-sm font-mono mb-2 text-center">{erro}</p>}
           <button
             onClick={handleStart}
-            disabled={!apelido.trim() || !bairro}
-            className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-none active:scale-95 active:shadow-none transition-all"
+            className="zine-edge w-full py-4 bg-laranja text-grafite brand-lockup text-2xl rounded-xl active:scale-95 active:shadow-none transition-all"
           >
             Começar →
           </button>

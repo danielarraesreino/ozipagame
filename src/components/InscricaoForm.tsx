@@ -154,7 +154,7 @@ export default function InscricaoForm({ onDone }: Props) {
 
       <button
         onClick={enviar}
-        disabled={enviando || !valido}
+        disabled={enviando}
         className="zine-edge w-full py-3 bg-laranja text-grafite brand-lockup text-xl rounded-xl active:scale-95 active:shadow-none transition-all disabled:opacity-50"
       >
         {enviando ? "inscrevendo…" : "confirmar inscrição →"}
