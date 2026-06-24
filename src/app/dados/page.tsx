@@ -44,38 +44,81 @@ interface Dados {
   }
 }
 
-interface Escala { media: number | null; dist: Record<string, number> }
+interface Escala { media: number | null; dist: Record<string, number>; nao_respondeu?: number }
+
+const CINZA = "var(--color-grafite-3)"
 
 function Barras({ data, cor = "var(--color-laranja)" }: { data: Record<string, number>; cor?: string }) {
-  const entries = Object.entries(data).sort((a, b) => b[1] - a[1])
+  // "não respondeu" sempre por último e em cinza — é dado, mas não é uma resposta.
+  const entries = Object.entries(data).sort((a, b) => {
+    if (a[0] === "não respondeu") return 1
+    if (b[0] === "não respondeu") return -1
+    return b[1] - a[1]
+  })
   const max = Math.max(1, ...entries.map(([, n]) => n))
   if (!entries.length) return <p className="text-creme-soft/40 text-xs font-mono">sem dados ainda</p>
   return (
     <div className="space-y-2">
-      {entries.map(([k, n]) => (
-        <div key={k}>
-          <div className="flex justify-between text-xs mb-1">
-            <span className="text-creme-soft">{k}</span>
-            <span className="text-creme font-mono">{n}</span>
+      {entries.map(([k, n]) => {
+        const naoResp = k === "não respondeu"
+        return (
+          <div key={k}>
+            <div className="flex justify-between text-xs mb-1">
+              <span className={naoResp ? "text-creme-soft/40 italic" : "text-creme-soft"}>{k}</span>
+              <span className={naoResp ? "text-creme-soft/40 font-mono" : "text-creme font-mono"}>{n}</span>
+            </div>
+            <div className="h-2 bg-grafite-2 rounded-full overflow-hidden">
+              <div className="h-full rounded-full" style={{ width: `${(n / max) * 100}%`, background: naoResp ? CINZA : cor }} />
+            </div>
           </div>
-          <div className="h-2 bg-grafite-2 rounded-full overflow-hidden">
-            <div className="h-full rounded-full" style={{ width: `${(n / max) * 100}%`, background: cor }} />
-          </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
 
 function EscalaView({ e }: { e: Escala }) {
-  if (e.media == null) return <p className="text-creme-soft/40 text-xs font-mono">sem dados ainda</p>
+  if (e.media == null && !e.nao_respondeu) return <p className="text-creme-soft/40 text-xs font-mono">sem dados ainda</p>
   return (
     <>
-      <p className="brand-lockup text-creme text-3xl mb-3">
-        {e.media}<span className="text-creme-soft/50 text-lg">/5</span>
-      </p>
+      {e.media != null && (
+        <p className="brand-lockup text-creme text-3xl mb-3">
+          {e.media}<span className="text-creme-soft/50 text-lg">/5</span>
+        </p>
+      )}
       <Barras data={e.dist} />
+      {!!e.nao_respondeu && (
+        <p className="text-creme-soft/40 text-[11px] font-mono italic mt-2">não respondeu: {e.nao_respondeu}</p>
+      )}
     </>
+  )
+}
+
+// Par de comparação antes×depois. Lado a lado, rótulos explícitos de instrumento.
+function ComparaPar({ titulo, antesLabel, antes, depoisLabel, depois }: {
+  titulo: string; antesLabel: string; antes: React.ReactNode; depoisLabel: string; depois: React.ReactNode
+}) {
+  return (
+    <div className="border-t border-grafite-3 pt-4">
+      <p className="text-creme text-sm font-bold mb-3">{titulo}</p>
+      <div className="grid sm:grid-cols-2 gap-3">
+        <div className="bg-grafite border border-grafite-3 rounded-xl p-3">
+          <p className="brand-label text-[9px] text-creme-soft/50 mb-2">{antesLabel}</p>
+          {antes}
+        </div>
+        <div className="bg-grafite border border-verde/30 rounded-xl p-3">
+          <p className="brand-label text-[9px] text-verde/70 mb-2">{depoisLabel}</p>
+          {depois}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function GrandeNum({ n, de }: { n: number; de: number }) {
+  const pc = de ? Math.round((n / de) * 100) : 0
+  return (
+    <p className="brand-lockup text-creme text-3xl">{pc}%<span className="text-creme-soft/50 text-base"> ({n}/{de})</span></p>
   )
 }
 
@@ -273,6 +316,43 @@ export default function DadosPage() {
                   <Secao titulo="cor / raça"><Barras data={d.avaliacao.raca} cor="var(--color-amarelo)" /></Secao>
                 </div>
               </>
+            )}
+
+            {d.pesquisa.total > 0 && d.avaliacao && d.avaliacao.total > 0 && (
+              <section className="grain relative bg-grafite-2 border-2 border-laranja/40 rounded-2xl p-5 space-y-5">
+                <div>
+                  <p className="brand-label text-[10px] text-laranja mb-1">Antes × Depois do encontro</p>
+                  <p className="text-creme-soft/60 text-[11px] leading-relaxed">
+                    Comparação de <strong>grupo</strong>, não de pessoa: a pesquisa é anônima, então
+                    medimos a turma antes e a turma depois — não dá pra rastrear o mesmo jovem.
+                    Instrumentos diferentes, construtos ligados.
+                  </p>
+                </div>
+
+                <ComparaPar
+                  titulo="falar o que pensa sobre política"
+                  antesLabel="antes · à vontade pra opinar (1–5)"
+                  antes={<EscalaView e={d.pesquisa.avontade_opinar} />}
+                  depoisLabel="depois · confiança pra falar"
+                  depois={<Barras data={d.avaliacao.confianca_falar} cor="var(--color-verde)" />}
+                />
+
+                <ComparaPar
+                  titulo="medo de falar"
+                  antesLabel="antes · sentiam “medo de falar errado”"
+                  antes={<GrandeNum n={d.pesquisa.sentimentos["medo de falar errado"] ?? 0} de={d.pesquisa.total} />}
+                  depoisLabel="depois · o encontro diminuiu o medo?"
+                  depois={<Barras data={d.avaliacao.diminui_medo} cor="var(--color-verde)" />}
+                />
+
+                <ComparaPar
+                  titulo="o que trava a participação"
+                  antesLabel="antes · o que afasta"
+                  antes={<Barras data={d.pesquisa.afasta} cor="var(--color-vermelho)" />}
+                  depoisLabel="depois · o que dificulta o acesso"
+                  depois={<Barras data={d.avaliacao.dificulta} cor="var(--color-vermelho)" />}
+                />
+              </section>
             )}
 
             <p className="text-creme-soft/40 text-[11px] font-mono text-center pt-2 pb-6 leading-relaxed">

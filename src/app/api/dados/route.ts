@@ -8,34 +8,54 @@ export const dynamic = "force-dynamic"
 
 type Row = Record<string, unknown>
 
-function tally(rows: Row[], campo: string): Record<string, number> {
+// Bucket explícito de não-resposta. Princípio: branco é DADO, não buraco. O
+// denominador honesto é "quem foi PERGUNTADO", por isso `aplicavel`: na pesquisa
+// curta (fim de jogo) os campos só-completa não foram perguntados → não contam
+// como "não respondeu".
+const NAO_RESP = "não respondeu"
+
+function tally(rows: Row[], campo: string, aplicavel?: (r: Row) => boolean): Record<string, number> {
   const out: Record<string, number> = {}
+  let sem = 0
   for (const r of rows) {
+    if (aplicavel && !aplicavel(r)) continue
     const v = r[campo]
     if (typeof v === "string" && v) out[v] = (out[v] ?? 0) + 1
+    else sem++
   }
+  if (sem) out[NAO_RESP] = sem
   return out
 }
 
-// arrays jsonb (marca-várias): conta cada item
-function tallyArr(rows: Row[], campo: string): Record<string, number> {
+// arrays jsonb (marca-várias): conta cada item; linha sem nenhum item = não respondeu
+function tallyArr(rows: Row[], campo: string, aplicavel?: (r: Row) => boolean): Record<string, number> {
   const out: Record<string, number> = {}
+  let sem = 0
   for (const r of rows) {
+    if (aplicavel && !aplicavel(r)) continue
     const v = r[campo]
-    if (Array.isArray(v)) for (const item of v) if (typeof item === "string") out[item] = (out[item] ?? 0) + 1
+    if (Array.isArray(v) && v.length) for (const item of v) { if (typeof item === "string") out[item] = (out[item] ?? 0) + 1 }
+    else sem++
   }
+  if (sem) out[NAO_RESP] = sem
   return out
 }
 
-function escala(rows: Row[], campo: string): { media: number | null; dist: Record<string, number> } {
+function escala(rows: Row[], campo: string, aplicavel?: (r: Row) => boolean): { media: number | null; dist: Record<string, number>; nao_respondeu: number } {
   const dist: Record<string, number> = {}
-  let soma = 0, n = 0
+  let soma = 0, n = 0, sem = 0
   for (const r of rows) {
+    if (aplicavel && !aplicavel(r)) continue
     const v = r[campo]
     if (typeof v === "number") { dist[String(v)] = (dist[String(v)] ?? 0) + 1; soma += v; n++ }
+    else sem++
   }
-  return { media: n ? +(soma / n).toFixed(2) : null, dist }
+  return { media: n ? +(soma / n).toFixed(2) : null, dist, nao_respondeu: sem }
 }
+
+// fichas curtas (fim de jogo) não perguntam os campos só-completa → não entram no
+// denominador de não-resposta desses campos. Momento null = formulário completo.
+const fezCompleta = (r: Row) => r.momento !== "fim_jogo" && r.momento !== "curta"
 
 export async function GET() {
   try {
@@ -44,7 +64,7 @@ export async function GET() {
       db.from("partidas").select("bairro").limit(100000),
       db.from("respostas").select("dilema_id,modulo,escolha,verificacao_status").limit(200000),
       db.from("formularios").select(
-        "bairro,faixa_idade,estuda,sentimentos,afeta_vida,avontade_opinar,confia_eleitos,afasta,ja_participou,onde_discute,sabia_participar",
+        "momento,bairro,faixa_idade,estuda,sentimentos,afeta_vida,avontade_opinar,confia_eleitos,afasta,ja_participou,onde_discute,sabia_participar",
       ).limit(100000),
       // Avaliação pós-encontro: SÓ múltipla escolha (texto livre fica de fora do público)
       db.from("avaliacoes").select(
@@ -79,16 +99,17 @@ export async function GET() {
       },
       pesquisa: {
         total: forms.length,
+        completas: forms.filter(fezCompleta).length,
         faixa_idade: tally(forms, "faixa_idade"),
-        estuda: tally(forms, "estuda"),
+        estuda: tally(forms, "estuda", fezCompleta),
         sentimentos: tallyArr(forms, "sentimentos"),
         afeta_vida: escala(forms, "afeta_vida"),
-        avontade_opinar: escala(forms, "avontade_opinar"),
-        confia_eleitos: escala(forms, "confia_eleitos"),
-        afasta: tallyArr(forms, "afasta"),
+        avontade_opinar: escala(forms, "avontade_opinar", fezCompleta),
+        confia_eleitos: escala(forms, "confia_eleitos", fezCompleta),
+        afasta: tallyArr(forms, "afasta", fezCompleta),
         ja_participou: tally(forms, "ja_participou"),
-        onde_discute: tallyArr(forms, "onde_discute"),
-        sabia_participar: tally(forms, "sabia_participar"),
+        onde_discute: tallyArr(forms, "onde_discute", fezCompleta),
+        sabia_participar: tally(forms, "sabia_participar", fezCompleta),
       },
       avaliacao: {
         total: avals.length,

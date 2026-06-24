@@ -6,13 +6,16 @@ import { dilemas as hardcoded } from "@/lib/dilemas"
 import { dilemas as gerados } from "@/lib/dilemas_gerados"
 import type { Dilema } from "@/lib/dilemas"
 import MenuHamburger from "@/components/MenuHamburger"
+import CadastroForm from "@/components/CadastroForm"
+import { PESQUISA_INICIAL, MOMENTOS, type CampoPergunta } from "@/lib/pesquisa"
+import { AVALIACAO } from "@/lib/avaliacao"
 
 const allDilemas: Dilema[] = [...hardcoded, ...gerados]
 
 type VideoMap = Record<string, string>
 type SaveState = "idle" | "saving" | "ok" | "err"
 type UploadState = "idle" | "uploading" | "ok" | "err"
-type Aba = "inscricoes" | "videos" | "cards" | "trilha" | "conteudo" | "forms" | "memes" | "codigos"
+type Aba = "inscricoes" | "cadastro" | "videos" | "cards" | "trilha" | "conteudo" | "forms" | "memes" | "codigos"
 
 interface InscricaoRow {
   id: number
@@ -68,6 +71,7 @@ export default function AdminPage() {
   const [uploadStates, setUploadStates] = useState<Record<string, UploadState>>({})
   const [lastSaved, setLastSaved] = useState<string | null>(null)
   const [aba, setAba] = useState<Aba>("videos")
+  const [cadTipo, setCadTipo] = useState<"pesquisa" | "avaliacao">("pesquisa")
   const [codes, setCodes] = useState<CodesMap>({})
   const [novoCodigo, setNovoCodigo] = useState("")
   const [novoLabel, setNovoLabel] = useState("")
@@ -475,7 +479,7 @@ export default function AdminPage() {
 
       {/* Abas */}
       <div className="flex flex-wrap gap-2 mb-6">
-        {(["inscricoes", "videos", "cards", "trilha", "conteudo", "forms", "memes", "codigos"] as Aba[]).map((a) => (
+        {(["inscricoes", "cadastro", "videos", "cards", "trilha", "conteudo", "forms", "memes", "codigos"] as Aba[]).map((a) => (
           <button
             key={a}
             onClick={() => { setAba(a); if (a === "forms") carregarForms(); if (a === "memes") carregarMemes(); if (a === "inscricoes") carregarInscricoes() }}
@@ -485,7 +489,7 @@ export default function AdminPage() {
                 : "bg-grafite-2 border border-grafite-3 text-creme-soft hover:text-creme"
             }`}
           >
-            {a === "inscricoes" ? "📝 Inscrições" : a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : a === "conteudo" ? "📺 Conteúdo" : a === "forms" ? "📋 Pesquisa" : a === "memes" ? "🖼️ Memes" : "🔑 Códigos"}
+            {a === "inscricoes" ? "📝 Inscrições" : a === "cadastro" ? "✍️ Cadastrar" : a === "videos" ? "🎬 Vídeos" : a === "cards" ? "🃏 Cards" : a === "trilha" ? "🎵 Trilha" : a === "conteudo" ? "📺 Conteúdo" : a === "forms" ? "📋 Pesquisa" : a === "memes" ? "🖼️ Memes" : "🔑 Códigos"}
           </button>
         ))}
       </div>
@@ -494,6 +498,45 @@ export default function AdminPage() {
         <div className="mb-6 bg-verde/10 border border-verde/30 rounded-xl px-4 py-3 text-verde text-sm font-mono">
           ✓ Salvo — publicando no jogo em ~30s
         </div>
+      )}
+
+      {/* ── Aba Cadastrar (transcrição das fichas de papel) ─────────────── */}
+      {aba === "cadastro" && (
+        <>
+          <p className="text-creme-soft text-sm mb-4 leading-relaxed">
+            Transcreva as fichas de papel do encontro, <strong>uma por vez</strong>. Quando
+            a pessoa deixou uma pergunta em branco no papel, toque <strong>&ldquo;não respondeu&rdquo;</strong> —
+            isso é dado, não erro. Tudo anônimo.
+          </p>
+
+          <div className="flex gap-2 mb-6">
+            <button onClick={() => setCadTipo("pesquisa")}
+              className={`flex-1 py-2 rounded-xl text-sm font-mono transition-colors ${
+                cadTipo === "pesquisa" ? "bg-laranja text-grafite" : "bg-grafite-2 border border-grafite-3 text-creme-soft"
+              }`}>pesquisa inicial</button>
+            <button onClick={() => setCadTipo("avaliacao")}
+              className={`flex-1 py-2 rounded-xl text-sm font-mono transition-colors ${
+                cadTipo === "avaliacao" ? "bg-laranja text-grafite" : "bg-grafite-2 border border-grafite-3 text-creme-soft"
+              }`}>avaliação (pós)</button>
+          </div>
+
+          {cadTipo === "pesquisa" ? (
+            <CadastroForm
+              key="pesquisa"
+              titulo="pesquisa inicial · baseline"
+              perguntas={PESQUISA_INICIAL}
+              momentos={MOMENTOS}
+              endpoint="/api/admin/formularios"
+            />
+          ) : (
+            <CadastroForm
+              key="avaliacao"
+              titulo="avaliação pós-encontro"
+              perguntas={AVALIACAO as CampoPergunta[]}
+              endpoint="/api/admin/avaliacao"
+            />
+          )}
+        </>
       )}
 
       {/* ── Aba Inscrições ──────────────────────────────────────────────── */}
