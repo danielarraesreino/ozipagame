@@ -14,6 +14,7 @@ const ACOES = [
   { href: "/inicio",      icon: "📝", label: "Pesquisa",   sub: "tua voz no começo",       cor: "var(--color-amarelo)"  },
   { href: "/avaliacao",   icon: "⭐", label: "Avaliação",  sub: "como foi o encontro",     cor: "var(--color-laranja)"  },
   { href: "/dados",       icon: "📊", label: "Dados",      sub: "o que o Oziel respondeu", cor: "var(--color-verde)"    },
+  { href: "/apresentacao", icon: "📈", label: "Apresentação", sub: "o que os dados revelam", cor: "var(--color-laranja)" },
   { href: "/enviar-meme", icon: "📨", label: "Teu meme",   sub: "manda o teu",             cor: "var(--color-vermelho)" },
   { href: "/equipe",      icon: "👥", label: "Equipe",     sub: "quem tá por trás",        cor: "var(--color-amarelo)"  },
 ]
