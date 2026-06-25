@@ -12,6 +12,7 @@ export const MENU_LINKS = [
   { href: "/inicio",      icon: "📝", label: "Pesquisa de entrada" },
   { href: "/avaliacao",   icon: "⭐", label: "Avaliação"           },
   { href: "/dados",       icon: "📊", label: "Dados abertos"       },
+  { href: "/apresentacao", icon: "📈", label: "Apresentação"        },
   { href: "/enviar-meme", icon: "📨", label: "Manda teu meme"      },
   { href: "/equipe",      icon: "👥", label: "Equipe"              },
   { href: "/admin",       icon: "🔒", label: "Admin"               },
