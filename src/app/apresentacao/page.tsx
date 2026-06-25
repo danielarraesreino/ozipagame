@@ -117,7 +117,7 @@ export default function Apresentacao() {
         <div className="relative z-10 max-w-3xl mx-auto w-full">
           <Reveal><Stamp>Dossiê de dados · Grupo Diálogos / CriaLab</Stamp></Reveal>
           <Reveal delay={0.1}>
-            <h1 className="brand-lockup text-creme mt-6 text-[16vw] md:text-[7rem] leading-[0.82]">
+            <h1 className="brand-lockup text-creme mt-6 text-[clamp(2rem,11.5vw,7rem)] leading-[0.82]">
               O que a<br /><span className="text-laranja">quebrada</span><br />respondeu
             </h1>
           </Reveal>
@@ -128,7 +128,7 @@ export default function Apresentacao() {
             </p>
           </Reveal>
           <Reveal delay={0.4} className="mt-8 flex flex-wrap gap-3 items-center">
-            <span className="brand-lockup text-laranja text-6xl md:text-7xl">{N}</span>
+            <span className="brand-lockup text-laranja text-4xl sm:text-6xl md:text-7xl">{N}</span>
             <div className="font-mono text-xs text-creme-soft/70 leading-tight">
               fichas reais validadas<br />
               <span className="text-creme-soft/40">testes removidos · brancos = sem resposta</span>
@@ -145,7 +145,7 @@ export default function Apresentacao() {
       <Secao>
         <Reveal><Stamp cor={COR.amarelo}>01 · quem respondeu</Stamp></Reveal>
         <Reveal delay={0.1}>
-          <h2 className="brand-lockup text-4xl md:text-6xl mt-5 mb-3">A turma</h2>
+          <h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-3">A turma</h2>
           <p className="text-creme-soft text-lg leading-relaxed max-w-[46ch] mb-10">
             Jovem e de escola pública. <strong className="text-creme">53%</strong> têm 12–13 anos.
             <strong className="text-creme"> 70%</strong> estudam em escola pública. É da quebrada que vem a voz.
@@ -180,18 +180,18 @@ export default function Apresentacao() {
         <Secao>
           <Reveal><Stamp>02 · o achado que vira a mesa</Stamp></Reveal>
           <Reveal delay={0.1}>
-            <h2 className="brand-lockup text-4xl md:text-6xl mt-5 mb-8 leading-[0.9]">
+            <h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-8 leading-[0.9]">
               Cinismo <span className="text-vermelho">não</span><br />mata a voz
             </h2>
           </Reveal>
           <div className="grid grid-cols-2 gap-4 md:gap-8">
-            <Reveal className="zine-edge bg-grafite border-2 border-grafite-3 rounded-2xl p-6 text-center">
-              <p className="brand-lockup text-vermelho text-6xl md:text-7xl">−0,03</p>
+            <Reveal className="zine-edge bg-grafite border-2 border-grafite-3 rounded-2xl p-4 md:p-6 text-center">
+              <p className="brand-lockup text-vermelho text-4xl sm:text-6xl md:text-7xl">−0,03</p>
               <p className="text-creme-soft text-xs md:text-sm mt-3">confiar em político <br />× vontade de opinar</p>
               <p className="text-creme/60 text-[11px] mt-2 font-mono">≈ zero</p>
             </Reveal>
-            <Reveal delay={0.15} className="zine-edge bg-grafite border-2 border-laranja/40 rounded-2xl p-6 text-center">
-              <p className="brand-lockup text-laranja text-6xl md:text-7xl">+0,52</p>
+            <Reveal delay={0.15} className="zine-edge bg-grafite border-2 border-laranja/40 rounded-2xl p-4 md:p-6 text-center">
+              <p className="brand-lockup text-laranja text-4xl sm:text-6xl md:text-7xl">+0,52</p>
               <p className="text-creme-soft text-xs md:text-sm mt-3">sentir que afeta a vida<br />× vontade de opinar</p>
               <p className="text-laranja/80 text-[11px] mt-2 font-mono">a alavanca</p>
             </Reveal>
@@ -211,7 +211,7 @@ export default function Apresentacao() {
       <Secao>
         <Reveal><Stamp cor={COR.verde}>03 · a alavanca</Stamp></Reveal>
         <Reveal delay={0.1}>
-          <h2 className="brand-lockup text-4xl md:text-6xl mt-5 mb-4">A porta é o concreto</h2>
+          <h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-4">A porta é o concreto</h2>
           <p className="text-creme-soft text-lg leading-relaxed max-w-[46ch] mb-8">
             O que abre a fala não é ideologia — é sentir que política mexe com a vida.
             Perguntados o que os faria participar, responderam <strong className="text-creme">serviço e atividade</strong>, não partido:
@@ -238,15 +238,15 @@ export default function Apresentacao() {
           <div className="relative z-10">
             <Reveal><Stamp cor={COR.amarelo}>04 · o gargalo</Stamp></Reveal>
             <Reveal delay={0.1}>
-              <h2 className="brand-lockup text-4xl md:text-6xl mt-5 mb-8">O gargalo é a porta,<br />não a vontade</h2>
+              <h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-8">O gargalo é a porta,<br />não a vontade</h2>
             </Reveal>
             <div className="grid grid-cols-2 gap-4 md:gap-8 mb-10">
               <Reveal className="text-center">
-                <p className="brand-lockup text-amarelo text-7xl md:text-8xl">47%</p>
+                <p className="brand-lockup text-amarelo text-5xl md:text-8xl">47%</p>
                 <p className="text-creme-soft text-sm mt-2">não sabiam que dá<br />pra participar</p>
               </Reveal>
               <Reveal delay={0.15} className="text-center">
-                <p className="brand-lockup text-laranja text-7xl md:text-8xl">63%</p>
+                <p className="brand-lockup text-laranja text-5xl md:text-8xl">63%</p>
                 <p className="text-creme-soft text-sm mt-2">nunca participaram<br />de nada no bairro</p>
               </Reveal>
             </div>
@@ -281,7 +281,7 @@ export default function Apresentacao() {
       <Secao>
         <Reveal><Stamp>05 · o cohort-alavanca</Stamp></Reveal>
         <Reveal delay={0.1}>
-          <h2 className="brand-lockup text-4xl md:text-6xl mt-5 mb-4">16–17: confia menos,<br />fala mais</h2>
+          <h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-4">16–17: confia menos,<br />fala mais</h2>
           <p className="text-creme-soft text-lg leading-relaxed max-w-[46ch] mb-8">
             Desconfiados e vocais. É onde a energia pra canalizar mora — e onde a oficina rende mais.
           </p>
@@ -309,7 +309,7 @@ export default function Apresentacao() {
         <Secao>
           <Reveal><Stamp cor={COR.vermelho}>06 · o mapa</Stamp></Reveal>
           <Reveal delay={0.1}>
-            <h2 className="brand-lockup text-4xl md:text-6xl mt-5 mb-4">O desengajamento<br />tem CEP</h2>
+            <h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-4">O desengajamento<br />tem CEP</h2>
             <p className="text-creme-soft text-lg leading-relaxed max-w-[46ch] mb-8">
               Quanto menos a turma sente que política afeta a vida, menos participa. E isso varia por bairro.
             </p>
@@ -343,14 +343,14 @@ export default function Apresentacao() {
       <Secao>
         <Reveal><Stamp cor={COR.verde}>07 · o que dá pra mudar</Stamp></Reveal>
         <Reveal delay={0.1}>
-          <h2 className="brand-lockup text-4xl md:text-6xl mt-5 mb-10">Silêncio é treinável</h2>
+          <h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-10">Silêncio é treinável</h2>
         </Reveal>
         <div className="grid md:grid-cols-2 gap-6 mb-14">
-          <Reveal className="zine-edge bg-grafite-2 border-2 border-grafite-3 rounded-2xl p-6 text-center">
+          <Reveal className="zine-edge bg-grafite-2 border-2 border-grafite-3 rounded-2xl p-4 md:p-6 text-center">
             <p className="brand-lockup text-creme-soft text-5xl">2,11</p>
             <p className="text-creme-soft text-sm mt-2">à vontade de quem<br /><strong className="text-creme">&ldquo;não discuto&rdquo;</strong></p>
           </Reveal>
-          <Reveal delay={0.15} className="zine-edge bg-grafite-2 border-2 border-verde/40 rounded-2xl p-6 text-center">
+          <Reveal delay={0.15} className="zine-edge bg-grafite-2 border-2 border-verde/40 rounded-2xl p-4 md:p-6 text-center">
             <p className="brand-lockup text-verde text-5xl">2,95</p>
             <p className="text-creme-soft text-sm mt-2">à vontade de quem<br /><strong className="text-creme">discute em algum lugar</strong></p>
           </Reveal>
@@ -373,7 +373,7 @@ export default function Apresentacao() {
       <div className="bg-grafite-2 border-y-2 border-grafite-3">
         <Secao>
           <Reveal><Stamp>08 · o resumo numérico</Stamp></Reveal>
-          <Reveal delay={0.1}><h2 className="brand-lockup text-4xl md:text-6xl mt-5 mb-10">Três números<br />que contam tudo</h2></Reveal>
+          <Reveal delay={0.1}><h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-10">Três números<br />que contam tudo</h2></Reveal>
           <div className="space-y-4">
             {[
               { par: "afeta a vida × vontade de opinar", r: "+0,52", cor: COR.laranja, txt: "relevância destrava a voz" },
@@ -398,7 +398,7 @@ export default function Apresentacao() {
       {/* ░░ ANTES × DEPOIS (pendente) ░░ */}
       <Secao>
         <Reveal><Stamp cor={COR.amarelo}>09 · o que vem aí</Stamp></Reveal>
-        <Reveal delay={0.1}><h2 className="brand-lockup text-4xl md:text-6xl mt-5 mb-4">Antes × Depois</h2></Reveal>
+        <Reveal delay={0.1}><h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-4">Antes × Depois</h2></Reveal>
         <Reveal delay={0.15}>
           <p className="text-creme-soft text-lg leading-relaxed max-w-[48ch] mb-8">
             Este é o <strong className="text-creme">antes</strong>. Quando a avaliação pós-encontro entrar,
