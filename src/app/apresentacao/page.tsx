@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useSpring } from "framer-motion"
 import Link from "next/link"
+import MenuHamburger from "@/components/MenuHamburger"
 
 /* ───────────────────────────────────────────────────────────────────────────
    APRESENTAÇÃO — Dossiê de dados "Vozes do Oziel"
@@ -109,8 +110,10 @@ export default function Apresentacao() {
       {/* barra de progresso */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 z-50 origin-left" style={{ scaleX: barra, background: COR.laranja }} />
 
-      {/* link discreto */}
-      <Link href="/" className="fixed top-4 right-5 z-50 brand-stamp text-[10px] text-creme-soft/60 hover:text-laranja transition-colors">← início</Link>
+      {/* navbar fixo (menu global) */}
+      <div className="fixed top-4 right-4 z-50">
+        <MenuHamburger />
+      </div>
 
       {/* ░░ CAPA ░░ */}
       <section className="bg-halftone bg-halftone-veil min-h-screen flex flex-col justify-center px-6">
