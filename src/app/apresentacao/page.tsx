@@ -395,30 +395,32 @@ export default function Apresentacao() {
         </Secao>
       </div>
 
-      {/* ░░ ANTES × DEPOIS (pendente) ░░ */}
+      {/* ░░ ANTES × DEPOIS — avaliação pós-encontro entrou (N=13) ░░ */}
       <Secao>
-        <Reveal><Stamp cor={COR.amarelo}>09 · o que vem aí</Stamp></Reveal>
+        <Reveal><Stamp cor={COR.verde}>09 · a prova de impacto</Stamp></Reveal>
         <Reveal delay={0.1}><h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-4">Antes × Depois</h2></Reveal>
         <Reveal delay={0.15}>
           <p className="text-creme-soft text-lg leading-relaxed max-w-[48ch] mb-8">
-            Este é o <strong className="text-creme">antes</strong>. Quando a avaliação pós-encontro entrar,
-            medimos o delta de cada alavanca — relevância subiu? o info-gap caiu? o medo diminuiu? —
-            e a prova de impacto aparece sozinha.
+            A avaliação pós-encontro entrou (<strong className="text-creme">N=13</strong>). Cada jovem
+            reportou o próprio salto — saiu com mais vontade, menos medo, mais confiança pra falar?
+            O delta apareceu <strong className="text-creme">sozinho</strong>.
           </p>
         </Reveal>
-        <div className="grid grid-cols-2 gap-4">
-          {[["afeta a vida", "2,89", "?"], ["à vontade pra opinar", "2,68", "?"], ["não sabia que dava", "47%", "?"], ["nunca participou", "63%", "?"]].map(([l, antes, depois], i) => (
-            <Reveal key={l} delay={i * 0.08} className="bg-grafite-2 border-2 border-grafite-3 rounded-xl p-4">
-              <p className="brand-label text-[9px] text-creme-soft/50 mb-2">{l}</p>
-              <div className="flex items-end gap-2">
-                <span className="brand-lockup text-creme text-3xl">{antes}</span>
-                <span className="text-creme-soft/40 text-xl">→</span>
-                <span className="brand-lockup text-amarelo/40 text-3xl">{depois}</span>
-              </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            { l: "mais vontade de participar", pct: "77%", n: "10 de 13", antes: "0 saíram com menos" },
+            { l: "o medo de falar diminuiu", pct: "69%", n: "9 de 13", antes: "antes travava 5 em 30" },
+            { l: "mais confiança pra falar", pct: "54%", n: "7 de 13", antes: "só 1 saiu com menos" },
+          ].map((c, i) => (
+            <Reveal key={c.l} delay={i * 0.08} className="bg-grafite-2 border-2 border-grafite-3 rounded-xl p-5">
+              <p className="brand-label text-[9px] text-creme-soft/50 mb-3">{c.l}</p>
+              <p className="brand-lockup text-5xl leading-none" style={{ color: COR.verde }}>{c.pct}</p>
+              <p className="font-mono text-xs text-creme-soft/70 mt-2">{c.n}</p>
+              <p className="font-mono text-[10px] text-creme-soft/40 mt-1">{c.antes}</p>
             </Reveal>
           ))}
         </div>
-        <Reveal delay={0.2}><p className="text-creme-soft/40 text-[11px] font-mono mt-5">comparação de grupo (cross-section anônimo), nunca de pessoa.</p></Reveal>
+        <Reveal delay={0.2}><p className="text-creme-soft/40 text-[11px] font-mono mt-5">auto-relato pós-encontro · N=13 (2 fichas descartadas: 1 duplicata, 1 inválida) · comparação de grupo, nunca de pessoa · indicativo, não conclusivo.</p></Reveal>
       </Secao>
 
       {/* ░░ CTA — escolas ░░ */}
