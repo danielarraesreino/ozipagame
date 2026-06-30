@@ -4,6 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion"
 import Link from "next/link"
 import MenuHamburger from "@/components/MenuHamburger"
+import DownloadGate from "@/components/DownloadGate"
 import { COHORTS, OZIEL, RUI, AVALIACAO, VOZES, TOTAIS, type Cohort } from "@/lib/apresentacao_dados"
 
 /* ───────────────────────────────────────────────────────────────────────────
@@ -591,6 +592,7 @@ export default function Apresentacao() {
           <p className="brand-stamp text-[10px] text-creme-soft/40 mt-16 leading-relaxed">
             Vozes do Oziel · Grupo Diálogos / CriaLab · {TOTAIS.fichas} fichas · {TOTAIS.encontros} encontros · dados abertos CC BY-SA 4.0
           </p>
+          <DownloadGate />
         </div>
       </section>
     </main>
