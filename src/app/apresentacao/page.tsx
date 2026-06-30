@@ -71,8 +71,8 @@ function Bar({ label, value, max, cor = COR.laranja, suffix = "", highlight = fa
   return (
     <div className={highlight ? "relative" : ""}>
       <div className="flex justify-between items-baseline mb-1.5">
-        <span className={`text-sm ${highlight ? "text-creme font-bold" : mudo ? "text-creme-soft/40 italic" : "text-creme-soft"}`}>{highlight && "▸ "}{label}</span>
-        <span className={`font-mono text-sm ${highlight ? "text-laranja font-bold" : mudo ? "text-creme-soft/40" : "text-creme"}`}>{value}{suffix}</span>
+        <span className={`text-sm ${highlight ? "text-creme font-bold" : mudo ? "text-creme-soft/70 italic" : "text-creme-soft"}`}>{highlight && "▸ "}{label}</span>
+        <span className={`font-mono text-sm ${highlight ? "text-laranja font-bold" : mudo ? "text-creme-soft/70" : "text-creme"}`}>{value}{suffix}</span>
       </div>
       <div className="h-3 bg-grafite rounded-sm overflow-hidden border border-grafite-3">
         <motion.div
@@ -95,7 +95,7 @@ function BigNum({ valor, cor, sub, nota }: { valor: React.ReactNode; cor: string
     <Reveal className="zine-edge bg-grafite border-2 rounded-2xl p-4 md:p-6 text-center" >
       <p className="brand-lockup text-4xl sm:text-6xl md:text-7xl leading-none" style={{ color: cor }}>{valor}</p>
       <p className="text-creme-soft text-xs md:text-sm mt-3 leading-tight">{sub}</p>
-      {nota && <p className="text-creme/50 text-[11px] mt-2 font-mono">{nota}</p>}
+      {nota && <p className="text-creme/75 text-[11px] mt-2 font-mono">{nota}</p>}
     </Reveal>
   )
 }
@@ -111,7 +111,7 @@ function Switcher({ ativo, set }: { ativo: Cohort; set: (c: Cohort) => void }) {
             {on && <motion.span layoutId="switch-bg" className="absolute inset-0 rounded-xl bg-laranja" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
             <span className="relative z-10 block">
               <span className={`brand-lockup text-sm md:text-base leading-none ${on ? "text-grafite" : "text-creme"}`}>{c.encontro}</span>
-              <span className={`block brand-label text-[9px] mt-1 ${on ? "text-grafite/70" : "text-creme-soft/50"}`}>{c.local} · N={c.n}</span>
+              <span className={`block brand-label text-[9px] mt-1 ${on ? "text-grafite/70" : "text-creme-soft/75"}`}>{c.local} · N={c.n}</span>
             </span>
           </button>
         )
@@ -132,7 +132,7 @@ function Painel({ c }: { c: Cohort }) {
     >
       <div className="flex flex-wrap items-end gap-x-4 gap-y-1 mb-2">
         <h3 className="brand-lockup text-3xl md:text-4xl" style={{ color: acc }}>{c.local}</h3>
-        <span className="brand-label text-[10px] text-creme-soft/60">{c.escola} · {c.data}</span>
+        <span className="brand-label text-[10px] text-creme-soft/80">{c.escola} · {c.data}</span>
       </div>
       <p className="text-creme-soft text-base md:text-lg leading-relaxed max-w-[48ch] mb-8">{c.resumo}</p>
 
@@ -141,11 +141,11 @@ function Painel({ c }: { c: Cohort }) {
         {[["afeta a vida", c.escalas.afeta, COR.laranja], ["à vontade p/ opinar", c.escalas.avontade, COR.amarelo], ["confia em eleitos", c.escalas.confia, COR.vermelho]].map(([l, v, cr]) => (
           <div key={l as string} className="bg-grafite border-2 border-grafite-3 rounded-xl p-3 md:p-4 text-center">
             <p className="brand-lockup text-3xl md:text-4xl leading-none" style={{ color: cr as string }}>{(v as number).toFixed(2)}</p>
-            <p className="text-creme-soft/60 text-[10px] md:text-xs mt-1.5 leading-tight">{l}</p>
+            <p className="text-creme-soft/80 text-[10px] md:text-xs mt-1.5 leading-tight">{l}</p>
           </div>
         ))}
       </div>
-      <p className="brand-label text-[9px] text-creme-soft/40 -mt-7 mb-9 text-center">médias na escala 1–5</p>
+      <p className="brand-label text-[9px] text-creme-soft/70 -mt-7 mb-9 text-center">médias na escala 1–5</p>
 
       <div className="grid md:grid-cols-2 gap-x-10 gap-y-8">
         <div>
@@ -179,15 +179,15 @@ function VS({ label, a, b, fmt = (x: number) => x.toFixed(2), invert = false, no
     <Reveal className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-5 bg-grafite border-2 border-grafite-3 rounded-xl p-4">
       <div className="text-right">
         <p className="brand-lockup text-3xl md:text-4xl leading-none" style={{ color: aWins ? COR.laranja : COR.creme }}>{fmt(a)}</p>
-        <p className="brand-label text-[9px] text-creme-soft/50 mt-1">Oziel</p>
+        <p className="brand-label text-[9px] text-creme-soft/75 mt-1">Oziel</p>
       </div>
       <div className="text-center min-w-0 px-1">
         <p className="text-creme text-[11px] md:text-sm font-bold leading-tight">{label}</p>
-        {nota && <p className="text-creme-soft/50 text-[10px] mt-1 leading-tight">{nota}</p>}
+        {nota && <p className="text-creme-soft/75 text-[10px] mt-1 leading-tight">{nota}</p>}
       </div>
       <div className="text-left">
         <p className="brand-lockup text-3xl md:text-4xl leading-none" style={{ color: !aWins ? COR.verde : COR.creme }}>{fmt(b)}</p>
-        <p className="brand-label text-[9px] text-creme-soft/50 mt-1">Rui Rodrigues</p>
+        <p className="brand-label text-[9px] text-creme-soft/75 mt-1">Rui Rodrigues</p>
       </div>
     </Reveal>
   )
@@ -200,8 +200,8 @@ function Corr({ r, label, txt, cor }: { r: number; label: string; txt: string; c
     <div className="flex items-center gap-4 md:gap-6 bg-grafite border-2 border-grafite-3 rounded-xl p-4 md:p-5">
       <p className="brand-lockup text-4xl md:text-5xl leading-none whitespace-nowrap w-28 md:w-36 shrink-0" style={{ color: cor }}>{s}</p>
       <div className="min-w-0">
-        <p className="text-creme text-sm font-bold">{label}</p>
-        <p className="text-creme-soft/60 text-xs mt-0.5">{txt}</p>
+        <p className="text-creme text-base md:text-lg font-bold leading-snug">{label}</p>
+        <p className="text-creme-soft text-sm md:text-base mt-1 leading-snug">{txt}</p>
       </div>
     </div>
   )
@@ -294,18 +294,20 @@ export default function Apresentacao() {
           <Reveal delay={0.4} className="mt-8 flex flex-wrap gap-6 items-end">
             <div className="flex items-end gap-2">
               <CountUp to={TOTAIS.fichas} className="brand-lockup text-laranja text-5xl sm:text-7xl" />
-              <span className="font-mono text-xs text-creme-soft/70 leading-tight pb-1">fichas reais<br />validadas</span>
+              <span className="font-mono text-sm md:text-base text-creme-soft leading-tight pb-1">fichas reais<br />validadas</span>
             </div>
             <div className="flex items-end gap-2">
               <CountUp to={TOTAIS.encontros} className="brand-lockup text-creme text-4xl sm:text-6xl" />
-              <span className="font-mono text-xs text-creme-soft/70 leading-tight pb-1">encontros<br />comparados</span>
+              <span className="font-mono text-sm md:text-base text-creme-soft leading-tight pb-1">encontros<br />comparados</span>
             </div>
             <div className="flex items-end gap-2">
               <CountUp to={TOTAIS.avaliacoes} className="brand-lockup text-verde text-4xl sm:text-6xl" />
-              <span className="font-mono text-xs text-creme-soft/70 leading-tight pb-1">avaliações<br />pós-encontro</span>
+              <span className="font-mono text-sm md:text-base text-creme-soft leading-tight pb-1">avaliações<br />pós-encontro</span>
             </div>
           </Reveal>
-          <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.8 }} className="mt-14 brand-stamp text-[10px] text-creme-soft/50">↓ role pra ver</motion.div>
+          <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }} className="mt-14 inline-flex items-center gap-2.5 brand-stamp text-sm md:text-base text-amarelo">
+            <span className="text-2xl md:text-3xl leading-none">↓</span> role pra ver
+          </motion.div>
         </div>
       </section>
 
@@ -346,7 +348,7 @@ export default function Apresentacao() {
 
         {/* legenda — decodifica os símbolos */}
         <Reveal delay={0.22}>
-          <p className="brand-label text-[10px] text-creme-soft/60 mb-4">o alfabeto dos números — guarde estes 5</p>
+          <p className="brand-label text-[10px] text-creme-soft/80 mb-4">o alfabeto dos números — guarde estes 5</p>
           <div className="grid sm:grid-cols-2 gap-3 mb-10">
             {LEGENDA.map(([sig, t, d], i) => (
               <div key={sig as string} className={`flex gap-4 bg-grafite border-2 border-grafite-3 rounded-xl p-4 ${i === 4 ? "sm:col-span-2" : ""}`}>
@@ -495,13 +497,13 @@ export default function Apresentacao() {
                 { label: `Rui · n${RUI.silencio.nMudo}→${RUI.silencio.nFala}`, a: RUI.silencio.mudo, b: RUI.silencio.fala, cor: COR.verde, hl: true },
               ]}
             />
-            <p className="text-creme-soft/60 text-xs mt-3 text-center leading-relaxed">Quem discute em <em>algum</em> lugar sobe na régua do &ldquo;à vontade pra opinar&rdquo; — <strong className="text-creme">nas duas escolas</strong>.</p>
+            <p className="text-creme-soft/80 text-xs mt-3 text-center leading-relaxed">Quem discute em <em>algum</em> lugar sobe na régua do &ldquo;à vontade pra opinar&rdquo; — <strong className="text-creme">nas duas escolas</strong>.</p>
           </Reveal>
 
           <Reveal className="mt-14"><h3 className="brand-lockup text-3xl md:text-4xl mb-2">Fatalismo, não ignorância</h3></Reveal>
           <Reveal delay={0.1}><p className="text-creme-soft text-base mb-6 max-w-[46ch]">A barreira nº1 pra participar — nos dois lugares — não é &ldquo;não entendo&rdquo;. É &ldquo;não muda nada&rdquo;.</p></Reveal>
           <div className="space-y-3">{RUI.afasta.map(([l, v], i) => <Bar key={l} label={l} value={v} max={RUI.afasta[0][1]} cor={COR.vermelho} delay={i * 0.04} highlight={l === "não muda nada"} />)}</div>
-          <Reveal delay={0.1}><p className="brand-label text-[9px] text-creme-soft/40 mt-3">o que mais afasta de participar · Rui Rodrigues</p></Reveal>
+          <Reveal delay={0.1}><p className="brand-label text-[9px] text-creme-soft/70 mt-3">o que mais afasta de participar · Rui Rodrigues</p></Reveal>
         </Secao>
       </div>
 
@@ -519,10 +521,10 @@ export default function Apresentacao() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {AVALIACAO.cards.map((c, i) => (
             <Reveal key={c.l} delay={i * 0.08} className="bg-grafite-2 border-2 border-grafite-3 rounded-xl p-5">
-              <p className="brand-label text-[9px] text-creme-soft/50 mb-3">{c.l}</p>
+              <p className="brand-label text-[9px] text-creme-soft/75 mb-3">{c.l}</p>
               <p className="brand-lockup text-5xl leading-none" style={{ color: corOf(c.cor) }}><CountUp to={c.pct} suffix="%" /></p>
               <p className="font-mono text-xs text-creme-soft/70 mt-2">{c.n}</p>
-              <p className="font-mono text-[10px] text-creme-soft/40 mt-1">{c.nota}</p>
+              <p className="font-mono text-[10px] text-creme-soft/70 mt-1">{c.nota}</p>
             </Reveal>
           ))}
         </div>
@@ -534,7 +536,7 @@ export default function Apresentacao() {
             domínio vem com repetição. O número desenha o próximo passo — mais encontros.
           </p>
         </Reveal>
-        <Reveal delay={0.25}><p className="text-creme-soft/40 text-[11px] font-mono mt-5">auto-relato pós-encontro · N={AVALIACAO.n} · {AVALIACAO.perfil.genero}, {AVALIACAO.perfil.raca} · comparação de grupo, nunca de pessoa · indicativo, não conclusivo.</p></Reveal>
+        <Reveal delay={0.25}><p className="text-creme-soft/70 text-[11px] font-mono mt-5">auto-relato pós-encontro · N={AVALIACAO.n} · {AVALIACAO.perfil.genero}, {AVALIACAO.perfil.raca} · comparação de grupo, nunca de pessoa · indicativo, não conclusivo.</p></Reveal>
       </Secao>
 
       {/* ░░ A PORTA É O CONCRETO — vozes ░░ */}
@@ -604,7 +606,7 @@ export default function Apresentacao() {
           <Corr r={OZIEL.corr.afetaVoz} label="afeta a vida × vontade de opinar" txt="relevância destrava a voz (Oziel)" cor={COR.laranja} />
           <Corr r={OZIEL.corr.confiaVoz} label="confiar em eleitos × vontade de opinar" txt="descrença não tira a voz (Oziel)" cor={COR.creme} />
         </div>
-        <Reveal delay={0.2}><p className="text-creme-soft/50 text-[11px] font-mono mt-5">Pearson · fichas completas · n pequeno por faixa = tendência, não conclusão</p></Reveal>
+        <Reveal delay={0.2}><p className="text-creme-soft/75 text-[11px] font-mono mt-5">Pearson · fichas completas · n pequeno por faixa = tendência, não conclusão</p></Reveal>
       </Secao>
 
       {/* ░░ CTA escolas ░░ */}
