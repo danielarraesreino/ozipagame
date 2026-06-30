@@ -4,9 +4,9 @@ import Logo from "@/components/Logo"
 import MenuHamburger from "@/components/MenuHamburger"
 
 export const metadata: Metadata = {
-  title: "A equipe · Vozes do Oziel",
+  title: "A equipe · Vozes da Quebrada",
   description:
-    "Grupo Diálogos — as sete pessoas por trás do Vozes do Oziel. Formado no CriaLab da Minha Campinas.",
+    "Grupo Diálogos — as sete pessoas por trás do Vozes da Quebrada. Formado no CriaLab da Minha Campinas.",
 }
 
 const equipe = [

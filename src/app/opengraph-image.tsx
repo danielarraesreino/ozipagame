@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og"
 // Imagem de compartilhamento (WhatsApp, Instagram, X, etc.) — 1200x630
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
-export const alt = "Vozes do Oziel — Cidadania Conectada"
+export const alt = "Vozes da Quebrada — Cidadania Conectada"
 
 // Símbolo da marca (balão de fala partido) como data URI SVG — espelha public/brand/logo.svg
 const logoSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">

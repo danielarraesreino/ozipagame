@@ -92,7 +92,7 @@ function EndScreen({
   }, [])
 
   const whatsappText = encodeURIComponent(
-    `Joguei Vozes do Oziel 🎮\n` +
+    `Joguei Vozes da Quebrada 🎮\n` +
     `${results.length} dilemas do bairro analisados.\n` +
     topStatus.map(([s, n]) => `${STATUS_LABEL[s] ?? s}: ${n}`).join(" · ") +
     (mudancas.length ? `\n\nMudei de ideia ${mudancas.length}x depois da oficina.` : "") +

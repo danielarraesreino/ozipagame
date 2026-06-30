@@ -13,7 +13,7 @@ import { COHORTS, OZIEL, RUI, AVALIACAO, VOZES, TOTAIS, type Cohort } from "@/li
 
 /* ───────────────────────────────────────────────────────────────────────────
    APRESENTAÇÃO — "O lado oculto da quebrada"
-   Dossiê de dados Vozes do Oziel. Dois encontros (Parque Oziel · EE Rui
+   Dossiê de dados Vozes da Quebrada. Dois encontros (Parque Oziel · EE Rui
    Rodrigues) + avaliação pós. Ótica Freakonomics: o que o número esconde, o
    contraintuitivo, o branco como dado. Estética zine/risograph.
    Números: src/lib/apresentacao_dados.ts (gerado de apresentacao_stats.json —
@@ -644,7 +644,7 @@ export default function Apresentacao() {
             </div>
           </Reveal>
           <p className="brand-stamp text-[10px] text-creme-soft/70 mt-16 leading-relaxed">
-            Vozes do Oziel · Grupo Diálogos / CriaLab · {TOTAIS.fichas} fichas · {TOTAIS.encontros} encontros · dados abertos CC BY-SA 4.0
+            Vozes da Quebrada · Grupo Diálogos / CriaLab · {TOTAIS.fichas} fichas · {TOTAIS.encontros} encontros · dados abertos CC BY-SA 4.0
           </p>
           <DownloadGate />
         </div>

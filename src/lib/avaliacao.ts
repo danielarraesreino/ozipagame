@@ -1,5 +1,5 @@
 // Avaliação pós-encontro (pesquisa FIM) — definição data-driven.
-// Importada do Google Form "Avaliação: Vozes do Oziel" e convertida pro nosso
+// Importada do Google Form "Avaliação: Vozes da Quebrada" e convertida pro nosso
 // modelo (pills / marca-várias / texto). E-mail REMOVIDO de propósito: o app é
 // anônimo (LGPD — participantes menores). Idade vira faixa pra agregar sem
 // identificar. O renderer (AvaliacaoForm) só lê deste array — zero texto preso

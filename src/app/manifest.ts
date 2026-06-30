@@ -4,7 +4,7 @@ import type { MetadataRoute } from "next"
 // Next serve isto em /manifest.webmanifest e injeta o <link rel="manifest">.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Vozes do Oziel",
+    name: "Vozes da Quebrada",
     short_name: "Oziel",
     description: "Memes, dilemas e o que eles escondem. Cidadania conectada, do Parque Oziel.",
     start_url: "/",

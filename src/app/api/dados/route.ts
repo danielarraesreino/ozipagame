@@ -88,7 +88,7 @@ export async function GET() {
 
     return NextResponse.json({
       licenca: "CC BY-SA 4.0",
-      projeto: "Vozes do Oziel — Grupo Diálogos / CriaLab",
+      projeto: "Vozes da Quebrada — Grupo Diálogos / CriaLab",
       gerado_em: new Date().toISOString(),
       jogo: {
         total_partidas: partidas.length,
