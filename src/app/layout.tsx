@@ -19,7 +19,7 @@ const spaceMono = Space_Mono({
 })
 
 const SITE_URL = "https://jogoozipa.vercel.app"
-const TITLE = "Vozes do Oziel — Cidadania Conectada"
+const TITLE = "Vozes da Quebrada — Cidadania Conectada"
 const DESCRIPTION =
   "Memes, dilemas e as consequências que eles escondem. Um jogo de 3 minutos sobre participação popular, feito por e para a juventude do Parque Oziel, Campinas."
 
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: TITLE,
   description: DESCRIPTION,
-  applicationName: "Vozes do Oziel",
+  applicationName: "Vozes da Quebrada",
   appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Oziel" },
   icons: {
     icon: "/favicon.ico",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     url: SITE_URL,
-    siteName: "Vozes do Oziel",
+    siteName: "Vozes da Quebrada",
     title: TITLE,
     description: DESCRIPTION,
   },

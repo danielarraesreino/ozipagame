@@ -1,5 +1,5 @@
 /**
- * Símbolo da marca Vozes do Oziel — balão de fala partido em grafite/laranja
+ * Símbolo da marca Vozes da Quebrada — balão de fala partido em grafite/laranja
  * com o gesto de deslize ‹ › no miolo. Espelha public/brand/logo.svg.
  * Variantes conforme o guia: cor (padrão), mono, inverso.
  */
@@ -23,7 +23,7 @@ export default function Logo({ size = 56, variant = "cor", className }: LogoProp
       viewBox="0 0 256 256"
       className={className}
       role="img"
-      aria-label="Vozes do Oziel"
+      aria-label="Vozes da Quebrada"
     >
       <defs>
         <clipPath id="logo-bub">

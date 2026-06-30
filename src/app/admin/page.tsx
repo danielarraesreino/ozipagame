@@ -378,7 +378,7 @@ export default function AdminPage() {
       <main className="min-h-screen flex flex-col items-center justify-center bg-grafite px-6">
         <div className="w-full max-w-sm">
           <p className="text-[11px] font-mono tracking-widest uppercase text-laranja mb-6">
-            Admin · Vozes do Oziel
+            Admin · Vozes da Quebrada
           </p>
           <h1 className="text-3xl font-black text-creme mb-8">Área restrita</h1>
           <form onSubmit={handleLogin} className="space-y-4">
@@ -462,7 +462,7 @@ export default function AdminPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <p className="text-[11px] font-mono tracking-widest uppercase text-laranja mb-1">
-            Admin · Vozes do Oziel
+            Admin · Vozes da Quebrada
           </p>
           <h1 className="text-2xl font-black text-creme">Painel da equipe</h1>
         </div>
@@ -1159,7 +1159,7 @@ export default function AdminPage() {
       )}
 
       <p className="text-creme-soft/40 text-xs font-mono text-center mt-12">
-        Vozes do Oziel · equipe CriaLab
+        Vozes da Quebrada · equipe CriaLab
       </p>
     </main>
   )

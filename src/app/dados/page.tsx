@@ -357,7 +357,7 @@ export default function DadosPage() {
 
             <p className="text-creme-soft/40 text-[11px] font-mono text-center pt-2 pb-6 leading-relaxed">
               Licença Creative Commons CC BY-SA 4.0 · use, remixe e cite.<br />
-              Vozes do Oziel · Grupo Diálogos · CriaLab · atualizado {new Date(d.gerado_em).toLocaleDateString("pt-BR")}
+              Vozes da Quebrada · Grupo Diálogos · CriaLab · atualizado {new Date(d.gerado_em).toLocaleDateString("pt-BR")}
             </p>
           </div>
         )}
