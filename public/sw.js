@@ -1,4 +1,4 @@
-// Service worker do Vozes do Oziel — habilita instalação (PWA) + fallback offline.
+// Service worker do Vozes da Quebrada — habilita instalação (PWA) + fallback offline.
 // Estratégia: network-first nas navegações/assets GET, com cache de apoio. NÃO
 // cacheia /api/ (dados dinâmicos do Supabase). Offline cai no cache ou na home.
 const CACHE = "oziel-v2"
