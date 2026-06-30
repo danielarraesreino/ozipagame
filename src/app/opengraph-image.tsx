@@ -89,7 +89,7 @@ export default async function Image() {
               letterSpacing: -2,
             }}
           >
-            do Oziel
+            da Quebrada
           </div>
           <div
             style={{

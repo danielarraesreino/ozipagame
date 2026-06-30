@@ -51,7 +51,7 @@ export default function Home() {
         <h1 className="brand-lockup text-creme text-[clamp(3rem,16vw,4.75rem)] mb-3 relative inline-block">
           Vozes
           <br />
-          <span className="text-laranja">do Oziel</span>
+          <span className="text-laranja">da Quebrada</span>
           <span className="zine-edge absolute -top-3 -right-6 bg-laranja text-grafite brand-lockup text-xl sm:text-2xl px-3 py-1 rounded-xl rotate-6 shadow-[4px_4px_0_0_rgba(0,0,0,0.45)] pulse-glow">
             Será? 🤔
           </span>

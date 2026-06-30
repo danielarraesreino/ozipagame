@@ -5,7 +5,7 @@ import type { MetadataRoute } from "next"
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Vozes da Quebrada",
-    short_name: "Oziel",
+    short_name: "Quebrada",
     description: "Memes, dilemas e o que eles escondem. Cidadania conectada, do Parque Oziel.",
     start_url: "/",
     scope: "/",

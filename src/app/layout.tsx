@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   applicationName: "Vozes da Quebrada",
-  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Oziel" },
+  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "Quebrada" },
   icons: {
     icon: "/favicon.ico",
     apple: "/icons/apple-touch-icon.png",
