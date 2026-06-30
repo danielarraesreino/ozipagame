@@ -65,7 +65,7 @@ function ComicBurst() {
   return (
     <div className="relative inline-block mt-1">
       <motion.svg
-        viewBox="0 0 200 200" width="210" height="210"
+        viewBox="0 0 200 200" width="280" height="280"
         initial={{ scale: 0, rotate: -18 }} animate={{ scale: 1, rotate: -4 }}
         transition={{ type: "spring", stiffness: 260, damping: 13, delay: 0.35 }}>
         <polygon
@@ -76,7 +76,7 @@ function ComicBurst() {
         className="absolute inset-0 flex items-center justify-center"
         initial={{ scale: 0 }} animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 320, damping: 12, delay: 0.5 }}>
-        <span className="brand-lockup text-grafite text-5xl md:text-6xl -rotate-6 select-none">BANF!</span>
+        <span className="brand-lockup text-vermelho text-6xl md:text-7xl -rotate-6 select-none drop-shadow-[2px_2px_0_rgba(19,19,14,0.6)]">BANF!</span>
       </motion.div>
     </div>
   )
