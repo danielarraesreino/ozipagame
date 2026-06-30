@@ -5,14 +5,20 @@ import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion"
 import Link from "next/link"
 import MenuHamburger from "@/components/MenuHamburger"
 import DownloadGate from "@/components/DownloadGate"
+import CountUp from "@/components/scrolly/CountUp"
+import ScrollyStage from "@/components/scrolly/ScrollyStage"
+import DotPlotSVG, { type DotRow } from "@/components/scrolly/charts/DotPlotSVG"
+import SlopeSVG from "@/components/scrolly/charts/SlopeSVG"
 import { COHORTS, OZIEL, RUI, AVALIACAO, VOZES, TOTAIS, type Cohort } from "@/lib/apresentacao_dados"
 
 /* ───────────────────────────────────────────────────────────────────────────
    APRESENTAÇÃO — "O lado oculto da quebrada"
-   Dossiê de dados Vozes do Oziel. Dois encontros (Parque Oziel N=30 · EE Rui
-   Rodrigues N=44) + avaliação pós (N=31). Ótica Freakonomics: o que o número
-   esconde, o contraintuitivo, o branco como dado. Estética zine/risograph.
-   Fonte única dos números: src/lib/apresentacao_dados.ts
+   Dossiê de dados Vozes do Oziel. Dois encontros (Parque Oziel · EE Rui
+   Rodrigues) + avaliação pós. Ótica Freakonomics: o que o número esconde, o
+   contraintuitivo, o branco como dado. Estética zine/risograph.
+   Números: src/lib/apresentacao_dados.ts (gerado de apresentacao_stats.json —
+   rode `npm run gen:apresentacao` pra recalcular do banco). N por coorte e
+   totais vêm dos dados, nunca hardcoded no JSX.
    ─────────────────────────────────────────────────────────────────────────── */
 
 const COR = {
@@ -25,6 +31,9 @@ const COR = {
 } as const
 const corOf = (k: string) => (COR as Record<string, string>)[k] ?? COR.laranja
 const ease = [0.22, 1, 0.36, 1] as const
+
+// formata correlação/decimal no padrão pt-BR com sinal (+0,52 / −0,03)
+const fmtR = (r: number) => (r >= 0 ? "+" : "−") + Math.abs(r).toFixed(2).replace(".", ",")
 
 // legenda dos símbolos — fonte única (seção 00 + widget flutuante)
 const LEGENDA: [string, string, string][] = [
@@ -81,7 +90,7 @@ function Tag({ children, cor }: { children: React.ReactNode; cor: string }) {
 }
 
 // ── número grande estilo "achado" ────────────────────────────────────────────
-function BigNum({ valor, cor, sub, nota }: { valor: string; cor: string; sub: React.ReactNode; nota?: string }) {
+function BigNum({ valor, cor, sub, nota }: { valor: React.ReactNode; cor: string; sub: React.ReactNode; nota?: string }) {
   return (
     <Reveal className="zine-edge bg-grafite border-2 rounded-2xl p-4 md:p-6 text-center" >
       <p className="brand-lockup text-4xl sm:text-6xl md:text-7xl leading-none" style={{ color: cor }}>{valor}</p>
@@ -243,6 +252,24 @@ export default function Apresentacao() {
   const barra = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 })
   const [cohort, setCohort] = useState<Cohort>(OZIEL)
 
+  // dot plot por idade (Rui) — laranja=afeta · amarelo=voz · vermelho=confia
+  const ruiIdade: DotRow[] = RUI.idadeTab.map((t) => ({
+    label: t.faixa,
+    sub: `n${t.n}`,
+    dots: [
+      { value: t.afeta, color: COR.laranja, label: "afeta" },
+      { value: t.avontade, color: COR.amarelo, label: "voz" },
+      { value: t.confia, color: COR.vermelho, label: "confia" },
+    ],
+  }))
+  // textos dos passos do scrolly de idade (alinhados à ordem de ruiIdade)
+  const idadePassos = RUI.idadeTab.map((t) => {
+    const v = (x: number) => x.toFixed(2).replace(".", ",")
+    if (t.faixa === "14–15") return { titulo: "Os mais novos", txt: <>Aos <strong className="text-creme">{t.faixa}</strong> a política já <strong className="text-laranja">afeta</strong> ({v(t.afeta)}), mas a <strong className="text-vermelho">confiança</strong> é o chão da régua ({v(t.confia)}). Sentem o peso antes de ter em quem confiar.</> }
+    if (t.faixa === "16–17") return { titulo: "No meio", txt: <>Aos <strong className="text-creme">{t.faixa}</strong> a <strong className="text-amarelo">vontade de opinar</strong> sobe ({v(t.avontade)}). A <strong className="text-vermelho">confiança</strong> mal mexe ({v(t.confia)}) — a voz cresce sem a fé voltar.</> }
+    return { titulo: "Os mais velhos", txt: <>Aos <strong className="text-creme">{t.faixa}</strong> a relevância vai ao <strong className="text-laranja">topo</strong> ({v(t.afeta)}). A <strong className="text-vermelho">confiança</strong> nunca acompanha ({v(t.confia)}). Idade não cura a descrença.</> }
+  })
+
   return (
     <main className="bg-grafite text-creme overflow-x-hidden">
       <motion.div className="fixed top-0 left-0 right-0 h-1 z-50 origin-left" style={{ scaleX: barra, background: COR.laranja }} />
@@ -266,15 +293,15 @@ export default function Apresentacao() {
           </Reveal>
           <Reveal delay={0.4} className="mt-8 flex flex-wrap gap-6 items-end">
             <div className="flex items-end gap-2">
-              <span className="brand-lockup text-laranja text-5xl sm:text-7xl">{TOTAIS.fichas}</span>
+              <CountUp to={TOTAIS.fichas} className="brand-lockup text-laranja text-5xl sm:text-7xl" />
               <span className="font-mono text-xs text-creme-soft/70 leading-tight pb-1">fichas reais<br />validadas</span>
             </div>
             <div className="flex items-end gap-2">
-              <span className="brand-lockup text-creme text-4xl sm:text-6xl">{TOTAIS.encontros}</span>
+              <CountUp to={TOTAIS.encontros} className="brand-lockup text-creme text-4xl sm:text-6xl" />
               <span className="font-mono text-xs text-creme-soft/70 leading-tight pb-1">encontros<br />comparados</span>
             </div>
             <div className="flex items-end gap-2">
-              <span className="brand-lockup text-verde text-4xl sm:text-6xl">{TOTAIS.avaliacoes}</span>
+              <CountUp to={TOTAIS.avaliacoes} className="brand-lockup text-verde text-4xl sm:text-6xl" />
               <span className="font-mono text-xs text-creme-soft/70 leading-tight pb-1">avaliações<br />pós-encontro</span>
             </div>
           </Reveal>
@@ -387,8 +414,9 @@ export default function Apresentacao() {
         <Reveal delay={0.35} className="mt-8 zine-edge bg-grafite-2 border-2 border-amarelo/40 rounded-2xl p-5">
           <p className="brand-label text-[10px] text-amarelo mb-2">o dado oculto</p>
           <p className="text-creme-soft text-sm leading-relaxed">
-            Em Rui Rodrigues o mesmo cruzamento dá <strong className="text-creme">+0,22</strong> — confiar e querer falar
-            começam a andar juntos. Outra escola, outra física social. <strong className="text-creme">A alavanca muda de bairro pra bairro</strong> — e é isso que a próxima seção mostra.
+            Em Rui Rodrigues o mesmo cruzamento dá <strong className="text-creme">{fmtR(RUI.corr.confiaVoz)}</strong> — de novo perto de zero.
+            O padrão <strong className="text-creme">se repete nas duas escolas</strong>: confiar no político não move a vontade de falar.
+            O que muda de um lugar pro outro é <strong className="text-creme">qual chave destrava</strong> — e é isso que a próxima seção mostra.
           </p>
         </Reveal>
       </Secao>
@@ -402,7 +430,7 @@ export default function Apresentacao() {
             <Reveal delay={0.15}>
               <p className="text-creme-soft text-lg leading-relaxed max-w-[48ch] mb-9">
                 O que destrava a fala não é o mesmo nos dois lugares. No Oziel, é
-                <strong className="text-creme"> sentir que política mexe com a vida</strong> (r&nbsp;+0,52). Em Rui Rodrigues
+                <strong className="text-creme"> sentir que política mexe com a vida</strong> (r&nbsp;{fmtR(OZIEL.corr.afetaVoz)}). Em Rui Rodrigues
                 eles <strong className="text-creme">já sentem</strong> isso — e mesmo assim não participam. Lá a chave é outra: <strong className="text-verde">informação</strong>.
               </p>
             </Reveal>
@@ -413,8 +441,8 @@ export default function Apresentacao() {
             </div>
             <Reveal delay={0.2}>
               <p className="text-creme text-lg md:text-xl leading-relaxed mt-10 max-w-[48ch]">
-                Em Campo Grande o jovem <strong>sabe</strong> que política afeta a vida dele (3,56/5) — e ainda
-                assim <strong className="text-vermelho">72% nunca participaram</strong>. Não falta consciência. Falta a porta.
+                Em Campo Grande o jovem <strong>sabe</strong> que política afeta a vida dele (média {RUI.escalas.afeta.toFixed(2).replace(".", ",")}/5) — e ainda
+                assim <strong className="text-vermelho">{RUI.infoGap.nuncaPct}% nunca participaram</strong>. Não falta consciência. Falta a porta.
               </p>
             </Reveal>
           </div>
@@ -426,13 +454,13 @@ export default function Apresentacao() {
         <Reveal><Stamp cor={COR.amarelo}>04 · o gargalo invisível</Stamp></Reveal>
         <Reveal delay={0.1}><h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-8">Ninguém disse<br />que dava</h2></Reveal>
         <div className="grid grid-cols-2 gap-4 md:gap-8 mb-10">
-          <BigNum valor={`${RUI.infoGap.naoSabiaPct}%`} cor={COR.amarelo} sub={<>não sabiam que dá<br />pra participar</>} nota="Rui Rodrigues" />
-          <BigNum valor={`${RUI.infoGap.nuncaPct}%`} cor={COR.laranja} sub={<>nunca participaram<br />de nada no bairro</>} nota="Rui Rodrigues" />
+          <BigNum valor={<CountUp to={RUI.infoGap.naoSabiaPct} suffix="%" />} cor={COR.amarelo} sub={<>não sabiam que dá<br />pra participar</>} nota="Rui Rodrigues" />
+          <BigNum valor={<CountUp to={RUI.infoGap.nuncaPct} suffix="%" />} cor={COR.laranja} sub={<>nunca participaram<br />de nada no bairro</>} nota="Rui Rodrigues" />
         </div>
         <Reveal delay={0.2} className="zine-edge bg-grafite-2 border-2 border-grafite-3 rounded-2xl p-5 mb-10">
           <p className="brand-label text-[10px] text-creme-soft mb-3">quem NÃO sabia que dava → participou?</p>
           <Bar label="nunca participou" value={RUI.infoGap.naoSabiaNunca} max={RUI.infoGap.naoSabiaN} cor={COR.vermelho} highlight />
-          <p className="text-creme-soft/70 text-xs mt-3 font-mono">{RUI.infoGap.naoSabiaNunca} de {RUI.infoGap.naoSabiaN} ({Math.round(100 * RUI.infoGap.naoSabiaNunca / RUI.infoGap.naoSabiaN)}%). Saber que o canal existe já É meio caminho — &ldquo;sabia e já fui&rdquo; foi só 1 em 44.</p>
+          <p className="text-creme-soft/70 text-xs mt-3 font-mono">{RUI.infoGap.naoSabiaNunca} de {RUI.infoGap.naoSabiaN} ({Math.round(100 * RUI.infoGap.naoSabiaNunca / RUI.infoGap.naoSabiaN)}%). Saber que o canal existe já É meio caminho — &ldquo;sabia e já fui&rdquo; foi só {RUI.sabia.find(([l]) => l === "sabia e já fui")?.[1] ?? 0} em {RUI.n}.</p>
         </Reveal>
         <div className="grid md:grid-cols-2 gap-x-10 gap-y-8">
           <div>
@@ -458,28 +486,17 @@ export default function Apresentacao() {
           <Reveal><Stamp cor={COR.verde}>05 · o que dá pra mudar</Stamp></Reveal>
           <Reveal delay={0.1}><h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-4">Silêncio é treinável</h2></Reveal>
           <Reveal delay={0.15}><p className="text-creme-soft text-lg leading-relaxed max-w-[48ch] mb-9">Quem discute política em <em>algum</em> lugar se sente mais à vontade pra opinar. Nos dois encontros. Falar gera conforto pra falar — e isso a oficina entrega de graça.</p></Reveal>
-          <div className="grid sm:grid-cols-2 gap-6">
-            {[OZIEL, RUI].map((c) => {
-              const acc = c.id === "oziel" ? COR.laranja : COR.verde
-              return (
-                <Reveal key={c.id} className="bg-grafite border-2 border-grafite-3 rounded-2xl p-5">
-                  <p className="brand-label text-[10px] mb-4" style={{ color: acc }}>{c.local}</p>
-                  <div className="flex items-end justify-between gap-4">
-                    <div className="text-center flex-1">
-                      <p className="brand-lockup text-4xl text-creme-soft/70">{c.silencio.mudo.toFixed(2)}</p>
-                      <p className="text-creme-soft/60 text-[11px] mt-1">&ldquo;não discuto&rdquo;<br /><span className="font-mono text-creme-soft/40">n{c.silencio.nMudo}</span></p>
-                    </div>
-                    <span className="brand-lockup text-2xl text-creme-soft/30 pb-5">→</span>
-                    <div className="text-center flex-1">
-                      <p className="brand-lockup text-4xl" style={{ color: acc }}>{c.silencio.fala.toFixed(2)}</p>
-                      <p className="text-creme-soft/60 text-[11px] mt-1">discute em algum lugar<br /><span className="font-mono text-creme-soft/40">n{c.silencio.nFala}</span></p>
-                    </div>
-                  </div>
-                </Reveal>
-              )
-            })}
-          </div>
-          <Reveal delay={0.1}><p className="brand-label text-[9px] text-creme-soft/40 mt-4 text-center">à vontade pra opinar · escala 1–5</p></Reveal>
+          <Reveal className="bg-grafite border-2 border-grafite-3 rounded-2xl p-5 md:p-7 max-w-xl mx-auto">
+            <SlopeSVG
+              titulo="à vontade pra opinar · escala 1–5"
+              extremos={["não discute", "discute"]}
+              pares={[
+                { label: `Oziel · n${OZIEL.silencio.nMudo}→${OZIEL.silencio.nFala}`, a: OZIEL.silencio.mudo, b: OZIEL.silencio.fala, cor: COR.laranja, hl: true },
+                { label: `Rui · n${RUI.silencio.nMudo}→${RUI.silencio.nFala}`, a: RUI.silencio.mudo, b: RUI.silencio.fala, cor: COR.verde, hl: true },
+              ]}
+            />
+            <p className="text-creme-soft/60 text-xs mt-3 text-center leading-relaxed">Quem discute em <em>algum</em> lugar sobe na régua do &ldquo;à vontade pra opinar&rdquo; — <strong className="text-creme">nas duas escolas</strong>.</p>
+          </Reveal>
 
           <Reveal className="mt-14"><h3 className="brand-lockup text-3xl md:text-4xl mb-2">Fatalismo, não ignorância</h3></Reveal>
           <Reveal delay={0.1}><p className="text-creme-soft text-base mb-6 max-w-[46ch]">A barreira nº1 pra participar — nos dois lugares — não é &ldquo;não entendo&rdquo;. É &ldquo;não muda nada&rdquo;.</p></Reveal>
@@ -503,7 +520,7 @@ export default function Apresentacao() {
           {AVALIACAO.cards.map((c, i) => (
             <Reveal key={c.l} delay={i * 0.08} className="bg-grafite-2 border-2 border-grafite-3 rounded-xl p-5">
               <p className="brand-label text-[9px] text-creme-soft/50 mb-3">{c.l}</p>
-              <p className="brand-lockup text-5xl leading-none" style={{ color: corOf(c.cor) }}>{c.pct}%</p>
+              <p className="brand-lockup text-5xl leading-none" style={{ color: corOf(c.cor) }}><CountUp to={c.pct} suffix="%" /></p>
               <p className="font-mono text-xs text-creme-soft/70 mt-2">{c.n}</p>
               <p className="font-mono text-[10px] text-creme-soft/40 mt-1">{c.nota}</p>
             </Reveal>
@@ -543,16 +560,51 @@ export default function Apresentacao() {
         </Secao>
       </div>
 
-      {/* ░░ TRÊS NÚMEROS ░░ */}
+      {/* ░░ A RÉGUA DA IDADE — scrolly hero ░░ */}
+      <section className="px-6 pt-24 md:pt-32 max-w-5xl mx-auto">
+        <Reveal><Stamp>08 · a régua da idade</Stamp></Reveal>
+        <Reveal delay={0.1}><h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-5">A confiança não<br />cresce com a idade</h2></Reveal>
+        <Reveal delay={0.15}>
+          <p className="text-creme-soft text-base leading-relaxed max-w-[46ch] mb-3">
+            Em Rui Rodrigues, três medidas por faixa de idade. Role e veja a régua andar.
+          </p>
+        </Reveal>
+        {/* legenda de cores */}
+        <Reveal delay={0.18}>
+          <div className="flex flex-wrap gap-x-5 gap-y-1.5 mb-2">
+            {[["afeta a vida", COR.laranja], ["à vontade p/ opinar", COR.amarelo], ["confia em eleitos", COR.vermelho]].map(([l, c]) => (
+              <span key={l} className="flex items-center gap-2 brand-label text-[9px] text-creme-soft/70">
+                <span className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: c }} />{l}
+              </span>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+      <ScrollyStage
+        className="px-6 max-w-5xl mx-auto"
+        graphic={(active) => (
+          <div className="bg-grafite border-2 border-grafite-3 rounded-2xl p-4 md:p-6">
+            <DotPlotSVG rows={ruiIdade} highlightIndex={active === 0 ? undefined : active - 1} eixo={["discordo", "concordo"]} />
+          </div>
+        )}
+        steps={[
+          <div key="0"><h3 className="brand-lockup text-2xl md:text-3xl mb-3">três medidas, uma régua</h3><p className="text-creme-soft text-base leading-relaxed">Cada faixa tem três pontos na escala 1–5. Quanto mais à direita, mais concordam. Repare onde a <strong className="text-vermelho">confiança</strong> sempre fica.</p></div>,
+          ...idadePassos.map((p, i) => (
+            <div key={i + 1}>
+              <h3 className="brand-lockup text-2xl md:text-3xl mb-3">{p.titulo}</h3>
+              <p className="text-creme-soft text-base md:text-lg leading-relaxed">{p.txt}</p>
+            </div>
+          )),
+        ]}
+      />
+      {/* coda — os dois números reais */}
       <Secao>
-        <Reveal><Stamp>08 · o resumo numérico</Stamp></Reveal>
-        <Reveal delay={0.1}><h2 className="brand-lockup text-[2rem] leading-[0.95] sm:text-5xl md:text-6xl mt-5 mb-10">Três números<br />que contam tudo</h2></Reveal>
+        <Reveal delay={0.1}><h3 className="brand-lockup text-2xl md:text-3xl mb-6">e os dois números que seguram tudo</h3></Reveal>
         <div className="space-y-4">
           <Corr r={OZIEL.corr.afetaVoz} label="afeta a vida × vontade de opinar" txt="relevância destrava a voz (Oziel)" cor={COR.laranja} />
           <Corr r={OZIEL.corr.confiaVoz} label="confiar em eleitos × vontade de opinar" txt="descrença não tira a voz (Oziel)" cor={COR.creme} />
-          <Corr r={RUI.infoGap.nuncaPct / 100} label="sente que afeta, mas nunca agiu" txt="o gargalo é a porta, não a vontade (Rui)" cor={COR.vermelho} />
         </div>
-        <Reveal delay={0.2}><p className="text-creme-soft/50 text-[11px] font-mono mt-5">Pearson · fichas completas · indicativo, não conclusivo</p></Reveal>
+        <Reveal delay={0.2}><p className="text-creme-soft/50 text-[11px] font-mono mt-5">Pearson · fichas completas · n pequeno por faixa = tendência, não conclusão</p></Reveal>
       </Secao>
 
       {/* ░░ CTA escolas ░░ */}

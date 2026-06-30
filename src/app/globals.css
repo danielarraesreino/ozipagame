@@ -118,3 +118,19 @@ html, body, #__next {
 @media (prefers-reduced-motion: reduce) {
   .pulse-glow { animation: none; }
 }
+
+/* Cinza um tom acima do grafite-3 — reserva pra projetor lavado. */
+@theme {
+  --color-grafite-4: #3A3A30;
+}
+
+/* Acessibilidade: corta movimento pra quem pediu. As primitivas scrolly já
+   tratam via useReducedMotion(); isto é reforço global. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
