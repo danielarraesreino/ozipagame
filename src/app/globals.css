@@ -63,7 +63,9 @@ html, body, #__next {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(19,19,14,0.55) 0%, rgba(19,19,14,0.92) 100%);
+  /* véu forte: os círculos creme do halftone vazavam atrás do texto creme.
+     Mantém a textura insinuada mas garante contraste (legibilidade > estética). */
+  background: linear-gradient(180deg, rgba(19,19,14,0.86) 0%, rgba(19,19,14,0.90) 45%, rgba(19,19,14,0.96) 100%);
   pointer-events: none;
 }
 
@@ -117,4 +119,20 @@ html, body, #__next {
 .pulse-glow { animation: ozipa-pulse 1.8s ease-out infinite; }
 @media (prefers-reduced-motion: reduce) {
   .pulse-glow { animation: none; }
+}
+
+/* Cinza um tom acima do grafite-3 — reserva pra projetor lavado. */
+@theme {
+  --color-grafite-4: #3A3A30;
+}
+
+/* Acessibilidade: corta movimento pra quem pediu. As primitivas scrolly já
+   tratam via useReducedMotion(); isto é reforço global. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

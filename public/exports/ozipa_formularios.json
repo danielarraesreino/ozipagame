@@ -1,0 +1,1882 @@
+[
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "18+",
+    "estuda": null,
+    "sentimentos": [],
+    "afeta_vida": null,
+    "avontade_opinar": null,
+    "confia_eleitos": null,
+    "afasta": null,
+    "ja_participou": "nunca",
+    "onde_discute": null,
+    "sabia_participar": null,
+    "criado_em": "2026-06-18T10:40:01.385892+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Parque Oziel",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 3,
+    "confia_eleitos": 3,
+    "afasta": [
+      "é tudo corrupto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-16T13:03:28.658387+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "18+",
+    "estuda": "não estudo agora",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 4,
+    "confia_eleitos": 3,
+    "afasta": [
+      "nada me afasta"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "WhatsApp da família",
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-08T18:08:49.797288+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 5,
+    "confia_eleitos": 1,
+    "afasta": [
+      "é tudo corrupto",
+      "não muda nada",
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "escola",
+      "não discuto",
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-16T01:16:16.374254+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Parque Oziel",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade",
+      "medo de falar errado"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 2,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não entendo do assunto",
+      "medo de me expor",
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto",
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-15T23:28:02.324816+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Parque Oziel",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 5,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não tenho tempo"
+    ],
+    "ja_participou": "uma vez",
+    "onde_discute": [
+      "escola"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-15T23:44:36.126811+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Parque Oziel",
+    "faixa_idade": "14–15",
+    "estuda": "escola particular",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 3,
+    "confia_eleitos": 3,
+    "afasta": [
+      "é tudo corrupto"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-16T11:59:49.769093+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Parque Oziel",
+    "faixa_idade": "18+",
+    "estuda": "curso técnico",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 4,
+    "confia_eleitos": 1,
+    "afasta": [
+      "medo de me expor"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-16T12:52:03.149063+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Parque Oziel",
+    "faixa_idade": "18+",
+    "estuda": "não estudo agora",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 1,
+    "confia_eleitos": 4,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "sempre que dá",
+    "onde_discute": [
+      "igreja"
+    ],
+    "sabia_participar": "sabia e já fui",
+    "criado_em": "2026-06-16T12:55:24.45699+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Parque Oziel",
+    "faixa_idade": "16–17",
+    "estuda": "curso técnico",
+    "sentimentos": [
+      "raiva / nojo",
+      "desânimo",
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 4,
+    "confia_eleitos": 1,
+    "afasta": [
+      "é tudo corrupto",
+      "não muda nada",
+      "medo de me expor",
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "WhatsApp da família",
+      "amigos"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-16T13:15:02.595316+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Jardim do Lago",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 5,
+    "confia_eleitos": 3,
+    "afasta": [
+      "nada me afasta"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "escola"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-25T00:18:23.024576+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Parque Oziel",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade"
+    ],
+    "afeta_vida": 2,
+    "avontade_opinar": 3,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "escola",
+      "amigos"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-25T01:24:54.695353+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Gleba B",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 1,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-25T01:36:23.311849+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Jardim Monte Cristo",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 2,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-25T01:38:36.788416+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Jardim Monte Cristo",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 2,
+    "avontade_opinar": 1,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-25T01:40:45.442548+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Jardim Monte Cristo",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 2,
+    "avontade_opinar": 1,
+    "confia_eleitos": 1,
+    "afasta": [
+      "nada me afasta"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-25T01:43:57.048074+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Jardim Monte Cristo",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 2,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-25T01:46:38.336784+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Jardim Monte Cristo",
+    "faixa_idade": "18+",
+    "estuda": "não estudo agora",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 1,
+    "confia_eleitos": null,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "sempre que dá",
+    "onde_discute": [
+      "WhatsApp da família"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-24T17:23:30.796958+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Jardim Monte Cristo",
+    "faixa_idade": "14–15",
+    "estuda": null,
+    "sentimentos": [
+      "distante de mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 3,
+    "confia_eleitos": null,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-24T17:54:02.213054+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Parque Oziel",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim",
+      "curiosidade",
+      "medo de falar errado"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 1,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-24T17:59:34.841777+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Gleba B",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "raiva / nojo",
+      "curiosidade"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 1,
+    "confia_eleitos": 2,
+    "afasta": [
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "WhatsApp da família",
+      "escola",
+      "amigos",
+      "na rua / bairro"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-24T18:24:52.745122+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Gleba B",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": null,
+    "avontade_opinar": 5,
+    "confia_eleitos": 1,
+    "afasta": [
+      "é tudo corrupto"
+    ],
+    "ja_participou": "sempre que dá",
+    "onde_discute": [
+      "amigos"
+    ],
+    "sabia_participar": "sabia e já fui",
+    "criado_em": "2026-06-24T18:32:13.641058+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Jardim Monte Cristo",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 3,
+    "confia_eleitos": 3,
+    "afasta": [
+      "medo de me expor"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-24T18:41:03.379249+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Jardim do Lago",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 3,
+    "confia_eleitos": 2,
+    "afasta": [
+      "medo de me expor",
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "sempre que dá",
+    "onde_discute": [
+      "amigos"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-24T18:49:18.544179+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "raiva / nojo",
+      "desânimo",
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 1,
+    "confia_eleitos": 1,
+    "afasta": [
+      "é tudo corrupto",
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:56:06.550927+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Parque Oziel",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 1,
+    "confia_eleitos": 1,
+    "afasta": [
+      "nada me afasta",
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta",
+      "amigos",
+      "na rua / bairro",
+      "não discuto"
+    ],
+    "sabia_participar": null,
+    "criado_em": "2026-06-25T01:27:56.036694+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Jardim Monte Cristo",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 1,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "WhatsApp da família"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-24T17:27:37.610991+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim",
+      "vontade de mudar algo",
+      "medo de falar errado"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 2,
+    "confia_eleitos": 3,
+    "afasta": [
+      "é tudo corrupto",
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "escola"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:56:24.592476+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "distante de mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": null,
+    "confia_eleitos": null,
+    "afasta": [],
+    "ja_participou": "nunca",
+    "onde_discute": [],
+    "sabia_participar": null,
+    "criado_em": "2026-06-24T18:38:03.443684+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Gleba B",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 4,
+    "confia_eleitos": 1,
+    "afasta": [],
+    "ja_participou": "nunca",
+    "onde_discute": [],
+    "sabia_participar": null,
+    "criado_em": "2026-06-24T18:47:31.947+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "12–13",
+    "estuda": "escola particular",
+    "sentimentos": [
+      "curiosidade"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 5,
+    "confia_eleitos": 3,
+    "afasta": [],
+    "ja_participou": "nunca",
+    "onde_discute": [],
+    "sabia_participar": null,
+    "criado_em": "2026-06-24T18:43:31.30539+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Gleba B",
+    "faixa_idade": "12–13",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 1,
+    "confia_eleitos": 1,
+    "afasta": [
+      "é tudo corrupto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-24T17:56:50.809395+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim",
+      "raiva / nojo",
+      "distante de mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 1,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não entendo do assunto",
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:55:03.436846+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim",
+      "curiosidade"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 3,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:55:11.865047+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 3,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não entendo do assunto",
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "WhatsApp da família",
+      "não discuto"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T17:55:12.700961+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 5,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não entendo do assunto",
+      "é tudo corrupto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T17:55:16.860176+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 2,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não entendo do assunto",
+      "não tenho tempo",
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:55:19.079513+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 3,
+    "confia_eleitos": 4,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta",
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:55:24.241723+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 5,
+    "confia_eleitos": 1,
+    "afasta": [
+      "é tudo corrupto",
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T17:56:32.327781+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 1,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "escola",
+      "amigos"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T17:56:39.694164+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim",
+      "distante de mim",
+      "medo de falar errado"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 2,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T17:56:48.367654+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "vontade de mudar algo",
+      "curiosidade"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 5,
+    "confia_eleitos": 3,
+    "afasta": [
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "escola",
+      "TikTok / Insta",
+      "amigos"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T17:57:29.983223+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 5,
+    "confia_eleitos": 3,
+    "afasta": [
+      "medo de me expor",
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "amigos",
+      "escola",
+      "WhatsApp da família"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:57:36.51896+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade",
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 1,
+    "confia_eleitos": 1,
+    "afasta": [
+      "é tudo corrupto",
+      "ninguém escuta jovem",
+      "medo de me expor",
+      "não muda nada"
+    ],
+    "ja_participou": "uma vez",
+    "onde_discute": [
+      "amigos",
+      "escola"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:57:37.096326+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 4,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não entendo do assunto",
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "WhatsApp da família",
+      "não discuto",
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:57:37.519583+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim",
+      "curiosidade"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 3,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não tenho tempo"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta",
+      "na rua / bairro"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T17:57:45.499339+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 4,
+    "confia_eleitos": 4,
+    "afasta": [
+      "nada me afasta"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:57:46.143042+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade",
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 4,
+    "confia_eleitos": 1,
+    "afasta": [
+      "ninguém escuta jovem",
+      "é tudo corrupto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "amigos",
+      "escola"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:57:39.818078+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "distante de mim"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 4,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T17:58:11.801696+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "desânimo"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 2,
+    "confia_eleitos": 1,
+    "afasta": [
+      "medo de me expor"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "escola"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:58:28.505981+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "raiva / nojo"
+    ],
+    "afeta_vida": 2,
+    "avontade_opinar": 2,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:58:29.837367+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "raiva / nojo",
+      "não é pra mim",
+      "distante de mim"
+    ],
+    "afeta_vida": 2,
+    "avontade_opinar": 5,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:58:44.325846+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "distante de mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 2,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "uma vez",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "sabia e já fui",
+    "criado_em": "2026-06-26T17:59:06.738327+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "raiva / nojo"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 5,
+    "confia_eleitos": 1,
+    "afasta": [
+      "é tudo corrupto",
+      "não muda nada",
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta",
+      "escola",
+      "amigos"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T17:59:18.038806+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "18+",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade",
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 4,
+    "confia_eleitos": 2,
+    "afasta": [
+      "ninguém escuta jovem",
+      "medo de me expor",
+      "não muda nada"
+    ],
+    "ja_participou": "uma vez",
+    "onde_discute": [
+      "TikTok / Insta",
+      "amigos"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T17:59:55.671489+00:00"
+  },
+  {
+    "momento": "fim_jogo",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": null,
+    "sentimentos": [
+      "curiosidade",
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": null,
+    "confia_eleitos": null,
+    "afasta": null,
+    "ja_participou": "sempre que dá",
+    "onde_discute": null,
+    "sabia_participar": null,
+    "criado_em": "2026-06-26T18:00:15.817768+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "desânimo"
+    ],
+    "afeta_vida": 2,
+    "avontade_opinar": 3,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T18:00:28.58027+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": null,
+    "estuda": "escola pública",
+    "sentimentos": [
+      "distante de mim",
+      "não é pra mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 2,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T18:00:34.188768+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "medo de falar errado"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 2,
+    "confia_eleitos": 1,
+    "afasta": [
+      "é tudo corrupto"
+    ],
+    "ja_participou": "uma vez",
+    "onde_discute": [
+      "amigos"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T18:00:57.367148+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "18+",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 4,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T18:02:11.998186+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 1,
+    "confia_eleitos": 1,
+    "afasta": [
+      "é tudo corrupto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T18:03:16.971285+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim",
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 2,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não muda nada",
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T18:05:22.236263+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "raiva / nojo",
+      "distante de mim"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 2,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "WhatsApp da família"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T18:05:57.967349+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 3,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não tenho tempo"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta",
+      "na rua / bairro"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T18:06:22.168294+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "distante de mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 2,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não entendo do assunto",
+      "é tudo corrupto",
+      "não muda nada",
+      "ninguém escuta jovem",
+      "medo de me expor"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta",
+      "amigos",
+      "na rua / bairro",
+      "escola"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T18:13:16.385865+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "distante de mim"
+    ],
+    "afeta_vida": 1,
+    "avontade_opinar": 2,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T18:14:20.453249+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "18+",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 4,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T18:14:57.841922+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "medo de falar errado"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 1,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "escola"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T18:33:07.514412+00:00"
+  },
+  {
+    "momento": "fim_jogo",
+    "bairro": "Campo Grande",
+    "faixa_idade": "14–15",
+    "estuda": null,
+    "sentimentos": [
+      "curiosidade"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": null,
+    "confia_eleitos": null,
+    "afasta": null,
+    "ja_participou": "às vezes",
+    "onde_discute": null,
+    "sabia_participar": null,
+    "criado_em": "2026-06-26T18:34:51.838197+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "desânimo"
+    ],
+    "afeta_vida": 2,
+    "avontade_opinar": 2,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-26T18:37:42.464389+00:00"
+  },
+  {
+    "momento": "fim_jogo",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": null,
+    "sentimentos": [
+      "curiosidade",
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": null,
+    "confia_eleitos": null,
+    "afasta": null,
+    "ja_participou": "nunca",
+    "onde_discute": null,
+    "sabia_participar": null,
+    "criado_em": "2026-06-26T18:49:07.87707+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade",
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 5,
+    "confia_eleitos": 3,
+    "afasta": [
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta",
+      "escola",
+      "amigos"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T18:57:08.518135+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "medo de falar errado"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 5,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta",
+      "na rua / bairro"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-26T18:58:39.515147+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": null,
+    "faixa_idade": null,
+    "estuda": null,
+    "sentimentos": null,
+    "afeta_vida": null,
+    "avontade_opinar": null,
+    "confia_eleitos": null,
+    "afasta": null,
+    "ja_participou": null,
+    "onde_discute": null,
+    "sabia_participar": null,
+    "criado_em": "2026-06-26T23:04:39.99433+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "18+",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 3,
+    "confia_eleitos": 2,
+    "afasta": [
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "18+",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "distante de mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 1,
+    "confia_eleitos": 3,
+    "afasta": [
+      "medo de me expor"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "18+",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 1,
+    "confia_eleitos": 3,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 1,
+    "confia_eleitos": 5,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "uma vez",
+    "onde_discute": [
+      "TikTok / Insta"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim",
+      "medo de falar errado"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 2,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não entendo do assunto",
+      "é tudo corrupto",
+      "nada me afasta"
+    ],
+    "ja_participou": "às vezes",
+    "onde_discute": [
+      "WhatsApp da família",
+      "escola",
+      "amigos",
+      "na rua / bairro"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "distante de mim"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 2,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não entendo do assunto",
+      "ninguém escuta jovem"
+    ],
+    "ja_participou": "uma vez",
+    "onde_discute": [
+      "amigos"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "14–15",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "distante de mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 5,
+    "confia_eleitos": 1,
+    "afasta": [
+      "não muda nada"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade",
+      "vontade de mudar algo"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 5,
+    "confia_eleitos": 2,
+    "afasta": [
+      "ninguém escuta jovem",
+      "não tenho tempo"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta",
+      "escola",
+      "amigos",
+      "na rua / bairro"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Campo Grande",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim",
+      "medo de falar errado"
+    ],
+    "afeta_vida": 4,
+    "avontade_opinar": 1,
+    "confia_eleitos": 2,
+    "afasta": [
+      "é tudo corrupto",
+      "não muda nada",
+      "medo de me expor"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "TikTok / Insta",
+      "amigos"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "não é pra mim"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 2,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "distante de mim"
+    ],
+    "afeta_vida": 5,
+    "avontade_opinar": 3,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "amigos"
+    ],
+    "sabia_participar": "sabia mas nunca fui",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  },
+  {
+    "momento": "inicio",
+    "bairro": "Outro bairro",
+    "faixa_idade": "16–17",
+    "estuda": "escola pública",
+    "sentimentos": [
+      "curiosidade"
+    ],
+    "afeta_vida": 3,
+    "avontade_opinar": 2,
+    "confia_eleitos": 2,
+    "afasta": [
+      "não entendo do assunto"
+    ],
+    "ja_participou": "nunca",
+    "onde_discute": [
+      "não discuto"
+    ],
+    "sabia_participar": "não sabia que dava",
+    "criado_em": "2026-06-30T15:05:58.151738+00:00"
+  }
+]

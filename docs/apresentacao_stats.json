@@ -1,0 +1,637 @@
+{
+  "gerado_em": "2026-06-30T18:18:09.034Z",
+  "fonte": {
+    "formularios": 86,
+    "avaliacoes": 31
+  },
+  "oziel": {
+    "n": 30,
+    "completas": 30,
+    "bairros": [
+      [
+        "Parque Oziel",
+        10
+      ],
+      [
+        "Jardim Monte Cristo",
+        8
+      ],
+      [
+        "Gleba B",
+        5
+      ],
+      [
+        "Outro bairro",
+        4
+      ],
+      [
+        "Jardim do Lago",
+        2
+      ],
+      [
+        "Campo Grande",
+        1
+      ]
+    ],
+    "idades": [
+      [
+        "12–13",
+        16
+      ],
+      [
+        "16–17",
+        6
+      ],
+      [
+        "18+",
+        5
+      ],
+      [
+        "14–15",
+        3
+      ]
+    ],
+    "publica": {
+      "pct": 70,
+      "abs": "21 de 30"
+    },
+    "sentimentos": [
+      [
+        "vontade de mudar algo",
+        11
+      ],
+      [
+        "não é pra mim",
+        9
+      ],
+      [
+        "curiosidade",
+        8
+      ],
+      [
+        "medo de falar errado",
+        2
+      ],
+      [
+        "raiva / nojo",
+        2
+      ],
+      [
+        "distante de mim",
+        2
+      ],
+      [
+        "desânimo",
+        1
+      ],
+      [
+        "sem resposta",
+        1
+      ]
+    ],
+    "afasta": [
+      [
+        "não muda nada",
+        9
+      ],
+      [
+        "é tudo corrupto",
+        6
+      ],
+      [
+        "não entendo do assunto",
+        6
+      ],
+      [
+        "medo de me expor",
+        5
+      ],
+      [
+        "nada me afasta",
+        4
+      ],
+      [
+        "ninguém escuta jovem",
+        4
+      ],
+      [
+        "não tenho tempo",
+        1
+      ],
+      [
+        "sem resposta",
+        4
+      ]
+    ],
+    "participou": [
+      [
+        "nunca",
+        19
+      ],
+      [
+        "às vezes",
+        6
+      ],
+      [
+        "sempre que dá",
+        4
+      ],
+      [
+        "uma vez",
+        1
+      ]
+    ],
+    "onde": [
+      [
+        "TikTok / Insta",
+        10
+      ],
+      [
+        "não discuto",
+        9
+      ],
+      [
+        "amigos",
+        6
+      ],
+      [
+        "WhatsApp da família",
+        5
+      ],
+      [
+        "escola",
+        5
+      ],
+      [
+        "na rua / bairro",
+        2
+      ],
+      [
+        "igreja",
+        1
+      ],
+      [
+        "sem resposta",
+        4
+      ]
+    ],
+    "sabia": [
+      [
+        "não sabia que dava",
+        14
+      ],
+      [
+        "sabia mas nunca fui",
+        9
+      ],
+      [
+        "sabia e já fui",
+        2
+      ],
+      [
+        "sem resposta",
+        5
+      ]
+    ],
+    "escalas": {
+      "afeta": 2.89,
+      "avontade": 2.68,
+      "confia": 2.12
+    },
+    "corr": {
+      "afetaVoz": {
+        "r": 0.52,
+        "n": 27
+      },
+      "confiaVoz": {
+        "r": -0.03,
+        "n": 26
+      },
+      "confiaAfeta": {
+        "r": -0.04,
+        "n": 25
+      }
+    },
+    "idadeTab": [
+      {
+        "faixa": "12–13",
+        "afeta": 2.73,
+        "avontade": 2.67,
+        "confia": 2.2,
+        "n": 16
+      },
+      {
+        "faixa": "14–15",
+        "afeta": 2.67,
+        "avontade": 2.33,
+        "confia": 2,
+        "n": 3
+      },
+      {
+        "faixa": "16–17",
+        "afeta": 2.67,
+        "avontade": 3,
+        "confia": 1.67,
+        "n": 6
+      },
+      {
+        "faixa": "18+",
+        "afeta": 4,
+        "avontade": 2.5,
+        "confia": 2.67,
+        "n": 5
+      }
+    ],
+    "bairroAfeta": [
+      {
+        "b": "Jardim Monte Cristo",
+        "afeta": 2,
+        "nunca": "7/8"
+      },
+      {
+        "b": "Parque Oziel",
+        "afeta": 2.7,
+        "nunca": "4/10"
+      },
+      {
+        "b": "Gleba B",
+        "afeta": 3,
+        "nunca": "4/5"
+      },
+      {
+        "b": "Jardim do Lago",
+        "afeta": 4,
+        "nunca": "0/2"
+      },
+      {
+        "b": "Outro bairro",
+        "afeta": 4.33,
+        "nunca": "3/4"
+      }
+    ],
+    "silencio": {
+      "mudo": 2.11,
+      "nMudo": 9,
+      "fala": 2.75,
+      "nFala": 20
+    },
+    "infoGap": {
+      "naoSabiaPct": 56,
+      "nuncaPct": 63,
+      "naoSabiaN": 14,
+      "naoSabiaNunca": 10
+    }
+  },
+  "rui": {
+    "n": 56,
+    "completas": 53,
+    "bairros": [
+      [
+        "Campo Grande",
+        39
+      ],
+      [
+        "Outro bairro",
+        16
+      ],
+      [
+        "sem resposta",
+        1
+      ]
+    ],
+    "idades": [
+      [
+        "16–17",
+        34
+      ],
+      [
+        "14–15",
+        14
+      ],
+      [
+        "18+",
+        6
+      ],
+      [
+        "sem resposta",
+        2
+      ]
+    ],
+    "publica": {
+      "pct": 93,
+      "abs": "52 de 56"
+    },
+    "sentimentos": [
+      [
+        "não é pra mim",
+        20
+      ],
+      [
+        "curiosidade",
+        16
+      ],
+      [
+        "vontade de mudar algo",
+        14
+      ],
+      [
+        "distante de mim",
+        13
+      ],
+      [
+        "medo de falar errado",
+        7
+      ],
+      [
+        "raiva / nojo",
+        6
+      ],
+      [
+        "desânimo",
+        4
+      ],
+      [
+        "sem resposta",
+        1
+      ]
+    ],
+    "afasta": [
+      [
+        "não muda nada",
+        21
+      ],
+      [
+        "não entendo do assunto",
+        21
+      ],
+      [
+        "ninguém escuta jovem",
+        14
+      ],
+      [
+        "é tudo corrupto",
+        12
+      ],
+      [
+        "medo de me expor",
+        7
+      ],
+      [
+        "não tenho tempo",
+        4
+      ],
+      [
+        "nada me afasta",
+        2
+      ],
+      [
+        "sem resposta",
+        1
+      ]
+    ],
+    "participou": [
+      [
+        "nunca",
+        41
+      ],
+      [
+        "às vezes",
+        7
+      ],
+      [
+        "uma vez",
+        6
+      ],
+      [
+        "sempre que dá",
+        1
+      ],
+      [
+        "sem resposta",
+        1
+      ]
+    ],
+    "onde": [
+      [
+        "não discuto",
+        21
+      ],
+      [
+        "TikTok / Insta",
+        21
+      ],
+      [
+        "amigos",
+        15
+      ],
+      [
+        "escola",
+        13
+      ],
+      [
+        "na rua / bairro",
+        6
+      ],
+      [
+        "WhatsApp da família",
+        5
+      ],
+      [
+        "sem resposta",
+        1
+      ]
+    ],
+    "sabia": [
+      [
+        "não sabia que dava",
+        29
+      ],
+      [
+        "sabia mas nunca fui",
+        22
+      ],
+      [
+        "sabia e já fui",
+        1
+      ],
+      [
+        "sem resposta",
+        1
+      ]
+    ],
+    "escalas": {
+      "afeta": 3.4,
+      "avontade": 2.81,
+      "confia": 1.96
+    },
+    "corr": {
+      "afetaVoz": {
+        "r": 0.15,
+        "n": 52
+      },
+      "confiaVoz": {
+        "r": 0.01,
+        "n": 52
+      },
+      "confiaAfeta": {
+        "r": 0.17,
+        "n": 52
+      }
+    },
+    "idadeTab": [
+      {
+        "faixa": "14–15",
+        "afeta": 3.43,
+        "avontade": 2.54,
+        "confia": 1.38,
+        "n": 14
+      },
+      {
+        "faixa": "16–17",
+        "afeta": 3.32,
+        "avontade": 2.94,
+        "confia": 2.13,
+        "n": 34
+      },
+      {
+        "faixa": "18+",
+        "afeta": 3.83,
+        "avontade": 2.83,
+        "confia": 2.33,
+        "n": 6
+      }
+    ],
+    "bairroAfeta": [
+      {
+        "b": "Outro bairro",
+        "afeta": 2.88,
+        "nunca": "14/16"
+      },
+      {
+        "b": "Campo Grande",
+        "afeta": 3.62,
+        "nunca": "27/39"
+      }
+    ],
+    "silencio": {
+      "mudo": 2.48,
+      "nMudo": 21,
+      "fala": 3.06,
+      "nFala": 34
+    },
+    "infoGap": {
+      "naoSabiaPct": 56,
+      "nuncaPct": 73,
+      "naoSabiaN": 29,
+      "naoSabiaNunca": 23
+    }
+  },
+  "avaliacao": {
+    "n": 31,
+    "cards": {
+      "medo": {
+        "pct": 84,
+        "abs": "26 de 31"
+      },
+      "vontade": {
+        "pct": 55,
+        "abs": "17 de 31"
+      },
+      "confianca": {
+        "pct": 45,
+        "abs": "14 de 31"
+      }
+    },
+    "politica": [
+      [
+        "votar nas eleições",
+        22
+      ],
+      [
+        "cobrar o vereador ou a prefeitura por uma melhoria",
+        20
+      ],
+      [
+        "participar de um mutirão ou ação no bairro",
+        16
+      ],
+      [
+        "discutir os problemas da escola e propor mudanças",
+        15
+      ],
+      [
+        "organizar um evento ou coletivo com a galera",
+        14
+      ],
+      [
+        "falar dos problemas da cidade com amigos e família",
+        14
+      ],
+      [
+        "reclamar de buraco na rua ou falta de iluminação",
+        13
+      ]
+    ],
+    "dificulta": [
+      [
+        "desanimo porque as pessoas não conseguem mais conversar com opinião diferente",
+        11
+      ],
+      [
+        "me falta informação de como participar",
+        11
+      ],
+      [
+        "me falta tempo pra participar",
+        10
+      ],
+      [
+        "tenho dificuldade de falar minha opinião nesses espaços",
+        9
+      ],
+      [
+        "acho a linguagem desses espaços difícil",
+        5
+      ],
+      [
+        "desanimo por causa da corrupção",
+        5
+      ],
+      [
+        "não acredito na política",
+        4
+      ],
+      [
+        "me falta grana pra transporte e comida",
+        3
+      ],
+      [
+        "sinto falta de grupo/coletivo que eu me identifique",
+        2
+      ],
+      [
+        "é difícil chegar nos locais (transporte)",
+        2
+      ]
+    ],
+    "perfil": {
+      "genero": {
+        "label": "mulher cis",
+        "pct": 58
+      },
+      "idade": {
+        "label": "16–17",
+        "pct": 65
+      },
+      "raca": {
+        "label": "parda",
+        "pct": 39
+      }
+    }
+  },
+  "totais": {
+    "fichas": 86,
+    "encontros": 2,
+    "avaliacoes": 31
+  }
+}
