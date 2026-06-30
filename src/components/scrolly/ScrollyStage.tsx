@@ -27,13 +27,13 @@ export default function ScrollyStage({ steps, graphic, className = "" }: Props) 
     <div ref={trackRef} className={`relative ${className}`}>
       <div className="md:grid md:grid-cols-2 md:gap-10">
         {/* gráfico fixo */}
-        <div className="sticky top-0 z-0 h-[58vh] md:h-screen flex items-center justify-center md:order-2">
-          <div className="w-full">{graphic(active)}</div>
+        <div className="sticky top-0 z-0 h-[52vh] md:h-screen flex items-center justify-center md:order-2">
+          <div className="w-full max-w-md mx-auto">{graphic(active)}</div>
         </div>
         {/* passos de texto */}
         <div className="relative z-10 md:order-1">
           {steps.map((s, i) => (
-            <div key={i} className="min-h-[68vh] md:min-h-screen flex items-center">
+            <div key={i} className="min-h-[62vh] md:min-h-[78vh] flex items-center">
               <motion.div
                 animate={reduce ? undefined : { opacity: i === active ? 1 : 0.26, filter: i === active ? "blur(0px)" : "blur(0.6px)" }}
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}

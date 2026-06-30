@@ -641,7 +641,7 @@ export default function Apresentacao() {
               <Link href="/" className="border-2 border-grafite-3 text-creme-soft brand-lockup text-lg px-6 py-3 rounded-xl hover:border-creme/30 transition-colors">jogar</Link>
             </div>
           </Reveal>
-          <p className="brand-stamp text-[10px] text-creme-soft/40 mt-16 leading-relaxed">
+          <p className="brand-stamp text-[10px] text-creme-soft/70 mt-16 leading-relaxed">
             Vozes do Oziel · Grupo Diálogos / CriaLab · {TOTAIS.fichas} fichas · {TOTAIS.encontros} encontros · dados abertos CC BY-SA 4.0
           </p>
           <DownloadGate />
